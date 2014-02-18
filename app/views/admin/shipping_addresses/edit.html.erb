@@ -1,0 +1,5 @@
+<%= page_title('Edit Shipping Address') %>
+<% form_for @shipping_address, :url => { :controller => "admin/shipping_addresses",:action => "update",:id => @shipping_address.id }  do |order_form| %>
+  <%= render :partial => 'form',:locals=>{:f => order_form} %>
+<% end %>
+<%#= render :partial => 'form' %>

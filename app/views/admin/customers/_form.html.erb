@@ -1,0 +1,193 @@
+
+  <%= f.error_messages %>
+  <table class="form">
+    <tr>
+      <td class="field_label">Customer Name:</td>
+      <td><%= text_field 'customer', 'customer_name',{:class=>"input", :style=>"width:200px"}  %>*</td>
+      <td class="field_label">Status:</td>
+      <td>
+        <%=select_tag 'customer[customer_status]', options_for_select([
+      	['Select',''],
+      	['Prospect','P'],
+      	['Active','A'],
+      	['Inactive','I']
+      	],@customer.customer_status),:class=>"input", :style=>"width:200px"%>
+      	<%#= text_field 'customer', 'customer_status',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">OC Code:</td>
+      <td><%= text_field 'customer', 'oc_code',{:class=>"input", :style=>"width:200px"}  %>*</td>
+    </tr>
+    <tr>
+      <td class="field_label">User Name:</td>
+      <td><%= text_field 'customer', 'user_name',{:class=>"input", :style=>"width:200px",:value=> f.object.user_name.blank? ? " " : f.object.user_name }  %>*</td>
+      <td class="field_label">Password:</td>
+      <td><%= password_field 'customer', 'password',{:class=>"input", :style=>"width:200px"}  %>*</td>
+    </tr>
+    <tr>
+      <td class="field_label">Company:</td>
+      <td>
+        <%=select_tag 'customer[company]', options_for_select([
+      	['Select',''],
+      	['Centrade','T'],
+      	['CTI','C']
+      	],@customer.company),:class=>"input", :style=>"width:200px"%>*
+      	<%#= text_field 'customer', 'company',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Arrival Port:</td>
+      <td>
+        <%=select_tag 'customer[arrival_port]', options_for_select([
+      	['Select',''],   
+        ['Atlanta, GA','ATL_GA'],
+        ['Baltimore, NC','BAL_NC'],
+        ['Calgary, AB','CAL_AB'],
+        ['Charleston, SC','CHA_CS'],
+        ['Charlotte, NC','CHA_NC'],
+        ['Chicago, IL','CHA_IL'],
+        ['Cleveland, OH','CLE_OH'],
+        ['Columbus, OH','COL_OH'],
+        ['Dallas, TX','DAL_TX'],
+        ['Denver, CO','DEN_CO'],
+        ['Detroit, MI','DET_MI'],
+        ['Houston, TX','HOU_TX'],
+        ['Indianapolis, IN','IND_IN'],
+        ['Los Angeles, CA','LOS_CA'],
+        ['Miami, FL','MIA_FL'],
+        ['Minneapolis, MN','MIN_MN'],
+        ['Montreal, QC','MON_QC'],
+        ['New York, NY','NWY_NY'],
+        ['Norfolk, VA','NOR_VA'],
+        ['Oakland, CA','OAK_CA'],
+        ['Portland, OR','POR_OR'],
+        ['Salt Lake City, UT','SAL_UT'],
+        ['San Francsico, CA','SAN_CA'],
+        ['Savannah, GA','SAV_GA'],
+        ['Seattle, WA','SEA_WA'],
+        ['Toronto, ON','TOR_ON'],
+        ['Vancouver, BC' , 'VAN_BC'],
+        ['Wilmington, NC','WIL_NC'],
+        ['Winnipeg, MB','WIN_MB']
+      	],@customer.arrival_port),:class=>"input", :style=>"width:200px"%>
+      	
+      	<%#= text_field 'customer', 'arrival_port',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Region:</td>
+      <td>
+      	<%=select_tag 'customer[region]', options_for_select([
+      	['Select',''],
+        ['Canada East','CEA'],
+        ['Canada Central','CAC'],
+        ['Canada West','CAW'],
+        ['US South East','USE'],
+        ['US North East','UNE'],
+        ['US North Central','UNC'],
+        ['US South Central','USC'],
+        ['US North West','UNW'],
+        ['US South West','USW'],
+        ['United Kindom','UK'],
+        ['Austrailia','AUS']
+      	],@customer.region),:class=>"input", :style=>"width:200px"%>*
+      	<%#= text_field 'customer', 'region',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Terms:</td>
+      <td>
+        <%= select_tag 'customer[terms]', options_for_select([
+        ['Select',''],
+        ['30 days','30 days'],
+        ['20% Deposit','20% Deposit'],        
+        ['COD','COD']
+        ],@customer.terms),:class=>"input", :style=>"width:200px"%></td>
+    </tr>
+    <tr>
+      <td class="field_label">Currency:</td>
+      <td>
+        <%=select_tag 'customer[currency]', options_for_select([
+      	['Select',''],
+      	['US Dollar','USD'],
+      	['Canadian Dollar','CAD']      	
+      	],@customer.currency),:class=>"input", :style=>"width:200px"%>*
+      	<%#= text_field 'customer', 'currency',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Delivery Terms:</td>
+      <td>
+        <%=select_tag 'customer[delivery_terms]', options_for_select([
+      	['Select',''],
+      	['FOB Nanging','Nanging'],
+      	['FOB Shanhigh','Shanhigh'],      	
+      	['FOB Port/Rail Terminal','Terminal'],
+      	['FOB Door','Door']
+      	],@customer.delivery_terms),:class=>"input", :style=>"width:200px"%>
+      	<%#= text_field 'customer', 'delivery_terms',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td colspan=4><h1>Contacts</h1></td>
+    </tr>
+    <tr>
+      <td class="field_label">Name:</td>
+      <td><%= text_field 'customer', 'contact_name',{:class=>"input", :style=>"width:200px"}  %>*</td>
+      <td class="field_label">Position:</td>
+      <td><%= text_field 'customer', 'position',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Phone:</td>
+      <td><%= text_field 'customer', 'phone',{:class=>"input", :style=>"width:200px"}  %>*</td>
+      <td class="field_label">Email:</td>
+      <td><%= text_field 'customer', 'email',{:class=>"input", :style=>"width:200px"}  %>*</td>
+    </tr>
+    <tr>
+      <td colspan=4><h1>Billing Address</h1></td>
+    </tr>
+    <tr>
+      <td class="field_label">Street 1:</td>
+      <td><%= text_field 'customer', 'street_1',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Country:</td>
+      <td>
+        <%=select_tag 'customer[country]', options_for_select([
+      	  ['Canada','Canada'],
+      	  ['Usa','Usa'],
+          ['UK','UK'],
+          ['Argentine','Argentine'],
+          ['Ireland','Ireland']
+      	],@customer.country),:class=>"input", :id => "country", :style=>"width:200px"%>
+      	<%#= text_field 'customer', 'country',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Street 2:</td>
+      <td><%= text_field 'customer', 'street_2',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Province:</td>
+      <td><%= render :partial =>  "province_dropdown" %></td>
+    </tr>
+    <tr>
+      <td class="field_label">City:</td>
+      <td><%= text_field 'customer', 'city',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Postal Code:</td>
+      <td><%= text_field 'customer', 'postal_code',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Phone:</td>
+      <td><%= text_field 'customer', 'add_phone',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Fax:</td>
+      <td><%= text_field 'customer', 'fax',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Notes:</td>
+      <td colspan="3" ><%= text_area 'customer', 'notes',{:class=>"input", :style=>"width:500px"}  %></td>
+    </tr>
+    <tr>
+      <td colspan="4" class="field_label">
+	      <%= submit_tag 'Save',{:class=>"buttons"} %><%= link_to 'Cancel', "/admin/customers",:method=>'get',:class=>"buttons" %>
+	    </td>
+    </tr>    
+  </table>
+
+<script>
+  $("#country").change(function () {
+    $("#country option:selected").each(function () {
+      var str = $(this).val();
+      $.ajax({
+        url: "/province_dropdown?country="+str+"&selected_customer_id=<%= @customer.id %>" ,
+        success: function(data) {
+          $("#province_drop").html(data);
+        }
+      });
+    });
+  }).change();
+</script>

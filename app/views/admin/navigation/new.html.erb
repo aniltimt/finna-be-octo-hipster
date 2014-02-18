@@ -1,0 +1,6 @@
+<%= page_title('New navigation item') %>
+<% form_tag({:action => 'create'}, :multipart=>true) do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br /><br />
+<%= link_to 'Back', :action => 'list' %>

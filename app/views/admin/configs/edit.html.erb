@@ -1,0 +1,6 @@
+<%= page_title('Editing config item') %>
+<% form_tag :action => 'update', :id => @app_config do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br><br>
+<%= link_to 'Back', :action => 'list' %>

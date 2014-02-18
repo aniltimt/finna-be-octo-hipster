@@ -1,0 +1,203 @@
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<table class="form">
+  <tr>
+    <% if !@orders.blank? %>
+    <% if @orders.first.company == "T" %>
+      <h2><strong>Production Order For Reference <%= @orders.first.reference %></strong></h2>
+    <% else %>
+      <h2><strong>Production Order For Reference <%= @orders.first.reference %></strong></h2>
+    <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <td >
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+      <tbody>
+      	<tr>
+          <td class="label"><strong>Customer Order</strong></td>
+          <td class="label"><strong>Requested Delivery</strong></td>
+          <td class="label"><strong>Requested Ship</strong></td>
+          <td class="label"><strong>Arrival Port</strong></td>
+          <td class="label"><strong>Delivery Terms</strong></td>
+        </tr>
+        <% unless @orders.blank? -%>   
+        <% @orders.each_with_index do |order,index| %>    
+        <tr class="<%= index%2 == 0 ? 'row_dark' : 'row_light'  %>">
+          <td><%= order.customer.company %>O-<%= order.customer.oc_code %>&nbsp;<%= order.order_confirmation %></td>
+          <td><%= order.requested_delivery %></td>
+          <td><%= order.requested_ship_date %></td>
+          <td><%= render :partial => 'arrival_port',:locals => {:arrival_port => order.customer.arrival_port} %></td>
+          <td><%= order.customer.delivery_terms %></td>
+        </tr>
+        <% end %> 
+        <% else -%>
+        <tr>
+          <td colspan="3" class="note">No Orders for Such Reference </td>
+        </tr>
+        <% end -%>
+      </tbody>
+    </table>
+    </td>
+  </tr>
+    <tr>
+      <td><h2>Order Shedule</h2></td>
+    </tr>
+    <tr>
+      <td>
+        <table  border="0" cellpadding="3" cellspacing="1" class="texts" width="600">
+          <tr>
+            <% if !@orders.blank? %>
+            <% form_tag('/update_production_order') do -%>
+            <td colspan=2>Delivery Type:&nbsp;<%= @orders.first.customer.delivery_terms %></td>
+            <td colspan=2>Arrival Port:&nbsp;<%=select_tag 'customer[arrival_port]', options_for_select([['Select',''],
+              ['Select',''],   
+              ['Atlanta, GA','ATL_GA'],
+              ['Baltimore, NC','BAL_NC'],
+              ['Calgary, AB','CAL_AB'],
+              ['Charleston, SC','CHA_CS'],
+              ['Charlotte, NC','CHA_NC'],
+              ['Chicago, IL','CHA_IL'],
+              ['Cleveland, OH','CLE_OH'],
+              ['Columbus, OH','COL_OH'],
+              ['Dallas, TX','DAL_TX'],
+              ['Denver, CO','DEN_CO'],
+              ['Detroit, MI','DET_MI'],
+              ['Houston, TX','HOU_TX'],
+              ['Indianapolis, IN','IND_IN'],
+              ['Los Angeles, CA','LOS_CA'],
+              ['Miami, FL','MIA_FL'],
+              ['Minneapolis, MN','MIN_MN'],
+              ['Montreal, QC','MON_QC'],
+              ['New York, NY','NWY_NY'],
+              ['Norfolk, VA','NOR_VA'],
+              ['Oakland, CA','OAK_CA'],
+              ['Portland, OR','POR_OR'],
+              ['Salt Lake City, UT','SAL_UT'],
+              ['San Francsico, CA','SAN_CA'],
+              ['Savannah, GA','SAV_GA'],
+              ['Seattle, WA','SEA_WA'],
+              ['Toronto, ON','TOR_ON'],
+              ['Vancouver, BC' , 'VAN_BC'],
+              ['Wilmington, NC','WIL_NC'],
+              ['Winnipeg, MB','WIN_MB']
+              ],@orders.first.customer.arrival_port ),:class=>"input", :style=>"width:180px"%></td>
+          </tr>
+          <tr>
+            <td colspan=2>ETA to Port:&nbsp;<%= text_field_tag 'eta_to_port','',{:class=>"input", :id=>"datepicker1", :style=>"width:160px",:value => @orders.first.eta_to_port} %>
+            </td>
+            <td colspan=2>Confirmed Ship Date:&nbsp;<%= text_field_tag 'confirmed_ship_date','',{:class=>"input", :id=>"datepicker2", :style=>"width:140px",:value => @orders.first.confirmed_ship_date} %>
+              <%= hidden_field_tag 'id','',{:value => @orders.first.id} %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan=2>ETA to Customer:&nbsp;<%= text_field_tag 'eta_to_customer','',{:class=>"input", :id=>"datepicker3", :style=>"width:135px",:value => @orders.first.eta_to_customer} %></td>
+          </tr>
+          <tr>
+            <td class="field_label"><%= submit_tag 'Save',{:class=>"buttons"} %>
+            </td>
+          </tr>  
+          <% end %>
+          <% end -%>
+        </table>
+      </td>
+    </tr>
+    <% if !@orders.blank? %>
+    <% if !@orders.first.order_product_details.blank? %>
+    <% @orders.each_with_index do |single_order,index| %>
+    <tr>
+      <td><h2>Please label on all four sides -  <%= single_order.order_product_details.collect{|single| single.skid}.inject(0){|sum,item| sum + item} %>  Skids for <%= single_order.customer.company %>O-<%= single_order.customer.oc_code %>&nbsp;<%= single_order.order_confirmation %></h2></td>
+    </tr>
+    <tr>
+      <td >
+      <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+      <tbody>
+      	<tr>
+          <td class="label"><strong>Items</strong></td>
+          <td class="label"><strong>Descriptions</strong></td>
+          <td class="label"><strong>Colour</strong></td>
+          <td class="label"><strong>Skid</strong></td>
+          <td class="label"><strong>Pcs</strong></td>
+          <td class="label"><strong>Total</strong></td>
+          <td class="label"><strong>Barcode</strong></td>
+        </tr>
+        <% @order_product_details = single_order.order_product_details %>
+        <% if !@order_product_details.blank? %>
+          <% count_index = 0 %>
+        <% @order_product_details.each do | single_order_product_details | %>    
+        <tr class="<%= index%2 == 0 ? 'row_dark' : 'row_light'  %>">
+          <td><%= single_order_product_details.code %>-<%= single_order_product_details.colour %></td>
+          <td><%= single_order_product_details.description %></td>
+          <td><%= render :partial => 'colour',:locals => {:colour => single_order_product_details.colour} %></td>
+          <td><%= single_order_product_details.skid %></td>
+          <td><%= single_order_product_details.pack %></td>
+          <td><%= single_order_product_details.total %></td>
+          <td><%= link_to "#{single_order_product_details.barcode_number}","#",:onclick=>"edit_view_bar(edit_view_bar_#{index}_#{count_index});" %></td>
+        </tr>
+        <tr id="edit_view_bar_<%= index  %>_<%=count_index%>" style="display: none;">
+        <% form_remote_tag(:url=>{:controller => :orders, :action => :update_prod_order_barcode,:id => single_order_product_details.id })do -%> 
+          <td><%= text_field_tag('barcode_number',value = "#{single_order_product_details.barcode_number}",options = {:class =>"input",:placeholder=>"Barcode Number", :style=>"width:80px"})%></td>
+          <td><%= text_field_tag('bar_line_one',value = "#{single_order_product_details.bar_line_one}", options = {:class =>"input",:placeholder=>"Line 1", :style=>"width:80px"}) %></td>
+          <td><%= text_field_tag('bar_line_two',value = "#{single_order_product_details.bar_line_two}",options ={:class=>"input",:placeholder=>"Line 2", :style=>"width:80px"})%></td>
+          <td><%= text_field_tag('bar_line_three',value = "#{single_order_product_details.bar_line_three}",options ={:class=>"input",:placeholder=>"Line 3", :style=>"width:80px"}) %></td>
+          <td><%= text_field_tag('bar_line_four',value = "#{single_order_product_details.bar_line_four}",options ={:class=>"input",:placeholder=>"Line 4", :style=>"width:80px"}) %></td>
+          <td><%= text_field_tag('barcode_position',value = "#{single_order_product_details.barcode_position}",options ={:class=>"input",:placeholder=>"Position", :style=>"width:80px"}) %></td>
+          <td class="field_label"><%= submit_tag 'Update',{:class=>"buttons",:onclick=>"edit_view_bar(edit_view_bar_#{index}_#{count_index});"} %></td>
+        <% end -%>
+        </tr>
+        <% count_index += 1 %>
+        <% end %>
+        <% end %>
+      </tbody>
+      </table>
+      </td>
+    </tr>
+    <% end %> 
+    <% else -%>
+    <tr>
+      <td><h2>Please label on all four sides</h2></td>
+    </tr>
+    <tr>
+      <td >
+      <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+        <tbody>
+          <tr>
+            <td class="label"><strong>Items</strong></td>
+            <td class="label"><strong>Descriptions</strong></td>
+            <td class="label"><strong>Colour</strong></td>
+            <td class="label"><strong>Skid</strong></td>
+            <td class="label"><strong>Pcs</strong></td>
+            <td class="label"><strong>Total</strong></td>
+            <td class="label"><strong>Barcode</strong></td>
+          </tr>  
+          <tr>
+            <td colspan="3" class="note">No Order Product for Such Reference </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    <% end -%>
+    <% end -%>
+    </tr>
+</table>
+<div style="text-align:right;padding-right: 56px;">
+  <a href="/admin/orders/export_single_to_xml/?reference=<%=@orders.first.reference%>" class="buttons">Export to .xml</a>
+</div>
+<script>
+  $(function(){
+    $( "#datepicker1" ).datepicker();
+    $( "#datepicker2" ).datepicker();
+    $( "#datepicker3" ).datepicker();
+  });
+  function edit_view_bar(this_obc){  
+    var show_var = '#' + this_obc
+    var display_check = $(this_obc).attr("style");
+    if(display_check == "display: none;" ){
+      $(this_obc).attr("style","");
+    }else{
+      $(this_obc).hide("slow");
+    }
+  }
+</script>

@@ -1,0 +1,78 @@
+<script type="text/javascript">
+  function check_passwords(obj){
+    var contaner = $('#passwords_contaner');
+    if (obj.checked) 
+      contaner.show();
+    else
+      contaner.hide();
+  }
+</script>
+<%= error_messages_for 'category' %>
+<!--[form:category]-->
+<table class="form" border="0">
+  <tr>
+    <td style="text-align:right;width:60px;">Name:</td>
+    <td><%= text_field 'category', 'title', {:class => "input", :style => "width:250px"}  %></td>
+  </tr>
+  <% if @category.image && @category.image.original_filename.blank? %>
+    <tr>
+      <td style="text-align:right;" valign="top">
+        <span id="file_name_label">Current image:</span>
+      </td>
+      <td>
+        <span id="file_name">
+          <%= link_to(image_tag(@category.image.url(:thumb)), @category.image.url(:medium), :class => "thickbox") %><br />
+          <p>
+            <%= link_to(image_tag("/images/cms/view.gif", :alt => "view"), @category.image.url(:medium), :class => "thickbox") %>
+            <%= link_to_remote(
+              image_tag("/images/cms/delete.gif", :alt => "delete"),
+              {
+                :url => {:action => 'delete_image', :id => @category.id, :object => 'category'},
+                :success => "$('#file_name_label').remove(); $('#file_name').remove()",
+                :confirm => "Are you sure?"
+              }
+            ) %>
+          </p>
+        </span>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td style="text-align:right;">Image:</td>
+    <td style="text-align:left"><%= file_field 'category', 'image', {:class => "input", :style => "width:205px;", :size => 24}  %></td>
+  </tr>
+   <tr>
+    <td class="field_label">Parent:</td>
+    <td><%= text_field 'category_parent', 'name',{:class=>"input", :style=>"width:116px",:readonly=>true,:value=>@category.parent ? @category.parent.title : "none"}  %>
+      <%= hidden_field 'category', 'parent_id'  %>
+      <%= link_to_remote("Browse",{:url =>{:action=>'browse_categories',:id => @category.id ? @category.id : 0},:success=>visual_effect(:appear,'categories')},{:class=>"link_button", :title=>"browse"})%> 
+      <%= link_to("None","javascript:void(0);",{:class=>"link_button", :title=>"set 'none'", :onclick=>"document.getElementById('category_parent_id').value=0;document.getElementById('category_parent_name').value='none';"})%>   
+    </td>
+  </tr>  
+  <tr>
+    <td></td>
+    <td>
+      <% hidden_div_if(true, {:id => "categories"}) do %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div style="display:<%= @category.protected ? '' : 'none' %>" id="passwords_contaner">
+        <table cellpadding="1" cellspacing="1" border="0">
+          <tr>
+            <td class="field_label" style="width:60px">Passwords:</td>
+            <td><%= select_tag("category[password_ids][]", options_from_collection_for_select(Password.find(:all), 'id', 'title', @selected = @category.passwords.collect {|obj| obj.id}), { :multiple => true, :style=>"width:252px; height:100px;", :class => "input" }) %></td>
+          </tr>
+        </table>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align:right;"><span>
+      <%= check_box 'category', 'protected', :style => "margin:0px", :onclick => "check_passwords(this);" %> <label for="category_protected">Protected?</label>
+      <%= check_box 'category', 'enabled', :style => "margin:0px" %> <label for="category_enabled">Enabled?</label>
+      <%= submit_tag 'Save',{:class=>"buttons"} %></span></td>
+  </tr>  
+</table> 
+<!--[eoform:category]-->

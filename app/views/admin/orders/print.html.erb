@@ -1,0 +1,261 @@
+<% @address = @order.shipping_address %>
+<% @customer = @order.customer %>
+<%= stylesheet_link_tag 'order_print', :media => "screen" %>
+<%= stylesheet_link_tag 'order_print', :media => "print" %>
+
+<div class='order-confirmation'>
+  <h3 class='title'>Order Confirmation</h3>
+
+  <table class='main'>
+    <tr>
+      <td class='company'>
+        <% if @order.company == "C"%>
+          <img src="/images/logo.gif" alt="" width="70" height="50" border="0" /></br>
+          <br />
+          North America Office:</br>
+          P.O. Box 84657</br>
+          2336 Bloor St. W.</br>
+          Toronto, Ontario M6S 4Z7</br>
+          Tel: (416) 767 9574</br>
+          Fax: (416) 767 7505</br>
+          info@ctiplastic.com</br>
+        <% else %>
+          <img src="/images/centrade_logo.png" alt="" border="0" /></br>
+          <br />
+          83 Durie St.</br>
+          Toronto, Ontario M6S 3E7</br>
+          Tel: (416) 767 9574</br>
+          Fax: (416) 767 7505
+        <% end %>
+      </td>
+      <td>
+        <table class='details'>
+          <tr>
+            <td><h4>Date:</h4></td>
+            <td><%= @order.date_created %></td>
+          </tr>
+          <tr>
+            <td><h4>Order:</h4></td>
+            <td><%= @customer.company %>O-<%= @customer.oc_code %><%= @order.order_confirmation %></td>
+          </tr>
+          <tr>
+            <td><h4>Sold by:</h4></td>
+            <td><%= %></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table class='details'>
+          <tr> 
+            <td><h4>Sold To:</h4></td>
+            <td><%= @customer.customer_name %></br><%= @customer.street_1 %><%= @customer.street_2 %></br><%= @customer.city %>,<%= @customer.province %>,<%= @customer.country %></br><%= @customer.postal_code %></td>
+          </tr>
+          <tr>
+            <td>
+              <h4>Phone:</h4>
+            </td>
+            <td>
+              <%= @customer.phone %>
+            </td>
+          </tr>
+          </tr>
+            <td><h4>Requested Delivery:</h4></td>
+            <td>
+              <% if @order.requested_delivery %>
+                <%= "Week of #{@order.requested_delivery.at_beginning_of_week.to_formatted_s(:long)}" %>
+              <% end %>
+            </td>
+          </tr>
+          </tr>
+            <td><h4>Terms:</h4></td>
+            <td><%= @customer.terms %></td>
+          </tr>
+          </tr>
+            <td><h4>Delivery Terms:</h4></td>
+            <td><%= @customer.delivery_terms %></td>
+          </tr>
+          </tr>
+            <td><h4>Reference:</h4></td>
+            <td><%= @order.reference %></td>
+          </tr>
+          </tr>
+            <td><h4>Port:</h4></td>
+            <td><%= render :partial => 'arrival_port', :locals => { :arrival_port => @customer.arrival_port } %></td>
+          </tr>
+          </tr>
+            <td><h4>Currency:</h4></td>
+            <td><%= @customer.currency %></td>
+          </tr>
+          </tr>
+            <td><h4>Full/Mixed:</h4></td>
+            <td><%= @order.mixed_full %></td>
+          </tr>
+        </table>
+      </td>
+      <td class='ship-to'>
+        <table class='details'>
+          <tr>
+            <td><h4>Ship To:</h4></td>
+            <td><%= simple_format @order.ship_to %></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <table class='items'>
+    <tr>
+      <th colspan="10"></th>
+      <th colspan="6" ><strong>Barcode</strong></th>
+    </tr>
+    <tr>
+      <th><strong>Item</strong></th>
+      <th><strong>Colour</strong></th>
+      <th><strong>Description</strong></th>
+      <th><strong>Notes</strong></th>
+      <th><strong>Drain</strong></th>
+      <th><strong>Skids</strong></th>
+      <th><strong>Pack</strong></th>
+      <th><strong>Total</strong></th>
+      <th><strong>Price</strong></th>
+      <th><strong>Total</strong></th>
+      <th><strong>Number</strong></th>
+      <th><strong>Line #1</strong></th>
+      <th><strong>Line #2</strong></th>
+      <th><strong>Line #3</strong></th>
+      <th><strong>Line #4</strong></th>
+      <th><strong>Position</strong></th>
+    </tr>
+    <% t = 0 %>
+    <% @order.order_product_details.each do |product_form| %>
+      <tr>
+        <td><%= "#{product_form.code}-#{product_form.colour}" if product_form.code.present? %></td>
+        <td><%= Color.name_for_abbr product_form.colour %></td>
+        <td><%= product_form.description %></td>
+        <td><%= product_form.notes %></td>
+        <%  unless product_form.drainage %>
+          <td>No</td>
+        <%  else %>
+          <td>Yes</td>
+        <%  end %>
+        <td><%= product_form.skid %></td>
+        <td><%= product_form.pack %></td>
+        <td><%= product_form.total_amount %></td>
+        <td><%= number_to_currency product_form.price %></td>
+        <td><%= number_to_currency product_form.total_price %></td>
+        <td><%=  product_form.barcode_number %></td>
+        <td><%=  product_form.bar_line_one %></td>
+        <td><%=  product_form.bar_line_two %></td>
+        <td><%=  product_form.bar_line_three %></td>
+        <td><%=  product_form.bar_line_four %></td>
+        <td><%=  product_form.barcode_position %></td>
+      </tr>
+      <% t = t + product_form.total_amount %>
+    <% end %>
+    <tr>
+      <td colspan='5'></td>
+      <td><%= @order.total_skids %></td>
+      <td></td>
+      <td><%=  t %></td>
+      <td></td>
+      <td><%= number_to_currency @order.total_price %></td>
+    </tr>
+  </table>
+
+  <div class='cautions'>
+    <p>
+      PLEASE CHECK YOUR ORDER CAREFULLY BEFORE ISSUING A P.O. AND SIGNING!  
+      <br />
+      NO ORDER WILL BE PROCESSED WITHOUT  A P.O. OR SIGNATURE.
+    </p>
+    <p>
+      ALL ORDERS REQUIRE A SIGNATURE
+    </p>
+  </div>
+
+  <div>
+    <div class='signatures'>
+      <table class='details'>  
+        <tr>
+          <td>
+            <h4>Signed:</h4>
+          </td>
+          <td>
+            __________________
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>PO:</h4>
+          </td>
+          <td>
+            __________________
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>Date:</h4>
+          </td>
+          <td>
+            __________________
+          </td>
+        </tr>
+      </table>
+      <div class='cautions'>
+        <p>
+          Please fax back to confirm order
+          <br />
+          Fax# (416) 767 7505
+        </p>
+      </div>
+    </div>
+    <%   if @order.deposit_invoice == 'Yes' %>
+      <div class='deposit'>
+      <table>
+        <tr><th colspan='2'>Deposit Required</th></tr>
+          <td>Amount:</td>
+          <td><%= @order.deposit_amount %></td>
+        </tr>
+      </table>
+    </div>
+    <%  end %>
+    
+  </div>
+
+  <div class='cautions'>
+    <p>
+      Deposit and Payments can be either Wire Transferred or Mailed to the address above in USD.
+      <br />
+      Please email notification of wire Transfers to asst@centrade.ca.
+    </p>
+  </div>
+
+  <h3>Wire Transfer Information:</h3>
+
+  <div class='transfer-information'>
+    <p class='left'>
+      <b>Company Information:</b><br />
+      CTi International Limited<br />
+      P.O. BOX 84657<br />
+      2336 Bloor St. W.<br />
+      Toronto, Ontario<br />
+      M6S 4Z7<br />
+      Canada
+    </p>
+    <p class='right'>
+      <b>Bank Information:</b><br />
+      Toronto Dominion Bank<br />
+      2300 Steeles Ave. West Suite 100<br />
+      Vaughan, Ontario<br />
+      L4K 5X6<br />
+      Canada
+      <br /><br /><br />
+      Swift:  TDOMCATTOR
+      ABA/Routing: 026009593
+      Account Number: 004-1482-7313434
+    </p>
+  </div>
+
+</div>

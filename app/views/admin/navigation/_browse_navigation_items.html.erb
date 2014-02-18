@@ -1,0 +1,4 @@
+<%= header_for_hidden_div("Navigation", "navigation_items") %>
+
+<%= render :partial=>"navigation_item_flat", :collection=>@navigation_items, :locals=>{:parent_id=>"0"} %>
+<%= ruled_table("navigation_items") %>

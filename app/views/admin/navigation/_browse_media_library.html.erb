@@ -1,0 +1,27 @@
+<%= header_for_hidden_div("Media Library", "media_library") %>
+
+  <table width="100%" border="0" cellpadding="2" cellspacing="1" id="media">
+    <% if @parent -%>
+    <tr class="<%= cycle("row_dark", "row_light") -%>" ondblclick="<%= remote_function(:url => {:action => 'browse_media_library',:parent_id => @parent.parent_id}) -%>">
+      <td style="border:0px" width="24"><%= link_to_remote(image_tag("/images/media_library/up.png",:alt=>"view",:width=>"22px",:height=>"22px"),{:url=>{:action=>"browse_media_library", :parent_id=>@parent.parent_id!=0 ? @parent.parent_id : nil}}, :title=>"up") %></td>
+      <td><%= link_to_remote("[..]",{:url=>{:action=>"browse_media_library", :parent_id=>@parent.parent_id!=0 ? @parent.parent_id : nil}}, :title=>"up") %></td>         
+    </tr>  
+    <% end -%> 
+    
+    <% for folder in @folders %>    
+        <tr class="<%= cycle("row_dark", "row_light") -%>" ondblclick="<%= remote_function(:url => {:action => 'browse_media_library',:parent_id => folder}) -%>">
+          <td style="border:0px" width="24"><%= link_to_remote(image_tag("/images/media_library/folder.png",:alt=>"view",:width=>"24px",:height=>"24px"),{:url=>{:action=>'browse_media_library', :parent_id=>folder}}, :title=>"view") %></td>         
+		  <td><%= link_to_remote(folder.name,{:url=>{:action=>'browse_media_library', :parent_id=>folder}}, :title=>"view") %>
+          </td>      
+        </tr>
+	<% end -%> 
+    <% for object in @objects %>
+        <tr class="<%= cycle("row_dark", "row_light") -%>" onclick="$('#navigation_item_media_object_id').val(<%= object.id.to_s %>);$('#media_object_name').val('<%= adjust_quotes(object.name) %>');$('#media_library').hide();" style="cursor:pointer" title="select">
+          <td style="border:0px" width="24"><%= link_to(get_icon(object),{:controller=>"media_library",:action=>"get_object", :id=>object}, :title=>"view",:target=>"_blank") %></td>                
+          <td><%= link_to(object.name,"javascript:void(0);", :title=>"select", :onclick=>"$('#navigation_item_media_object_id').val(#{object.id});$('#media_object_name').val('#{adjust_quotes(object.name)}');$('#media_library').hide();") %></td>
+        </tr>    
+    <% end -%>  
+
+</table>
+<%= ruled_table("media",(@parent ? 1 : 0)) %>
+<%= render :partial => "/admin/partials/png_fix_after_ajax" if request.xml_http_request? %>

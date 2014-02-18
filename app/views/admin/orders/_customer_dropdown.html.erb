@@ -1,0 +1,19 @@
+<div id="second_drop">
+  <%= select_tag('customer_id', options_from_collection_for_select(@customers, 'id', 'customer_name'),:prompt => "Select",:style=>"width: 122px;") %>
+</div>
+
+
+<script>
+  $("#customer_id").change(function () {
+    var str = "";
+    $("#customer_id option:selected").each(function () {
+      str += $(this).val() + " ";
+      $.ajax({
+        url: "/shipping_address_dropdown?customer_id=" + str ,
+        success: function(data) {
+          $("#third_drop").html(data);
+        }
+      });
+    });
+  }).change();
+</script>

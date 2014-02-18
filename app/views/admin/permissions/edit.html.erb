@@ -1,0 +1,6 @@
+<%= page_title('Editing permission') %>
+<% form_tag :action => 'update', :id => @permission do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br><br>
+<%= link_to 'Back', :action => 'list' %>

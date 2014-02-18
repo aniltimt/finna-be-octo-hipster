@@ -1,0 +1,127 @@
+<script type="text/javascript">
+  function check_sample_form() {
+    for (i = 0; i < document.sample_form.elements.length; i++) { 
+      oElem = document.sample_form.elements[i]; 
+      if (oElem.type != "submit") { 
+        oElem.style.border=''; 
+      } 
+    }
+    var sample_error_field=document.getElementById('sample_error'); 
+    
+    if (document.sample_form.sample_product.value == '')
+      {
+        document.sample_form.sample_product.style.border='1px solid red';
+        document.sample_form.sample_product.focus();
+        sample_error_field.innerHTML = 'Product is required.';
+        return false;                                               
+      }
+      if (document.sample_form.quantity.value=='')
+        {
+          document.sample_form.quantity.style.border='1px solid red';
+          document.sample_form.quantity.focus();
+          sample_error_field.innerHTML = 'Quantity is required.';
+          return false;                                               
+        }
+        var sample_pattern = /^[1-9]{1,}$/;
+        if (!document.sample_form.quantity.value.match(new RegExp(sample_pattern)))
+          {
+            document.sample_form.quantity.style.border='1px solid red';
+            document.sample_form.quantity.focus();                     
+            sample_error_field.innerHTML = "Invalid Quantity format.";
+            return false;               
+          }               
+          if (document.sample_form.company.value=='')
+            {
+              document.sample_form.company.style.border='1px solid red';
+              document.sample_form.company.focus();
+              sample_error_field.innerHTML = 'Company is required.';
+              return false;                                               
+            }              
+            if (document.sample_form.name.value=='')
+              {
+                document.sample_form.name.style.border='1px solid red';
+                document.sample_form.name.focus();
+                sample_error_field.innerHTML = 'Name is required.';
+                return false;                                               
+              }
+              if (document.sample_form.email.value=='')
+                {
+                  document.sample_form.email.style.border='1px solid red';
+                  document.sample_form.email.focus();
+                  sample_error_field.innerHTML = 'E-mail is required.'; 
+                  return false;                                           
+                }
+                var sample_mail_pattern = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+                if (!document.sample_form.email.value.match(new RegExp(sample_mail_pattern)))
+                  {
+                    document.sample_form.email.style.border='1px solid red';
+                    document.sample_form.email.focus();                     
+                    sample_error_field.innerHTML = "Invalid E-mail address format.";
+                    return false;               
+                  }
+                  if (document.sample_form.phone.value=='')
+                    {
+                      document.sample_form.phone.style.border='1px solid red';
+                      document.sample_form.phone.focus();
+                      sample_error_field.innerHTML = 'Phone is required.';
+                      return false;                                               
+                    }     
+                    if (document.sample_form.fax.value=='')
+                      {
+                        document.sample_form.fax.style.border='1px solid red';
+                        document.sample_form.fax.focus();
+                        sample_error_field.innerHTML = 'Fax is required.';
+                        return false;                                               
+                      }
+                      if (document.sample_form.shipping_addresses.value=='')
+                        {
+                          document.sample_form.shipping_addresses.style.border='1px solid red';
+                          document.sample_form.shipping_addresses.focus();
+                          sample_error_field.innerHTML = 'Shipping addresses is required.';
+                          return false;                                               
+                        }
+                        
+                        return true;
+                      }           
+</script>
+<%= front_page_title("Sample") %>
+<!--div style="margin-bottom:40px;"><%# link_to "Contact", "/contact",:class=>"contact_link" %>&nbsp;|&nbsp;<%# link_to "Quote", "/contact/quote",:class=>"contact_link" %>&nbsp;|&nbsp;<span class="cur_contact_link">Sample</span></div-->
+  <% form_tag({:action =>'sample_mail'}, :id=>"sample_form", :name=>'sample_form', :onsubmit=>"return check_sample_form();") do %>
+    <table border="0" cellpadding="3" cellspacing="0">
+      <tr>
+        <td align="right" width="113">Product:</td>
+        <td><%= collection_select 'letter', 'product', Style.find(:all, :order=>"title ASC"), 'id', 'title', {:include_blank=>true}, :class => "input", :style => "width:138px", :id => 'sample_product' %></td>
+      </tr>
+      <tr>
+        <td align="right" >Quantity:</td>
+        <td><%= text_field('letter', 'quantity', :id=>"quantity", :size => '21', :class => 'input') %></td>
+      </tr>
+      <tr>
+        <td align="right" >Company:</td>
+        <td><%= text_field('letter', 'company', :id=>"company", :size => '21', :class => 'input') %></td>
+      </tr>
+      <tr>
+        <td align="right" >Name:</td>
+        <td><%= text_field('letter', 'name', :id=>"name", :size => '21', :class => 'input') %></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;">E-mail:</td>
+        <td><%= text_field('letter', 'email', :id=>"email", :size => '21', :class => 'input') %></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;">Phone:</td>
+        <td><%= text_field('letter', 'phone', :id=>"phone", :size => '21', :class => 'input') %></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;nowrap:true;vertical-align:top;">Fax:</td>
+        <td><%= text_field('letter', 'fax', :id=>"fax", :size => '21', :class => 'input') %></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;vertical-align:top;" nowrap="nowrap">Shipping addresses:</td>
+        <td><%= text_area('letter', 'shipping_addresses', :id=>"shipping_addresses", :style=>'width:256px;height:91px;',:class => 'input') %></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;" colspan="2"><span id="sample_error" style="margin-right:10px;"></span><%= submit_tag("Submit", :class=>'buttons', :name => 'submit')%></td>
+      </tr>
+    </table>
+  <% end -%>

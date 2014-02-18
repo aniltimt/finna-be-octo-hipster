@@ -1,0 +1,99 @@
+<script type="text/javascript">
+  
+  function check_contact_form() {
+    for (i = 0; i < document.contact_form.elements.length; i++) { 
+      oElem = document.contact_form.elements[i]; 
+      if (oElem.type != "submit") { 
+        oElem.style.border=''; 
+      } 
+    }
+    var error_field=document.getElementById('error');                   
+    
+    if (document.contact_form.name.value=='')
+      {
+        document.contact_form.name.style.border='1px solid red';
+        document.contact_form.name.focus();
+        error_field.innerHTML = 'Name is required.';
+        return false;                                               
+      }
+      if (document.contact_form.email.value=='')
+        {value_method
+          document.contact_form.email.style.border='1px solid red';
+          document.contact_form.email.focus();
+          error_field.innerHTML = 'E-mail is required.'; 
+          return false;                                           
+        }
+        var pattern = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+        if (!document.contact_form.email.value.match(new RegExp(pattern)))
+          {
+            document.contact_form.email.style.border='1px solid red';
+            document.contact_form.email.focus();                     
+            error_field.innerHTML = "Invalid E-mail address format.";
+            return false;               
+          }
+          if (document.contact_form.subject.value=='')
+            {
+              document.contact_form.subject.style.border='1px solid red';
+              document.contact_form.subject.focus();
+              error_field.innerHTML = 'Subject is required.';
+              return false;                                               
+            }
+            if (document.contact_form.message.value=='')
+              {
+                document.contact_form.message.style.border='1px solid red';
+                document.contact_form.message.focus();
+                error_field.innerHTML = 'Message is required.';
+                return false;                                               
+              }
+              
+              return true;
+            }           
+            </script>
+<%= front_page_title("Contact") %>
+<!--div style="margin-bottom:40px;"><span class="cur_contact_link">Contact</span>&nbsp;|&nbsp;<%# link_to "Quote", "/contact/quote",:class=>"contact_link" %>&nbsp;|&nbsp;<%# link_to "Sample", "/contact/sample",:class=>"contact_link" %></div-->
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="left" style="color:#7DC54E;font-style:italic;font-weight:bold;">
+      North American Office
+    </td>
+  </tr>
+  <tr>
+    <td style="color:#113d60;font-style:italic;font-weight:bold;" align="left">
+                         PO Box 84657   2336 Bloor St West   Toronto Ontario   M6S 4Z7   Canada<br />
+        T 001-416-767-9574 F 001-416-767-7505 www.ctiplastic.com  <%= javascript_email_for('info@ctiplastic.com') %>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" style="color:#7DC54E;font-style:italic;font-weight:bold;padding-top:20px;" >
+      China Factory
+    </td>
+  </tr>
+  <tr>
+    <td style="color:#113d60;font-style:italic;font-weight:bold;" align="left">
+    3F, Hongde Mansion   20-1 Yunnan Road   Nanjing 210008   P.R. China
+   </td>
+  </tr>
+</table>
+<% form_tag({:action =>'send_mail'}, :id=>"contact_form", :name=>'contact_form', :onsubmit=>"return check_contact_form();") do %>
+  <table border="0" cellpadding="3" cellspacing="0" style="padding-top:25px;">
+    <tr>
+      <td align="right">Name:</td>
+      <td><%= text_field('letter', 'name', :id=>"name", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;nowrap:true;">E-mail:</td>
+      <td><%= text_field('letter', 'email', :id=>"email", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;nowrap:true;">Subject:</td>
+      <td><%= text_field('letter', 'subject', :id=>"subject", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;nowrap:true;vertical-align:top;">Message:</td>
+      <td><%= text_area('letter', 'message', :id=>"message", :style=>'width:256px;height:91px;',:class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;" colspan="2"><span id="error" style="margin-right:10px;"></span><%= submit_tag("Submit", :class=>'buttons', :name => 'submit')%></td>
+    </tr>
+  </table>
+<% end -%>

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title><%= @config['cms_owner'] %> - KORE CMS</title>
+    <% unless Rails.env.test? -%>
+      <meta name="authenticity-token" id="authenticity-token" content="<%= form_authenticity_token %>" />
+    <% end -%>
+    <%= include_tiny_mce_js_if_needed %>
+    <%= tiny_mce_init_if_needed %>
+
+    <%= javascript_include_tag :defaults,'jquery.migrate', "jquery.highlitable", "thickbox", "jquery.string" %>
+    <%= stylesheet_link_tag "application", "thickbox" %>
+    <%= yield :auto_discovery_link_tag %>
+    <!--[if lt IE 7]>
+      <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <table border="0" align="center" cellpadding="1" cellspacing="0" class="main">
+      <tr>
+        <td colspan="2" bgcolor="#FFFFFF">
+          <table width="100%" border="0" cellpadding="3" cellspacing="0" class="top_bar">
+            <tr>
+              <td class="app_name">
+                <%= link_to(@config['cms_owner'], "/", :title => "view") %>
+              </td>
+              <td align="right" class="user">
+                <%= render :partial => "/admin/partials/logged_in" %>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">&nbsp;</td>
+        <td bgcolor="#FFFFFF">&nbsp;</td>
+      </tr>
+      <tr valign="top">
+        <td nowrap="nowrap" class="navigation" style="width:120px;">
+          <%= render :partial =>  "/layouts/navigation_links" %>
+        </td>
+        <td bgcolor="#FFFFFF" class="content">
+          <%= render :partial => '/admin/partials/notice' %>
+          <%= yield %>
+        </td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF">&nbsp;</td>
+        <td bgcolor="#FFFFFF">&nbsp;</td>
+      </tr>
+      <%= render :partial => '/admin/partials/footer' %>
+    </table>
+  </body>
+</html>

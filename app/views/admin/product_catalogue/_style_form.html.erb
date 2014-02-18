@@ -1,0 +1,74 @@
+<%= error_messages_for 'style' %>
+<%= hidden_field('style', 'category_id') %>
+<!--[form:style]-->
+<table class="form" border="0" style="width:375px">
+  <tr>
+    <td style="text-align:right;width:100px" nowrap="nowrap">Name:</td>
+    <td style="text-align:left">
+      <%= text_field('style', 'title', {:class => "input", :style => "width:240px;"})  %>
+    </td>
+  </tr>
+  <% @style.all_images.each_with_index do |image, index| %>
+    <tr>
+      <td style="text-align:right;width:100px" valign="top">
+        <span id="image_label"><%= "Product Image #{index + 1}:" %></span>
+      </td>
+      <td style="text-align:left" valign="top">
+        <% if image.exists? %>
+          <span id="<%= image.name %>_links">
+            <%= link_to(image_tag(image.url(:thumb)), image.url(:medium), :class => "thickbox") %><br />
+            <%= link_to(image_tag("/images/cms/view.gif", :alt => "view"), image.url(:medium), :class => "thickbox") %>
+            <%= link_to_remote(
+              image_tag("/images/cms/delete.gif", :alt => "delete"),
+              {
+                :url => {:action => 'delete_style_image', :id => @style.id, :type => image.name.to_s},
+                :success => "$('##{image.name}_links').remove();",
+                :confirm => "Are you sure?"
+              }
+            ) %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:right;width:100px" nowrap="nowrap"></td>
+      <td style="text-align:left">
+        <%= file_field('style', image.name, {:class => "input", :style => "width:205px; margin-bottom: 25px;", :size => "22"})  %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td style="text-align:right;width:100px" valign="top">
+      <span id="palette_image_label">Colour Story <%= "(Defualt)" unless @style.palette.exists? %>:</span>
+    </td>
+    <td style="text-align:left" valign="top">
+        <span id="palette_image">
+          <%= link_to(image_tag(@style.palette.url, :style => "width:150px"), @style.palette.url, :class => "thickbox") %><br />
+          <%= link_to(image_tag("/images/cms/view.gif", :alt => "view"), @style.palette.url, :class => "thickbox") %>
+          <% if @style.palette.exists? %>
+            <%= link_to_remote(
+              image_tag("/images/cms/delete.gif", :alt => "delete"),
+              {
+                :url => {:action => 'delete_style_image', :id => @style.id, :type => 'palette'},
+                :success => "$('#palette_image').remove()",
+                :confirm => "Are you sure?"
+              }
+            ) %>
+          <% end %>
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align:right;width:100px" nowrap="nowrap"></td>
+    <td style="text-align:left">
+      <%= file_field('style', 'palette', {:class => "input", :style => "width:205px; margin-bottom: 25px;", :size => "22"}) %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding-top:3px;text-align:right;padding-right:20px;">
+      <%= submit_tag('Save', {:class => "buttons"}) %>
+    </td>
+  </tr>
+</table>
+<%= focus('style_title') %>
+<!--[eoform:style]-->

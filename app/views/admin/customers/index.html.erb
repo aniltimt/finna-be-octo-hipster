@@ -1,0 +1,101 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td class="page_title" style="text-align:left">Customers List</td>
+    <td align="right">
+      
+    </td>
+  </tr>
+</tbody></table>
+<br /><br />
+<% form_tag('/admin/customers',:method=>"get") do -%>
+<table width="5%" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+  	<tr>
+      <td style="text-align:right">Company&nbsp;&nbsp;</td>
+      <td><%=select_tag 'company', options_for_select([
+      	['Select',''],
+      	['Centrade','T'],
+      	['CTI','C']
+      	],params[:company]),:style=>"width: 122px;"%></td>
+    </tr>
+    <tr>
+      <td style="text-align:right">Name&nbsp;&nbsp;</td>
+      <td><%= text_field_tag "customer_name",params[:customer_name],:style=>"width: 115px;" %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right">Region&nbsp;&nbsp;</td>
+      <td><%=select_tag 'region', options_for_select([
+      	['Select',''],
+        ['Canada East','CEA'],
+        ['Canada Central','CAC'],
+        ['Canada West','CAW'],
+        ['US South East','USE'],
+        ['US North East','UNE'],
+        ['US North Central','UNC'],
+        ['US South Central','USC'],
+        ['US North West','UNW'],
+        ['US South West','USW'],
+        ['United Kindom','UK'],
+        ['Austrailia','AUS']
+      	],params[:region]),:style=>"width: 122px;"%></td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td></td>
+      <td><%= submit_tag "Search" %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>
+<br /><br />
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+  <tbody><tr>
+    <td class="label">Name</td>
+    <td class="label">Region</td>
+    <!-- <td class="label_actions" width="30">on/off</td>
+    <td class="label_actions" width="30">view</td>
+     --><td class="label_actions" width="30">edit</td>
+    <!-- <td class="label_actions" width="30">delete</td> -->
+  </tr>
+  
+    
+    <% unless @customers.blank? -%>   
+   <% @customers.each_with_index do |customer,index| %>    
+      <tr class="<%= index%2 == 0 ? 'row_dark' : 'row_light'  %>">
+        <td><%=h customer.customer_name %></td>
+        <td>
+          <% case customer.region when "CEA" %>
+            <%=h 'Canada East' %>
+          <% when "CAC" %>
+            <%=h 'Canada Central' %>
+          <% when "CAW" %>
+            <%=h 'Canada West' %>
+          <% when "USE" %>
+            <%=h 'US South East' %>
+          <% when "UNE" %>
+            <%=h 'US North East' %>
+          <% when "USC" %>
+            <%=h 'US South Central' %>
+          <% when "UNC" %>
+            <%=h 'US North Central' %>
+          <% when "UNW" %>
+            <%=h 'US North West' %>
+          <% when "USW" %>
+            <%=h 'US South West' %>
+          <% when "UK" %>
+            <%=h 'United Kindom' %>
+          <% when "AUS" %>
+            <%=h 'Austrailia' %>
+          <% end %>
+        </td>
+        <td><%= link_to "#{image_tag '/images/cms/edit.gif?1370421000'}",:controller => "admin/customers",:action=>'edit',:id => customer.id %>
+      </tr>
+    <% end %> 
+    <% else -%>
+    <tr>
+      <td colspan="3" class="note">No customers</td>
+    </tr>
+  <% end -%>
+</tbody></table>
+
+<%= list_footer("customer",@customers) %>

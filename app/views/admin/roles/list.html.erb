@@ -1,0 +1,22 @@
+<%= page_title('Roles') %>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="roles">
+  <tr>
+    <td class="label">Name</td>
+    <td class="label_actions" width="30">edit</td>
+    <td class="label_actions" width="30">delete</td>
+  </tr>
+  <% unless @roles.blank? -%>
+    <% for role in @roles -%>
+      <tr class="<%= cycle("row_dark", "row_light") -%>">
+        <td><%= role.name %></td>
+        <td><%= link_to_edit(role) %></td>
+        <td><%= link_to_delete(role) %></td>
+      </tr>
+    <% end -%>
+  <% else -%>
+    <tr>
+      <td colspan="3" class="note">No roles</td>
+    </tr>
+  <% end -%>
+</table>
+<%= list_footer("role", @roles) %>

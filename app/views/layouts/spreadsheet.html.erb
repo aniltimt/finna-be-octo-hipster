@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title><%= @config['cms_owner'] %> - KORE CMS</title>
+    <% unless Rails.env.test? -%>
+      <meta name="authenticity-token" id="authenticity-token" content="<%= form_authenticity_token %>" />
+    <% end -%>
+    <%= include_tiny_mce_js_if_needed %>
+    <%= tiny_mce_init_if_needed %>
+
+    <%= javascript_include_tag :defaults, "jquery.browser", "jquery.notice",
+      "jquery.tipsy" %>
+    <%= javascript_include_tag "spreadsheet-min" %>
+    <%= stylesheet_link_tag "jquery-ui/jquery.ui.all", "spreadsheet", :media => "all" %>
+
+    <%= yield(:stylesheet) %>
+    <!--[if lt IE 7]>
+      <div style="position:absolute;z-index:1000;width:100%;height:1000px;background:#fff;padding:10px;">
+        IE6 and older are not supported...
+      </div>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="main">
+      <%= yield %>
+    </div>
+  </body>
+</html>

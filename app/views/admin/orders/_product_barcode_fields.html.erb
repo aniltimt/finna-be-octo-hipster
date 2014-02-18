@@ -1,0 +1,11 @@
+<table  border="0" cellpadding="3" cellspacing="1" class="texts" width="678">
+<tr align="center" bgcolor="#FFFFFF" class="barcode_fields">
+  <td><%= f.text_field 'barcode_number',{:class=>"input", :style=>"width:80px"} %></td>
+  <td><%= f.text_field 'bar_line_one',{:class=>"input", :style=>"width:80px"} %></td>
+  <td><%= f.text_field 'bar_line_two',{:class=>"input", :style=>"width:80px"} %></td>
+  <td><%= f.text_field 'bar_line_three',{:class=>"input", :style=>"width:80px"} %></td>
+  <td><%= f.text_field 'bar_line_four',{:class=>"input", :style=>"width:80px"} %></td>
+  <td><%= f.text_field 'barcode_position',{:class=>"input", :style=>"width:80px"} %></td>
+  <td><% f.hidden_field :_destroy %><%= link_to_remove_fields "remove", f %></td>
+</tr>
+</table>

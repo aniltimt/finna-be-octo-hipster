@@ -1,0 +1,9 @@
+page.replace_html "cell-#{@row.id}-notes", @row.notes
+
+unless @sadmin
+  page.call "$('#cell-#{@row.id}-notes').addClass", "edited-cell"
+else
+  page.call "set_context_menu"
+end
+
+page.call "initformsie"

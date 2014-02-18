@@ -1,0 +1,31 @@
+  <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="media">
+    <tr>
+      <td class="label" width="24">&nbsp;</td>
+      <td class="label">Name</td>
+      <td class="label_actions" width="30">edit</td>
+      <td class="label_actions" width="30">delete</td>
+    </tr>
+    <% if @parent -%>
+    <tr class="<%= cycle("row_dark", "row_light") -%>" ondblclick="document.location='/admin/media_library/browse/<%= @parent.parent_id!=0 ? @parent.parent_id : "" -%>';">
+      <td style="border:0px" width="24"><%= link_to(image_tag("/images/media_library/up.png",:alt=>"view",:width=>"22px",:height=>"22px"),{:action=>"browse", :id=>@parent.parent_id!=0 ? @parent.parent_id : nil}, :title=>"up") %></td>
+      <td colspan="3" ><%= link_to("[..]",{:action=>"browse", :id=>@parent.parent_id!=0 ? @parent.parent_id : nil}, :title=>"up") %></td>         
+    </tr>  
+    <% end -%> 
+    
+        
+    <%= render :partial=>"folder", :collection=>@folders %>
+
+    <% if params[:action_status] and params[:action_status]=="new_folder" -%>
+    <%= render :partial=>"new_folder" %>
+    <% end -%>
+
+    <%= render :partial=>"object", :collection=>@objects %>
+
+    <% if params[:action_status] and params[:action_status]=="new_object" -%>
+    <%= render :partial=>"new_object" %>
+    <% end -%>
+
+</table>
+<%= ruled_table("media",(@parent ? 2 : 1)) %>
+<%= render :partial => "/admin/partials/png_fix_after_ajax" if request.xml_http_request? %>
+<%= javascript_tag'reset_container("selected_folders");reset_container("selected_media_objects");' if request.xml_http_request? %>

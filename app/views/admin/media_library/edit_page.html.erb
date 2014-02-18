@@ -1,0 +1,32 @@
+<%= page_title('Editing page: '+@object.name) %>
+
+<%= error_messages_for 'object' %>
+<%= error_messages_for 'media_item' %>
+
+<% form_tag :action => 'edit_object', :id => @object do %>
+
+<table class="form" border="0">
+  <tr>
+    <td width="60" style="text-align:left">Title:</td>
+    <td style="text-align:left"><%= text_field 'object', 'name',{:class=>"input",:style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td style="text-align:left">Template:</td>
+    <td style="text-align:left"><%= collection_select 'media_item', 'template_item_id', TemplateItem.find (:all, :order=>'name'), 'id', 'name', :class => "input", :style => "width:204px" %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align:left">Content:</td>
+  </tr>  
+</table>
+<table class="form" border="0">
+  <tr>
+	<td><%= text_area 'media_item', 'content', :style=>"height:500px;width:590px"  %></td>
+  </tr>  
+  <tr>    
+    <td><%= submit_tag 'Save',{:class=>"buttons"} %></td>
+  </tr>  
+</table>    
+<% end %>
+<br /><br />
+<%= link_to 'Show', :action => 'get_object', :id=>@object %> |
+<%= link_to 'Back', :action => 'browse', :id=>@parent_id!=0 ? @parent_id : nil %>

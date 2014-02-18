@@ -1,0 +1,39 @@
+<table cellpadding="0" cellspacing="0" id="order-confirmation-table">
+  <thead>
+    <tr>
+      <td>Company</td>
+      <td class="code">Order Code</td>
+      <td class="date">Request Date</td>
+      <td class="date">Delivery Date</td>
+      <td class="city">Destination City</td>
+      <td class="skid">Skid</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% for row in @rows %>
+      <tr>
+        <td id="cell-<%= row.id %>-company"
+            class="tipsed <%= row.company_highlight ? "edited-cell" : "" %>"><%= row.company %></td>
+        <td id="cell-<%= row.id %>-order_code"
+            class="code <%= row.order_code_highlight ? "edited-cell" : "" %>"><%= row.order_code %></td>
+        <%
+          if !@spreadsheet_row.eta_port.blank? && !row.request_date.blank? &&
+              (@spreadsheet_row.eta_port - 7.days) >= row.request_date
+            request_highlight = "red-cell"
+          else
+            request_highlight = ""
+          end
+        %>
+        <td id="cell-<%= row.id %>-request_date"
+            class="date <%= row.request_date_highlight ? "edited-cell" : "" %> <%= request_highlight %>"><%= !row.request_date.blank? ? row.request_date.strftime("%m/%d/%Y") : "" %></td>
+        <td id="cell-<%= row.id %>-delivery_date"
+            class="date <%= row.delivery_date_highlight ? "edited-cell" : "" %>"><%= !row.delivery_date.blank? ? row.delivery_date.strftime("%m/%d/%Y") : "" %></td>
+        <td id="cell-<%= row.id %>-destination_city"
+            class="tipsed city <%= row.destination_city_highlight ? "edited-cell" : "" %>"><%= row.destination_city %></td>
+        <td id="cell-<%= row.id %>-skid"
+            class="skid <%= row.skid_highlight ? "edited-cell" : "" %>"><%= row.skid %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

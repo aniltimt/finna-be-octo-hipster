@@ -1,0 +1,6 @@
+<%= page_title('New config item') %>
+<% form_tag :action => 'create',:class=>'form' do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br><br>
+<%= link_to 'Back', :action => 'list' %>

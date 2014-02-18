@@ -1,0 +1,16 @@
+<%= page_title('Authentication') %>
+  <% form_tag do %>
+  <table class="form">
+    <tr><td><label for="user_login">Username:</label></td>
+    <td><%= text_field_tag "login", {}, {:class => 'input', :value => '', :style => "width:150px"} %></td>
+    </tr>
+    <tr>
+    <td><label for="user_password">Password:</label></td>
+    <td><%= password_field_tag "password", {}, {:class => 'input', :value => '', :style => "width:150px"} %></td>
+    </tr>
+    <tr>
+    <td colspan="2" style="text-align:right;"><%= submit_tag 'Login', :class => 'buttons' %></td>
+    </tr>
+  </table>
+  <% end %>
+<%= focus('login') %>

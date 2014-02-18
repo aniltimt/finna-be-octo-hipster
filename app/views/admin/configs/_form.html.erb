@@ -1,0 +1,23 @@
+<%= error_messages_for 'app_config' %>
+
+<!--[form:app_config]-->
+<table class="form">
+  <tr>
+    <td class="field_label">Name:</td>
+    <td><%= text_field 'app_config', 'key',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Value:</td>
+    <td><%= text_field 'app_config', 'value',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Description:</td>
+    <td><%= text_field 'app_config', 'description',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="field_label"><%= submit_tag 'Save',{:class=>"buttons"} %> </td>
+  </tr>  
+</table> 
+<!--[eoform:app_config]-->
+

@@ -1,0 +1,63 @@
+<p>
+  <b>Customer:</b>
+  <%=h @shipping_address.customer_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @shipping_address.title %>
+</p>
+
+<p>
+  <b>Receiver name:</b>
+  <%=h @shipping_address.receiver_name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @shipping_address.email %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%=h @shipping_address.phone %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%=h @shipping_address.notes %>
+</p>
+
+<p>
+  <b>Street 1:</b>
+  <%=h @shipping_address.street_1 %>
+</p>
+
+<p>
+  <b>Street 2:</b>
+  <%=h @shipping_address.street_2 %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%=h @shipping_address.city %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%=h @shipping_address.country %>
+</p>
+
+<p>
+  <b>Province:</b>
+  <%=h @shipping_address.province %>
+</p>
+
+<p>
+  <b>Postal code:</b>
+  <%=h @shipping_address.postal_code %>
+</p>
+
+
+<%= link_to 'Edit', edit_shipping_address_path(@shipping_address) %> |
+<%= link_to 'Back', shipping_addresses_path %>

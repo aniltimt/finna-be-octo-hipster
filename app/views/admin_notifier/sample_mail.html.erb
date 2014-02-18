@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title><%= @product.title %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+  <table border="0">
+    <tr>
+      <td>Product:</td><td><%= @product.title %></td>
+    </tr>
+    <tr>
+      <td>Quantity:</td><td><%= @letter[:quantity] %></td>
+    </tr>
+    <tr>
+      <td>Company:</td><td><%= @letter[:company] %></td>
+    </tr>
+    <tr>
+      <td>Name:</td><td><%= @letter[:name] %></td>
+    </tr>
+    <tr>
+      <td>E-mail:</td><td><%= @letter[:email] %></td>
+    </tr>
+    <tr>
+      <td>Phone:</td><td><%= @letter[:phone] %></td>
+    </tr>
+    <tr>
+      <td>Fax:</td><td><%= @letter[:fax] %></td>
+    </tr>
+    <tr>
+      <td>Shipping addresses:</td><td><%= @letter[:shipping_addresses] %></td>
+    </tr>
+  </table>  
+</body>
+</html>	
+

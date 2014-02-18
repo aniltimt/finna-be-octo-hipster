@@ -1,0 +1,722 @@
+body {
+    padding:0px 0px 0px 0px;
+    margin:0px;
+    overflow: hidden;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+a,
+.ui-widget-content a {
+    color: #1B75BB;
+    text-decoration: none;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+a:hover {
+    color: #1B7577;
+}
+
+div#main {
+    height:100%;
+}
+
+div#page {
+    border: 1px solid #ccc;
+    overflow:hidden;
+    position:absolute;
+    /*top:30px;*/
+    clear: both;
+}
+
+div#body {
+    overflow: auto;
+    position: relative
+}
+
+div#body table {
+    width:1900px;
+    table-layout: auto;
+    position:relative;
+}
+
+#page #body table td {
+    display:inline-block;
+    height:13px;
+    cursor:pointer;
+    font-size: 11px;
+    overflow: hidden;
+    margin:0px;
+    padding:5px;
+    width:150px;
+}
+
+#page #body table td.notes {
+    width:300px;
+}
+
+#page #body table td.date {
+    width:80px;
+}
+
+#page #body table td.date-mbcc {
+    width:80px;
+}
+
+#page #body table td.mixed-port {
+    width:60px;
+}
+
+#page #body table td.carrier {
+    width:50px;
+}
+
+#page #body table td.port-of-loading {
+    width:90px;
+}
+
+#page #body table td.cntr {
+    width:85px;
+}
+
+#page #body table td.order-confirmation {
+    width:25px;
+}
+
+#head {
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+#head table {
+    width:1900px;
+    table-layout: fixed;
+    position:relative;
+}
+
+#head table td {
+    width: 150px;
+    height:13px;
+}
+
+#head table td img {
+    vertical-align: top;
+    margin-top: 5px;
+}
+
+#num {
+    overflow: hidden;
+    display: inline-block;
+    float:left;
+    width:111px;
+    position: relative;
+}
+
+#num table {
+    width:110px;
+    position:relative;
+}
+
+#body-po {
+    overflow: hidden;
+    display: inline-block;
+    float:left;
+    width:101px;
+    position: relative;
+}
+
+#body-po table {
+    width:160px;
+    position:relative;
+}
+
+#appendix {
+    width:110px;
+    height:23px;
+    /*overflow: hidden;*/
+    display: inline-block;
+    float:left;
+    background:#E3E9FF url(/images/head-default.png) repeat-x scroll 50% 50%;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    margin:0px;
+    cursor:pointer;
+}
+
+#appendix img {
+    margin:10px 0px 0px 10px;
+}
+
+#po-field {
+    width:90px;
+    height:13px;
+    padding:5px;
+    display: inline-block;
+    float:left;
+    background:#E3E9FF url(/images/head-default.png) repeat-x scroll 50% 50%;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    margin:0px;
+    cursor:pointer;
+    text-align:center;
+    font-size:10px;
+    position:relative;
+}
+
+#page table td {
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+
+#page table thead,
+#page table tbody td.rownum {
+    background:#E3E9FF url(/images/head-default.png) repeat-x scroll 50% 50%;
+    font-size:10px;
+}
+
+#page table thead td.head-green {
+    background:#6E9F6F url(/images/head-green.png) repeat-x scroll 50% 50%;
+}
+
+#page table thead td.head-gray {
+    background:#C2C2C2 url(/images/head-gray.png) repeat-x scroll 50% 50%;
+}
+
+#page table thead td.head-red {
+    background:#F4A8A8 url(/images/head-red.png) repeat-x scroll 50% 50%;
+}
+
+#page #head table thead td {
+    padding:5px;
+    width:150px;
+    text-align:center;
+    height:13px;
+    display:inline-block;
+}
+
+#page #head table thead td.notes {
+    width:300px;
+}
+
+#page #head table thead td.date {
+    width:80px;
+
+}
+
+#page #head table thead td.head-mixed-port {
+    width:60px;
+}
+
+#page #head table thead td.head-carrier {
+    width:50px;
+}
+
+#page #head table thead td.head-mbcc {
+    font-size:8px;
+    width:80px;
+    *padding-bottom:0px;
+    *padding-top:0px;
+}
+
+#page #head table thead td.head-mbcc span {
+    position:relative;
+    top:-5px;
+    text-align:center;
+    float:left;
+}
+
+#page #head table thead td.head-port-of-loading {
+    width:90px;
+}
+
+#page #head table thead td.head-request-shipdate {
+    font-size:9px;
+}
+
+#page #head table thead td.head-request-shipdate span {
+    position:relative;
+    top:-5px;
+    text-align:center;
+}
+
+#page #head table thead td.head-delivery-date {
+    font-size:9px;
+}
+
+#page #head table thead td.head-cntr {
+    width:85px;
+}
+
+#page #head table thead td.head-oc {
+    width:25px;
+}
+
+#page #num table tbody td.rownum {
+    padding:5px;
+    padding-left:10px;
+    width:95px;
+    height:13px;
+    display:inline-block;
+}
+
+#page #body-po table tbody td {
+    padding:5px;
+    width:90px;
+    height:13px;
+    display:inline-block;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+#page table tbody td {
+    padding:5px;
+    width:150px;
+    display:inline-block;
+}
+
+.editing {
+    background-color: #bbbfef;
+}
+
+#page #num .ui-button-text {
+    padding:1px 10px;
+    display:block;
+    line-height:0.8;
+    font-size:10px;
+}
+
+#page #num .ui-helper-hidden-accessible {
+    position:absolute;
+    float:left;
+}
+
+#page #num .right-label {
+    float:right;
+}
+
+#page #num .numerations {
+    float:left;
+}
+
+.invisible-row,
+#page table tbody td.invisible-row {
+    background:#EDEDED url(/stylesheets/jquery-ui/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
+}
+
+.edited-cell {
+    background:#FEDE75 url(/stylesheets/jquery-ui/images/12_gloss_wave.png) repeat-x scroll 50% 50%;
+}
+
+.red-cell {
+    background:#F4A8A8 url(/images/head-red.png) repeat-x scroll 50% 50%;
+}
+
+.highlight-cell {
+    background: #EFF3FA;
+}
+
+
+#add-rows-button {
+    background-color:#E3E9FF;
+    border:1px solid #CCCCCC;
+    height:15px;
+    left:0;
+    position:absolute;
+    width:210px;
+    text-align: center;
+    font-size:11px;
+    cursor:pointer;
+}
+
+#add-rows-button:hover {
+    background: #EFF3FA;
+}
+
+#add-rows input {
+    width:150px;
+    border:1px solid #ccc;
+}
+
+#actions {
+    font-size:10px;
+    padding:5px;
+    height:20px;
+    overflow:hidden;
+}
+
+#actions input.input {
+    width:30px;
+    border:1px solid #ccc;
+    height:12px;
+    font-size:10px;
+}
+
+#actions input.submit {
+    border:1px solid #CCCCCC;
+    font-size:10px;
+    height:16px;
+    vertical-align:bottom;
+}
+
+#actions #login-information {
+    font-size:13px;
+    padding-top:2px;
+}
+
+#spinner-dialog {
+    text-align:center;
+}
+
+#spinner-dialog p {
+    margin-top:40px;
+}
+
+#edit-cell input.edit-cell-datafield,
+#edit-order-confirmation-cell input.edit-cell-datafield {
+    border: 1px solid #aaa;
+    width: 150px;
+    margin:0px;
+}
+
+#edit-notes-cell textarea.edit-cell-datafield {
+    border: 1px solid #aaa;
+    width: 520px;
+    height: 250px;
+    margin: 0px;
+}
+
+#edit-notes-cell textarea.edit-cell-datafield:disabled {
+    background-color: #fff;
+}
+
+#edit-notes-cell .ui-button-text-only .ui-button-text {
+    padding:0.1em 1.7em;
+}
+
+#edit-notes-cell input.edit-cell-datafield {
+    width: 460px;
+    border: 1px solid #aaa;
+    margin: 10px 0px 0px 0px;
+}
+
+#edit-date-cell {
+    padding-left:48px;
+}
+
+#edit-cell {
+    margin:0px;
+    padding:0.5em 0px 0px 1em;
+}
+
+#access-denied p {
+    margin-bottom:0px;
+}
+
+.access-alert {
+    margin: 0px 7px 0px 0px;
+    float: left;
+    background-image:url(/stylesheets/jquery-ui/images/ui-icons_cd0a0a_256x240.png);
+    background-position:0px -144px;
+    height:16px;
+    width:16px;
+    background-repeat:no-repeat;
+    display:block;
+    overflow:hidden;
+    text-indent:-99999px;
+}
+
+
+/* Notice */
+
+.notice-wrap {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    z-index: 9999;
+}
+
+* html .notice-wrap {
+    position: absolute;
+}
+
+.notice-item {
+    height: 60px;
+    background: #E3E9FF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    color: #222;
+    padding: 6px 6px 0 6px;
+    font-family: lucida Grande;
+    font-size: 11px;
+    border: 2px solid #BBCCFF;
+    display: block;
+    position: relative;
+    margin: 0 0 12px 0;
+}
+
+.notice-item-close {
+    position: absolute;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    right: 6px;
+    top: 6px;
+    cursor: pointer;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+/* ui-widget font setup */
+
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 10px;
+}
+
+/* Pagination */
+
+div.pagination {
+    font-size:14px;
+}
+
+#pages,
+#filter-button-contaner,
+#search-button-contaner,
+#business-names,
+#color-buttons {
+    display:inline-block;
+    padding:0px 5px;
+    float:left;
+}
+
+#search-button-contaner {
+    width:255px;
+}
+
+#login-information {
+    display:inline-block;
+    padding:0px 5px;
+    float:right;
+}
+
+#pages {
+    /*width:315px;*/
+}
+
+#filter-button-contaner,
+#search-button-contaner {
+    padding-left:0px;
+}
+
+#filter-button-contaner button,
+#search-button-contaner button {
+    font-size:10px;
+}
+
+#filter-button-contaner button span.ui-button-text,
+#search-button-contaner button span.ui-button-text,
+#business-names-buttonset label span.ui-button-text,
+#color-buttons button span.ui-button-text {
+    padding:2px 7px;
+}
+
+#business-names-buttonset label {
+    width:75px;
+}
+
+#color-buttons button {
+    width:25px;
+}
+
+#color-buttons button#red-button {
+    background:#F4A8A8 url(/images/head-red.png) repeat-x scroll 50% 50%;
+}
+
+#color-buttons button#yellow-button {
+    background: #FDD658 url(/stylesheets/jquery-ui/images/12_gloss_wave.png) repeat-x scroll 50% 50%;
+}
+
+#filters {
+    padding:20px 20px 10px 20px;
+}
+
+#filters input {
+    width:70px;
+    height:14px;
+    border:1px solid #ccc;
+    font-size:11px;
+}
+
+#filters label {
+    display:inline-block;
+    width:110px;
+}
+
+#search-query {
+    border:1px solid #ccc;
+    width:135px;
+    display: inline-block;
+    position:relative;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    float:left;
+    margin-right:5px;
+}
+
+#search-button-contaner form {
+   float:left;
+   display: inline-block;
+   position:relative;
+}
+
+#body table td img {
+    float:right;
+    display:none;
+}
+
+#context-menu {
+    position:absolute;
+    width:100px;
+    height:20px;
+    overflow: hidden;
+    border:1px solid #ccc;
+    background-color: #E3E9FF;
+    padding:2px 5px;
+    cursor:pointer;
+    display: none;
+}
+
+#context-menu:hover {
+    background: #EFF3FA;
+    color: #222;
+}
+
+del.diffmod, del.diffdel {
+    color: red;
+    background-color: #ffdfdf;
+}
+
+ins.diffmod, ins.diffins {
+    background-color:  #cfc;
+    text-decoration: none;
+    color: green;
+}
+
+#log-items tr.highlight td {
+    background-color: #FDD658;
+}
+
+#log-items td {
+    padding:3px 0px 3px 0px;
+}
+
+#edit-mixed-port-cell {
+    text-align: center;
+}
+
+/* Typsy */
+
+.tipsy {
+    padding: 5px;
+    font-size: 10px;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    background-repeat: no-repeat;
+    background-image: url(/images/tipsy.gif);
+}
+.tipsy-inner {
+    padding: 5px 8px 4px 8px;
+    background-color: #E3E9FF;
+    color: #000;
+    max-width: 400px;
+    text-align: left;
+}
+.tipsy-inner {
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+}
+.tipsy-north { background-position: top center; }
+.tipsy-south { background-position: bottom center; }
+.tipsy-east { background-position: right center; }
+.tipsy-west { background-position: left center; }
+
+/* Order confirmation */
+
+table#order-confirmation-table {
+    width:100%;
+    border-left:1px solid #ccc;
+    border-top:1px solid #ccc;
+}
+
+table#order-confirmation-table thead {
+    background:#E3E9FF url(/images/head-default.png) repeat-x scroll 50% 50%;
+    font-size:10px;
+}
+
+table#order-confirmation-table thead td {
+    padding:5px;
+    text-align:center;
+    height:13px;
+    /*display:inline-block;*/
+}
+
+table#order-confirmation-table thead td.date {
+    width:80px;
+}
+
+table#order-confirmation-table thead td.skid {
+    width:25px;
+}
+
+table#order-confirmation-table thead td.code {
+    width:110px;
+}
+
+table#order-confirmation-table thead td.city {
+    width:130px;
+}
+
+table#order-confirmation-table td {
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+
+table#order-confirmation-table tbody td {
+    padding:5px;
+    height:25px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+table#order-confirmation-table tbody td.date {
+    width:80px;
+}
+
+.helpers {
+    background-color: #5A82C0;
+    border:2px solid #5A82C0;
+    display:block;
+    position: absolute;
+    display:none;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+.main-helpers {
+    background-color: #5A82C0;
+    display:block;
+    position: absolute;
+    display:none;
+}
+
+.left-helper {
+    left:0px;
+    width:108px;
+}
+
+.top-helper {
+    height: 21px;
+}

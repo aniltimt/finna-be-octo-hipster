@@ -1,0 +1,97 @@
+<!-- Section category -->
+<% unless @categories.blank? -%>
+  <table width="90%" cellspacing="0" cellpadding="20" border="0" style="padding-bottom:100px;">
+    <% category_index = 0; categories_max_count = @categories.size; per_row = 3; row_count = 0 -%>
+    <% while category_index < categories_max_count -%>
+          <% categories, count = get_row_items_data(category_index, @categories, per_row); category_index += count -%>
+          <% row_count += 1 -%>
+      <tr align="center">
+        <% for i in 0...per_row -%>
+           <% category = categories[i] -%>
+            <% if category.blank? -%>
+            <td>&nbsp;</td>   
+          <% else -%>
+            <td>
+              <table width="100%" cellspacing="0" cellpadding="10" border="0">
+                <tbody>
+                  <tr>
+                    <td align="center">
+                      <%= link_to("<img width='154' height='112' style='border:1.5px solid #82b04e;' alt='#{category.title}' src='#{category.image.url(:thumb)}'/>",{:action=>'list',:id=>category.id}) %><br />
+                      <span class="h"><%= link_to(category.title, {:action => 'list', :id => category.id}, :class => "#{category.protected ? "category_protected" : ""}") %></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          <% end -%>
+        <% end -%>
+      </tr>
+    <% end -%>
+  </table>
+<% end -%>
+<!-- End category section -->
+<!-- Section style -->
+<% if @styles  -%>
+  <table width="90%" border="0" cellspacing="0" cellpadding="0" style="padding-bottom:100px;">
+    <tr align="left">
+      <td valign="top" class="vline" nowrap="nowrap" width="165">
+        <div class="h" style="padding-bottom:20px;padding-top:20px;">Products</div>
+        <%= browse_categories %>                       
+      </td>
+      <td>
+        <table border="0" cellpadding="0"  cellspacing="0" style="padding:0px;" width="100%"> 
+        <tr>
+          <td align="right" style="padding-right:2px;">
+            <% form_tag(:action => 'find') do -%>
+                <%= text_field_tag('search_string', '', {:style => "width:185px;", :class => "input"}) %>
+                <%= submit_tag("Find", :class => 'buttons') %>
+            <% end -%>
+          </td>
+        </tr>
+        <tr>
+          <td align="right" colspan="2">
+            <% form_tag({:action => 'search_by_size'}, :method => "get") do -%>
+              <table  border="0"  style="padding-right:0px;" align="right">
+                <tr>
+                <td nowrap="nowrap" align="right">Size, from:</td>
+                <td><%= select 'size', 'from', [8,10,12,14,16,18], {:include_blank => true}, {:class => 'input', :width => '10px'} %></td>
+                <td nowrap="nowrap" align="right">to:</td>
+                <td><%= select 'size', 'to', [8,10,12,14,16,18], {:include_blank => true}, {:class => 'input', :width => '10px'} %></td>
+                <td><%= submit_tag("Find", :class => 'buttons') %></td>
+              </table>
+            <% end -%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% unless @styles.blank? -%>
+              <table width="80%" border="0" cellspacing="0" cellpadding="10" style="padding:55px 20px 20px 20px;">
+                <% style_index = 0; styles_max_count = @styles.size; per_row = 2; row_count = 0 -%>
+                 <% while style_index < styles_max_count -%>
+                   <% styles, count = get_row_items_data(style_index, @styles, per_row); style_index += count -%>
+                    <% row_count += 1 -%>
+                  <tr>
+                    <% for i in 0...per_row -%>
+                       <% style = styles[i] -%>
+                       <% if style.nil? -%>
+                        <td>&nbsp;</td>   
+                      <% else -%>
+                        <td align="center">
+                          <%= link_to("<img style='border:1.5px solid #82b04e;' alt='#{style.title}' src='#{style.image.url(:thumb)}'/>", {:action => 'show', :id => style.category.id, :style_id => style.id}) %><br />
+                          <span class="h"><%= link_to(style.title, {:action => 'show', :id => style.category.id, :style_id => style.id}) %></span>
+                        </td>
+                      <% end -%>
+                  <% end -%>
+                  </tr>
+                <% end -%>
+            <% end -%>
+            </table>
+          </td>
+        </tr>
+        </table>
+        <p>&nbsp;</p>
+      </td>
+    </tr>
+  </table>
+<% end -%>
+<!-- End style section -->

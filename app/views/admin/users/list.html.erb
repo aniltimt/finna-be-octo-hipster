@@ -1,0 +1,32 @@
+<%= page_title('Users') %>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+  <tr>
+    <td class="label">Login</td>
+    <td class="label">First Name</td>
+    <td class="label">Last Name</td>
+    <td class="label">E-mail</td>
+    <td class="label_actions" width="30">on/off</td>
+    <td class="label_actions" width="30">view</td>
+    <td class="label_actions" width="30">edit</td>
+    <td class="label_actions" width="30">delete</td>
+  </tr>
+  <% unless @users.blank? -%>
+    <% for user in @users -%>
+      <tr class="<%= cycle("row_dark", "row_light") -%>">
+        <td><%= user.login %></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= link_to(user.email, "mailto:" + user.email) %></td>
+        <td><%= link_to_enable(user) %></td>
+        <td><%= link_to_view(user) %></td>
+        <td><%= link_to_edit(user) %></td>
+        <td><%= link_to_delete(user) %></td>
+      </tr>
+    <% end -%>
+  <% else -%>
+    <tr>
+      <td colspan="3" class="note">No users</td>
+    </tr>
+  <% end -%>
+</table>
+<%= list_footer("user", @users) %>

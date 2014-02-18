@@ -1,0 +1,20 @@
+<%= error_messages_for 'template_item' %>
+
+<!--[form:template_item]-->
+<table class="form">
+  <tr>
+    <td class="field_label">Name:</td>
+    <td><%= text_field 'template_item', 'name',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Codename:</td>
+    <td><%= text_field 'template_item', 'codename',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="field_label"><%= submit_tag 'Save',{:class=>"buttons"} %> </td>
+  </tr>  
+</table> 
+
+<!--[eoform:template_item]-->
+

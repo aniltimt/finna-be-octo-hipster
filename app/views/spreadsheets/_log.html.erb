@@ -1,0 +1,41 @@
+<% unless @log_items.blank? %>
+  <%= will_paginate(
+    @log_items,
+    {
+      :previous_label => '&laquo; ',
+      :next_label   => ' &raquo;',
+      :renderer => 'RemoteLinkRenderer',
+      :param_name => 'log_page',
+      :remote => {
+        :before => '$("#spinner-dialog").dialog("open");',
+        :complete => '$("#spinner-dialog").dialog("close");'
+      }
+    }
+  ) %>
+  <table cellpadding="0" cellspacing="0" border="0" id="log-items" width="100%">
+    <thead>
+      <tr style="background-color:#E3E9FF;">
+        <td style="width:115px;">Date</td>
+        <td style="width:150px;">User</td>
+        <td>Message</td>
+      </tr>
+    </thead>
+    <tbody>
+    <% for item in @log_items %>
+      <tr>
+        <td><%= item.created_at.strftime("%m/%d/%Y %H:%M") %></td>
+        <td><b><%= item.user_login %></b> [<%= item.ip %>]</td>
+        <td><%= item.message %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= javascript_tag("$('table#log-items tbody tr').hover(
+        function() {
+          $(this).addClass('highlight');
+        },
+        function() {
+          $(this).removeClass('highlight');
+        }
+    );") %>
+<% end %>

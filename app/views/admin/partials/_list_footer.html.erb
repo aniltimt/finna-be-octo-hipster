@@ -1,0 +1,22 @@
+<div id="list_footer">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td>
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><%= link_to(image_tag("/images/cms/new.gif", :alt => "new"), :action => "new") %></td>
+            <td><%= link_to("New #{items_name.humanize.downcase}", {:action => "new"}, :title => 'new') %></td>
+          </tr>
+        </table>
+      </td>
+      <td class="pages">
+        <%= will_paginate(
+          collection,
+          {:previous_label => '&laquo; ', :next_label => ' &raquo;'}
+        ) if collection && collection.respond_to?('total_pages') %>
+      </td>
+    </tr>
+  </table>
+</div>
+<%= ruled_table(items_name.pluralize) %>
+    

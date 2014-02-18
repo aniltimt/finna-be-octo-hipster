@@ -1,0 +1,104 @@
+<%= page_title('Edit Order') %>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<% form_for @order, :url => { :controller => "admin/orders",:action => "update",:id => @order.id }  do |order_form| %>
+  <%= render :partial => 'form', :locals=>{:f => order_form} %>
+<% end %>
+
+<script>
+  $(function(){
+    $( "#datepicker1" ).datepicker();
+    $( "#datepicker2" ).datepicker();
+    $( "#datepicker3" ).datepicker();
+    $( "#datepicker4" ).datepicker();
+    $( "#datepicker5" ).datepicker();
+    $( "#datepicker6" ).datepicker();
+    $( "#datepicker7" ).datepicker();
+  });
+</script>
+
+<script>
+
+
+  function enableButton(this_obc){
+    var str = $(this_obc).val();
+    if(str=='') {
+      $("#Production").hide();
+    } else {
+      $("#Production").show();
+      $("#Production").attr("href","/edit_view_production_order?reference=" + str);
+    }
+  }
+  function myFunction(this_obc){
+    var str = $(this_obc).val();
+    var attr_id_str = $(this_obc).attr("id");
+    $.ajax({
+      url: "/product_code?code=" + str + "&attr_id_str=" + attr_id_str,
+      success: function(data) { 
+        $(this_obc).parent().next().next().html(data.split(",")[0]);
+        $(this_obc).parent().next().next().next().next().next().next().next().html(data.split(",")[2]);
+      }
+    });
+  }
+  function show_barcode(this_obc){
+    var show_id = '.' + $(this_obc).attr("id");   
+    var display_check = $(show_id).attr("style");
+    if(display_check == "display: none;" ){
+      $(show_id).attr("style","");
+    }else{
+      $(show_id).hide("slow");
+    }
+  }
+  function total(this_obc){
+    var str = $(this_obc).val();
+    var show_id = '#' + $(this_obc).attr("id");
+    var second_value = show_id.split("_skid")[0]+"_pack";
+    var str2 = $(second_value).val();
+    var temp = str * str2;
+    var str3 = Math.ceil(temp);
+    $(this_obc).parent().next().next().html(str3);
+    $(this_obc).next().val(str3);
+    var final_amount_id = show_id.split("_skid")[0]+"_price";
+    total_amount($(final_amount_id));
+  }
+  function total_amount(this_obc){
+    var str = $(this_obc).val();
+    var str2 = $(this_obc).parent().prev().html();
+    var str3 = str * str2;
+    $(this_obc).parent().next().html("$" +addCommas(str3.toFixed(2)));
+    $(this_obc).next().val(str3);
+
+    var sum = 0;
+    $('.total_amount').each(function(){
+    var sum_new = Number($(this).html().replace(/[^0-9\.]+/g,""));
+     sum = sum_new + sum;
+    });
+    
+    $('.final_amount').html("$"+ addCommas(sum.toFixed(2)));
+    $('#order_final_amount').val(sum); 
+  }
+  function addCommas(str) {
+    var amount_full = new String(str); 
+    amount = amount_full.split('.')[0]
+    amount = amount.split("").reverse();
+
+    var output = "";
+    for ( var i = 0; i <= amount.length-1; i++ ){
+        output = amount[i] + output;
+        if ((i+1) % 3 == 0 && (amount.length-1) !== i)output = ',' + output;
+    }
+    return output + '.' + amount_full.split('.')[1] ;
+  }
+</script>
+
+<script>
+  function code_disp(this_obc,selected_id){
+    var str = $(this_obc).val();
+    var show_id = $(this_obc).attr("id");
+    $(selected_id).html('-'+str);
+  }
+</script>
+

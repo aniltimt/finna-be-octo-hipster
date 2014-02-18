@@ -1,0 +1,8 @@
+one:
+  id: 1
+  customer: one
+  reference: 1111
+  status: Pending
+  mixed_full: full
+  eta_to_port: '2013-10-10'
+  confirmed_ship_date: '2013-10-10'

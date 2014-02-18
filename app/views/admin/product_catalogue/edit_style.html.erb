@@ -1,0 +1,111 @@
+<%= page_title('Editing style') %>
+<% action_post = @style.id.blank? ? "create_style" : "update_style" %>
+<% form_tag({:action => action_post, :id => @style}, :multipart=>true) do %>
+  <%= render :partial => 'style_form' %>
+<% end %>
+<% if !@style.id.blank? %>
+<%= page_title('Specifications') %>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="specifications_table">
+  <tr>
+    <td class="label">Item</td>
+    <td class="label_actions" style="width:30px">edit</td>
+    <td class="label_actions" style="width:30px">delete</td>
+  </tr>
+    <tr>
+      <td colspan="4" style="border:0px; padding:0px;">
+        <div id="specifications">
+          <%= render :partial => "specifications" %>
+        </div>
+      </td>
+    </tr>
+</table>
+<div id="list_footer">
+  <table width="340px" border="0" cellpadding="2" cellspacing="1">
+    <tr>
+      <td>
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <%= link_to(
+                image_tag("/images/cms/new.gif", :alt => "new"),
+                {:action => 'new_specification', :id => @style.id},
+                {:class => "button_link", :title => "New"}
+              ) %>
+            </td>
+            <td>
+              <%= link_to(
+                "New item",
+                {:action => 'new_specification', :id => @style.id},
+                {:class => "button_link", :title => "New"}
+              ) %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<br />
+<br />
+
+<%= page_title('Gallery items') %>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="gallery_items_table">
+  <tr>
+    <td class="label">File name</td>
+    <td class="label_actions" style="width:30px">view</td>
+    <td class="label_actions" style="width:30px">edit</td>
+    <td class="label_actions" style="width:30px">delete</td>
+  </tr>
+    <tr>
+      <td colspan="4" style="border:0px; padding:0px;">
+        <div id="gallery_items">
+          <%= render :partial => "gallery_items" %>
+        </div>
+      </td>
+    </tr>
+</table>
+<div id="list_footer">
+  <table width="340px" border="0" cellpadding="2" cellspacing="1">
+    <tr>
+      <td><table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <%= link_to(
+              image_tag("/images/cms/new.gif", :alt => "new"),
+              "javascript:void(0)",
+              :onClick => "$('#new_item').show()",
+              :class => "button_link",
+              :title => "New"
+            ) %>
+          </td>
+          <td>
+            <%= link_to(
+              "New item",
+              "javascript:void(0)",
+              :onClick => "$('#new_item').show()",
+              :class => "button_link",
+              :title => "New"
+            ) %>
+          </td>
+        </tr>
+      </table></td>
+    </tr>  
+    <tr>
+      <td colspan="4">
+        <% hidden_div_if(true, {:id => 'new_item'}) do %>
+          <%= header_for_hidden_div('New item', 'new_item') %>
+          <% @gallery_item = GalleryItem.new(:style_id => @style.id) -%>
+          <% form_tag({:action => 'create_item'}, :multipart => true) do %>
+            <%= render :partial => 'item_form' %>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>
+<% end %>
+<p>
+  <%= link_to('Back', {:action => 'edit', :id => @style.category}) %>
+</p>

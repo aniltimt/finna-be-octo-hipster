@@ -1,0 +1,38 @@
+#schedule {
+    margin-top: 10px;
+}
+
+
+
+#filter_form {
+    margin-bottom: 20px;
+}
+
+#filter_form .left {
+    float: left;
+    width: 48%;
+}
+
+#filter_form .right {
+    float: right;
+    width: 48%;
+}
+
+#filter_form .actions {
+    clear: both;
+}
+
+
+#filter_form label {
+    display: inline-block;
+    width: 150px;
+}
+
+#filter_form input[type=text], #filter_form select {
+    box-sizing: border-box;
+    width: 100px;
+}
+
+#filter_form .field {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,111 @@
+div.order-confirmation {
+  margin: 20px;
+  font-size: 0.8em;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+table {
+  font-size: 0.95em;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+h3.title {
+  text-align: center;
+  margin-bottom: -20px;
+}
+
+table.main {
+  width: 100%;
+}
+
+table.main td.ship-to {
+  vertical-align: top;
+}
+
+table.main td.company {
+  padding-bottom: 15px;
+}
+
+table.details td {
+  vertical-align: top;
+  padding-right: 15px;
+}
+
+table.details h4 {
+  margin: 0;
+}
+
+table.items {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+table.items th {
+  border: 1px solid gray;
+}
+
+table.items td {
+  border: 1px solid gray;
+}
+
+div.cautions {
+  width: 100%;
+  clear: both;
+}
+
+div.cautions p {
+  font-weight: bold;
+}
+
+div.signatures {
+  float: left;
+  width: 60%;
+}
+
+div.signatures table td {
+  padding-bottom: 20px;
+}
+
+div.deposit {
+  float: right;
+  width: 30%;
+}
+
+div.deposit table {
+  border-collapse: collapse;
+  width: 200px;
+}
+
+div.deposit table td, div.deposit table th {
+  border: 1px solid gray;
+  width: 50%;
+  padding: 5px;
+}
+
+div.deposit table th {
+  font-size: 1.3em;
+}
+
+div.transfer-information {
+  width: 80%;
+  clear: both;
+}
+
+div.transfer-information p {
+  width: 200px;
+}
+
+div.transfer-information p.left {
+  float: left;
+}
+
+div.transfer-information p.right {
+  float: right;
+}

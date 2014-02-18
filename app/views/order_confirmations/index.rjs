@@ -1,0 +1,1 @@
+page.replace_html "order-confirmation", :partial => "order_confirmations"

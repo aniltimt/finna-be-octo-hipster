@@ -1,0 +1,10 @@
+<div id="navigation_items_<%= parent_id %>" <% if parent_id!='0' %>class="children_for_list_item" style="display:none"<% end %>>
+      	<table width="100%" border="0" cellpadding="2" cellspacing="1" id="navigation_item_flat_table<%= navigation_item_flat.id.to_s %>">
+        <tr class="<%= navigation_item_flat.parent_id==0 ? cycle("row_dark", "row_light", :name => navigation_item_flat.parent_id.to_s) : "row_light" -%>">
+          <td style="border:0px" width="20"><%= link_to_elapse(navigation_item_flat,"navigation_items") %></td>
+          <td onclick="document.getElementById('navigation_item_parent_id').value=<%= navigation_item_flat.id.to_s %>;document.getElementById('navigation_item_parent_name').value='<%= adjust_quotes(navigation_item_flat.name) %>';$('#navigation_items').hide()" style="cursor:pointer" title="select"><%= navigation_item_flat.name %></td>
+        </tr>
+        </table>
+        <%= ruled_table("navigation_item_table#{navigation_item_flat.id}",0) %>
+        <%= render :partial=>"navigation_item_flat", :collection=>navigation_item_flat.children.find(:all,:conditions=>["id!=?",@navigation_item ? @navigation_item.id : 0]), :locals=>{:parent_id=>navigation_item_flat.id.to_s} %>
+</div>

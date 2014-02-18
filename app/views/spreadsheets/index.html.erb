@@ -1,0 +1,241 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "print", :media => "print" %>
+<% end %>
+
+<div id="actions">
+
+  <div id="filter-button-contaner">
+    <button id="filter-button">Filters</button>
+
+    <button id="reset-filter-button">Reset</button>
+  </div>
+
+  <div id="search-button-contaner">
+    <% form_tag(spreadsheets_path, :id => "search-form", :onsubmit => "submit_search(); return false;") do %>
+      <%= text_field_tag("search-query") %>
+    <% end %>
+    <button id="search-button">Search</button>
+
+    <button id="reset-search-button">Reset</button>
+  </div>
+
+  <div id="business-names">
+    <div id="business-names-buttonset">
+      <input type="radio" id="centrade-radio" name="business-names-buttonset" checked="checked" />
+      <label for="centrade-radio">Centrade</label>
+      <input type="radio" id="cti-radio" name="business-names-buttonset" />
+      <label for="cti-radio">CTI</label>
+    </div>
+  </div>
+
+  <div id="color-buttons">
+    <button id="red-button">&nbsp;</button>
+    <button id="yellow-button">&nbsp;</button>
+  </div>
+
+  <div id="pages">
+    <%= will_paginate(
+      @rows,
+      {
+        :previous_label => '&laquo; ',
+        :next_label   => ' &raquo;',
+        :renderer => 'RemoteLinkRenderer',
+        :remote => {
+          :before => '$("#spinner-dialog").dialog("open");',
+          :complete => '$("#spinner-dialog").dialog("close");'
+        },
+        :inner_window => 3
+      }
+    ) unless @rows.blank? %>
+  </div>
+
+  <div id="login-information">
+    You logged in as <b><%= current_user.login %></b>
+    <% if @sadmin %>
+    | <%= link_to("System Log", "", :id => "system-log-link") %>
+    <% end %>
+    | <%= link_to("Log out", logout_path) %>
+  </div>
+</div>
+<div id="page">
+
+  <div id="appendix" onclick="sort(this, 'id')">
+    
+  </div>
+
+  <div id="po-field" onclick="sort(this, 'po')">
+    P.O. <img src="/images/sort_desc.png" alt="" />
+  </div>
+
+  <div id="head">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <%=
+            text = ""
+            #text << "<td style=\"cursor:pointer\" onclick=\"sort(this, 'po')\">P.O.</td>"
+            text << "<td style=\"cursor:pointer\" onclick=\"sort(this, 'cnee')\">CNEE</td>"
+            text << "<td class=\"head-oc\">O.C.</td>"
+            text << "<td class=\"head-green head-cntr\">CNTR#</td>" #85px
+            text << "<td class=\"head-mixed-port\">Mixed/Port</td>"
+            text << "<td class=\"head-carrier\">CARRIER</td>"
+            text << "<td style=\"cursor:pointer;\" class=\"head-green head-mbcc\" onclick=\"sort(this, 'mbcc')\">
+                      <span>MBCC Schedule<br />Finishing</span>
+                    </td>"
+            text << "<td class=\"head-port-of-loading head-green\">Port of Loading</td>"
+            text << "<td class=\"head-request-shipdate date\"><span>Request Shipdate</span></td>"
+            text << "<td class=\"date head-red\" style=\"cursor:pointer;\" onclick=\"sort(this, 'etd')\">ETD</td>"
+            text << "<td class=\"date\">Request ETA</td>"
+            text << "<td class=\"date head-red\" style=\"cursor:pointer;\" onclick=\"sort(this, 'eta_port')\">
+                      ETA Port
+                    </td>"
+            text << "<td>Destination</td>"
+            text << "<td>Door Address</td>"
+            text << "<td class=\"notes head-gray\">Notes</td>"
+            text << "<td class=\"head-delivery-date date\" style=\"cursor:pointer\" onclick=\"sort(this, 'delivery_date')\">
+                      Delivery Date
+                    </td>"
+            text << "<td>Delivered</td>"
+          %>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div id="num">
+    <%= render :partial => "numerations" %>
+  </div>
+
+  <div id="body-po">
+    <%= render :partial => "body_po" %>
+  </div>
+
+  <div id="add-rows-button">+</div>
+
+  <div id="body">
+    <%= render :partial => "items" %>
+  </div>
+  
+</div>
+
+<div style="position:relative;top:9999px">
+  <div id="edit-cell" title="Update cell data">
+    <% form_tag(
+      spreadsheets_path,
+      :method => :put,
+      :id => "edit-cell-form",
+      :onsubmit => "submit_update_cell(); return false;"
+    ) do %>
+      <%= hidden_field 'order_confirmation', 'row_id' %>
+      <%= hidden_field 'cell', 'field' %>
+      <%= hidden_field 'cell', 'id' %>
+      <%= text_field "cell", "data", :class => "edit-cell-datafield" %>
+    <% end %>
+  </div>
+
+  <div id="add-rows" title="Add rows to the bottom">
+    <% form_tag(spreadsheets_path, :id => "add-rows-form", :onsubmit => "submit_add_rows(); return false;") do %>
+      <%= text_field_tag 'rows_count', 1 %>
+    <% end %>
+  </div>
+
+  <div id="spinner-dialog" title="LOADING...">
+    <p>
+      LOADING...<br />
+      <img src="/images/thickbox/loadingAnimation.gif" alt="loading..." />
+    </p>
+  </div>
+
+  <div id="filters" title="Filters">
+    <% form_tag(spreadsheets_path, :id => "filters-form", :onsubmit => "return false;") do %>
+      <label>ETD from</label><%= text_field("filter", "etd_from") %> to <%= text_field("filter", "etd_to") %>&nbsp;&nbsp;
+      <label>ETA from</label><%= text_field("filter", "eta_from") %> to <%= text_field("filter", "eta_to") %>&nbsp;&nbsp;
+      <label>Delivery Date from</label><%= text_field("filter", "delivery_date_from") %> to <%= text_field("filter", "delivery_date_to") %>
+    <% end %>
+  </div>
+
+  <div id="access-denied" title="Access denied">
+    <p>
+      <span class="access-alert"></span>
+      You don't have permissions to edit this cell.
+      <% unless @enabled_fields.blank? %>
+        You can edit only:
+        <ul>
+          <% for field in @enabled_fields %>
+            <li><%= field.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </p>
+  </div>
+
+  <div id="edit-date-cell" title="Update cell data">
+    <div id="inline-datepicker"></div>
+  </div>
+
+  <div id="edit-notes-cell" title="Update cell data">
+    <%= text_area "cell", "notes", :class => "edit-cell-datafield" %><br />
+    <% form_tag(spreadsheets_path, :id => "notes-add-form", :onsubmit => "submit_add_notes(); return false;") do %>
+      <%= text_field_tag "notes_add", nil, :class => "edit-cell-datafield" %>
+      <button id="notes-add-button">Add</button>
+    <% end %>
+  </div>
+
+  <div id="edit-port-of-loading-cell" title="Update cell data">
+    <div id="port-of-loading-buttonset">
+      <input type="radio" id="shanghai-radio" name="port-of-loading-buttonset" /><label for="shanghai-radio">Shanghai</label>
+      <input type="radio" id="nanjing-radio" name="port-of-loading-buttonset" /><label for="nanjing-radio">Nanjing</label>
+      <input type="radio" id="ningbo-radio" name="port-of-loading-buttonset" /><label for="ningbo-radio">Ningbo</label>
+    </div>
+  </div>
+
+  <div id="edit-mixed-port-cell" title="Update cell data">
+    <div id="mixed-port-buttonset">
+      <input type="radio" id="door-radio" name="mixed-port-buttonset" /><label for="door-radio">Door</label>
+      <input type="radio" id="port-radio" name="mixed-port-buttonset" /><label for="port-radio">Port</label>
+    </div>
+  </div>
+
+  <div id="system-log" title="System Log">
+
+  </div>
+
+  <div id="order-confirmation" title="Order Confirmation">
+  </div>
+</div>
+
+<!-- some helpers -->
+<div id="left-helper" class="helpers left-helper">
+</div>
+
+<div id="top-helper" class="helpers top-helper">
+</div>
+
+<div id="main-left-helper" class="main-helpers main-left-helper">
+</div>
+
+<div id="main-right-helper" class="main-helpers main-right-helper">
+</div>
+
+<div id="main-top-helper" class="main-helpers main-top-helper">
+</div>
+
+<div id="main-bottom-helper" class="main-helpers main-bottom-helper">
+</div>
+<!-- end some helpers -->
+
+
+<div id="context-menu">
+  <%= hidden_field_tag("clicked-cell") %>
+  Unhighlight
+</div>
+<%= javascript_tag("$(document).ready(function() {
+    set_editable_fields([#{@enabled_fields.map {|f| "'#{f.codename}'"}.join(",")}]);
+    $('#order_confirmation_cell_data').val('');
+  })") %>
+
+<%= javascript_tag("$(document).ready(function() {
+    set_context_menu();
+    set_role(true);
+  })") if @sadmin %>
+

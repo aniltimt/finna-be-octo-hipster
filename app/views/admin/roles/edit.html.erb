@@ -1,0 +1,178 @@
+<% content_for :custom_assets do %>
+    <%= javascript_include_tag 'roles' %>
+    <%= stylesheet_link_tag 'jquery-ui/jquery.ui.all' %>
+<% end %>
+<%= page_title('Editing role') %>
+<%= stylesheet_link_tag 'role_edit' %>
+<% form_tag :action => 'update', :id => @role do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br />
+      <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="permissions">
+        <tr>
+          <td class="label">Name</td>
+          <td width="30" class="label_actions"><font color="#CC6600">delete</font></td>
+        </tr>
+<% unless @role.permissions.empty? -%>
+	<% for permission in @role_permissions %> 
+	        <tr class="<%= cycle("row_dark", "row_light") -%>">
+	          <td><%= permission.name %></td>
+	          <td><%= link_to_remove(permission,{:action => 'del_permission', :id => @role,"permission[id]"=>permission}) %></td>
+	        </tr> 
+	<% end %>  
+<% else -%>
+        <tr>
+          <td colspan="3" class="note">No permissions</td>
+        </tr>
+<% end -%>
+      </table>
+	  <br />
+      <%= ruled_table("permissions") %>
+<%= will_paginate(
+          @role_permissions,
+          {:previous_label => '&laquo; ', :next_label => ' &raquo;'}
+        ) if @role_permissions && @role_permissions.respond_to?('total_pages') %>
+<% form_tag :action => 'add_permission', :id => @role do %>
+	<%= collection_select("permission", 'id', Permission.find(:all,:conditions=>"id NOT IN(0"+(@role.permissions.collect{|p| ",#{p.id}" }).to_s+")", :order => "name ASC"), 'id', 'name',{},{:class=>"input", :style=>"width:283px"}) %> <%= submit_tag "Add Permission", :class => "buttons", :title => "Add" %>
+<% end %> 
+<br>
+<br>
+<% form_tag :action => 'update', :id => @role do   %>
+<h4>Shipping Schedule Default Filter and Fields</h4>
+<!-- FILTERS -->
+<div id = 'role_form'>
+    <div class='left'>
+        <div class="field add_date_picker">
+          <%= label 'filters', :eta_to_port_after %>
+          <%= 
+          text_field 'filters', :eta_to_port_after, :value => (@role.shipping_schedule_filter.eta_to_port_after if @role.shipping_schedule_filter), :size => 10, :class => "pickdate" %>
+          <%= check_box 'filters', :eta_to_port_after_no_blanks ,{:checked => (@role.shipping_schedule_filter.eta_to_port_after_no_blanks if @role.shipping_schedule_filter)}%> no blanks
+        </div>
+
+        <div class="field add_date_picker">
+          <%= label 'filters', :confirmed_shipdate_after %>
+          <%= text_field 'filters', :confirmed_shipdate_after, :value => (@role.shipping_schedule_filter.confirmed_shipdate_after if @role.shipping_schedule_filter), :size => 10, :class => "pickdate" %>
+          <%= check_box 'filters', :confirmed_shipdate_after_no_blanks ,{:checked => (@role.shipping_schedule_filter.confirmed_shipdate_after_no_blanks if @role.shipping_schedule_filter)}%> no blanks
+        </div>
+
+        <div class="field">
+          <%= label 'filters', :status %>
+          <%= select 'filters', :status, options_for_select([['',0], ['Placed',1], ['Pending',2],['Invoiced',3], ['Discrepancy',4], ['Approved ',5], ['P.S.',6]], (@role.shipping_schedule_filter.status if @role.shipping_schedule_filter)) %>
+        </div>
+    </div>
+    <div class='right'>
+        <div class="field">
+          <%= label 'filters', :customer_id %>
+          <%= select 'filters', :customer_id, options_for_select(@customers, (@role.shipping_schedule_filter.customer_id if @role.shipping_schedule_filter))  %>
+        </div>
+
+        <div class="field">
+          <%= label 'filters', :reference %>
+          <%= text_field 'filters', :reference, :value => (@role.shipping_schedule_filter.reference if @role.shipping_schedule_filter), :size => 10 %>
+          <%= check_box 'filters', :reference_no_blanks ,{:checked => (@role.shipping_schedule_filter.reference_no_blanks if @role.shipping_schedule_filter) }%> no blanks
+        </div>
+
+        <div class="field">
+          <%= label 'filters',:mixed_full %>
+          <%= select 'filters', :mixed_full, options_for_select([['',0], ['Mixed',1], ['Full',2]], (@role.shipping_schedule_filter.mixed_full if @role.shipping_schedule_filter))  %>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br>
+<!-- PERMISSIONS -->
+<h4>Shipping Schedule Columns Permissions</h4>
+<div id = "role_form">
+	<table>
+		<tr>
+         <td><%= label 'shipping_schedule_permissions', :reference %>
+          	 <%= select 'shipping_schedule_permissions', :reference, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+          	 	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.reference) if @role.shipping_schedule_permission)), {}, {:size => 0} %>
+         </td>
+          <td><%= label 'shipping_schedule_permissions', :date_created %>
+          	  <%= select 'shipping_schedule_permissions', :date_created, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+          	   :selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.date_created) if @role.shipping_schedule_permission)) %>
+          </td>
+          <td><%= label 'shipping_schedule_permissions', :status %>
+          	  <%= select 'shipping_schedule_permissions', :status, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+          	   :selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.status) if @role.shipping_schedule_permission)) %>
+          </td>
+          <td><%= label 'shipping_schedule_permissions', :customer_name %>
+          	  <%= select 'shipping_schedule_permissions', :customer_name, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+          	   :selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.customer_name) if @role.shipping_schedule_permission)) %>
+          </td>
+       	</tr>
+       	<tr>
+       		<td><%= label 'shipping_schedule_permissions', :customer_po %>
+        	  	<%= select 'shipping_schedule_permissions', :customer_po, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.customer_po) if @role.shipping_schedule_permission)) %>
+        	</td>
+       		<td><%= label 'shipping_schedule_permissions', :order_confirmation %>
+        	  	<%= select 'shipping_schedule_permissions', :order_confirmation, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.order_confirmation) if @role.shipping_schedule_permission)), {}, {:size => 0} %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :mixed_full %>
+        	  	<%= select 'shipping_schedule_permissions', :mixed_full, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.mixed_full) if @role.shipping_schedule_permission)) %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :arrival_port %>
+        	  	<%= select 'shipping_schedule_permissions', :arrival_port, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.arrival_port) if @role.shipping_schedule_permission)) %>
+        	</td> 
+       	</tr>
+       	<tr>
+       		<td><%= label 'shipping_schedule_permissions', :customer_city %>
+        	  	<%= select 'shipping_schedule_permissions', :customer_city, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.customer_city) if @role.shipping_schedule_permission)) %>
+        	</td>
+       		<td><%= label 'shipping_schedule_permissions', :requested_delivery %>
+        	  	<%= select 'shipping_schedule_permissions', :requested_delivery, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.requested_delivery) if @role.shipping_schedule_permission)), {}, {:size => 0} %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :requested_ship_date %>
+          		<%= select 'shipping_schedule_permissions', :requested_ship_date, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+          		:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.requested_ship_date) if @role.shipping_schedule_permission)) %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :finished_date %>
+          		<%= select 'shipping_schedule_permissions', :finished_date, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+          		:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.finished_date) if @role.shipping_schedule_permission)) %>
+        	</td>
+       	</tr>
+       	<tr>
+       		<td><%= label 'shipping_schedule_permissions', :confirmed_ship_date %>
+        	  	<%= select 'shipping_schedule_permissions', :confirmed_ship_date, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.confirmed_ship_date) if @role.shipping_schedule_permission)) %>
+        	</td>
+       		<td><%= label 'shipping_schedule_permissions', :eta_to_port %>
+        	  	<%= select 'shipping_schedule_permissions', :eta_to_port, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.eta_to_port) if @role.shipping_schedule_permission)), {}, {:size => 0} %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :eta_to_customer %>
+          		<%= select 'shipping_schedule_permissions', :eta_to_customer, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+          		:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.eta_to_customer) if @role.shipping_schedule_permission)) %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :shipping_notes %>
+          		<%= select 'shipping_schedule_permissions', :shipping_notes, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'],
+          		:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.shipping_notes) if @role.shipping_schedule_permission)) %>
+        	</td>
+       	</tr>
+       	<tr>
+       		<td>
+       		</td>
+        	<td><%= label 'shipping_schedule_permissions', :edit_order_link %>
+        	  	<%= select 'shipping_schedule_permissions', :edit_order_link, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.edit_order_link) if @role.shipping_schedule_permission)) %>
+        	</td>
+        	<td><%= label 'shipping_schedule_permissions', :edit_production_order_link %>
+        	  	<%= select 'shipping_schedule_permissions', :edit_production_order_link, options_for_select(['READ_ONLY', 'HIDDEN','EDITABLE'], 
+        	  	:selected => (ShippingSchedulePermission.convert_permission(@role.shipping_schedule_permission.edit_production_order_link) if @role.shipping_schedule_permission)) %>
+        	</td>                 	
+       	</tr>
+  	</table>
+</div>
+<div class="left">
+
+</div>
+<div class="right">
+	<%= submit_tag "Save" %>
+</div>
+<% end %>

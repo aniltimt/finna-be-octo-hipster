@@ -1,0 +1,6 @@
+<%= page_title('New password') %>
+<% form_tag({:action => 'create'}) do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br /><br />
+<%= link_to 'Back', :action => nil %>

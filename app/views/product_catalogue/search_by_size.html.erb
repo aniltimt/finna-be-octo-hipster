@@ -1,0 +1,55 @@
+<%= front_page_title('Searching result')%>
+<% unless @specifications.empty? %>
+  <table width="90%" cellspacing="0" cellpadding="10" border="0" style="padding-bottom:100px;">
+    <% for specification in @specifications %>    
+     <tr>
+       <td width="150" valign="bottom">
+        <%= link_to("<img src='#{specification.style.image.url(:thumb)}' style='border:1.5px solid #82b04e;' alt='#{specification.style.title}' />",specification.style.image.url(:medium),{:border=>'0',:class => 'thickbox'}) %>
+       </td>
+       <td valign="top">
+         <span class="h"><%= link_to(specification.style.title,{:action=>'show',:style_id=>specification.style.id}) %></span>
+           <br />
+           <br />
+        <table height="100%" border="0" cellspacing="0" width="100%" valign="bottom" cellpadding="0" >
+          <tr>
+            <td bgcolor="#EEEEEE">      
+              <table  border="0" cellpadding="3" cellspacing="1" class="texts" width="678">
+                <tr align="center" valign="top">
+                  <td><strong>ITEM </strong></td>
+                  <td nowrap="nowrap"><strong>INCHES OD</strong></td> 
+                  <td><strong>HT </strong></td>
+                  <td><strong>BD</strong></td>
+                  <td nowrap="nowrap"><strong>CMS OD</strong></td>
+                  <td><strong>HT</strong></td>
+                  <td><strong>BD</strong></td>
+                  <td><strong>CAPACITY LITRES</strong></td>
+                  <td><strong>WEIGHT GRAMS</strong></td>
+                  <td><strong>SKID PACK</strong></td>
+                  <td><strong>DESCRIPTION</strong></td>
+                </tr>
+                <tr align="center" bgcolor="#FFFFFF">
+                  <td><%= specification.item %></td>
+                  <td><%= specification.od_ol_inch %></td>
+                  <td><%= specification.ht_inch %></td>
+                  <td><%= specification.bd_bl_inch %></td>
+                  <td><%= specification.od_ol_cms %></td>
+                  <td><%= specification.ht_cms %></td>
+                  <td><%= specification.bd_bl_cms %></td>
+                  <td><%= specification.litres %></td>
+                  <td><%= specification.weight_grams %></td>
+                  <td><%= specification.bulk_skids %></td>
+                  <td><%= specification.description %></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+       </td>
+     </tr>
+    <% end -%>
+  </table>
+<% else -%>
+  <p>No results found</p>
+<% end -%> 
+<br />
+<%= link_to("Back",{:action=>'list'}) %>

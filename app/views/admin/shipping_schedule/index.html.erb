@@ -1,0 +1,55 @@
+<% content_for :custom_assets do %>
+    <%= javascript_include_tag 'jquery.handsontable.full', 'shipping_schedule' %>
+    <%= stylesheet_link_tag 'jquery.handsontable.full', 'jquery-ui/jquery.ui.all', 'shipping_schedule' %>
+<% end %>
+
+<h1>Shipping Schedule</h1>
+
+<% form_tag shipping_schedule_path, :id => "filter_form" do %>
+    <div class='left'>
+        <div class="field">
+          <div class="add_date_picker">
+          	<%= label 'filters', :eta_to_port_after %>
+          	<%= text_field 'filters', :eta_to_port_after, :class => "pickdate" %>
+          	<%= check_box 'filters', :eta_to_port_after_no_blanks %> no blanks
+          </div>
+        </div>
+
+        <div class="field add_date_picker">
+          <%= label 'filters', :confirmed_shipdate_after %>
+          <%= text_field 'filters', :confirmed_shipdate_after, :class => "pickdate" %>
+          <%= check_box 'filters', :confirmed_shipdate_after_no_blanks %> no blanks
+        </div>
+
+        <div class="field">
+          <%= label 'filters', :status %>
+          <%= select 'filters', :status, options_for_select(['', 'Placed', 'Pending','Invoiced','Discrepancy','Approved','P.S'])  %>
+        </div>
+    </div>
+    <div class='right'>
+        <div class="field">
+          <%= label 'filters', :customer_id %>
+          <%= select 'filters', :customer_id, options_for_select(@customers)  %>
+        </div>
+
+        <div class="field">
+          <%= label 'filters', :reference %>
+          <%= text_field 'filters', :reference %>
+          <%= check_box 'filters', :reference_no_blanks %> no blanks
+        </div>
+
+        <div class="field">
+          <%= label 'filters',:mixed_full %>
+          <%= select 'filters', :mixed_full, options_for_select(['', 'Mixed', 'Full'])  %>
+        </div>
+
+    </div>
+
+    <div class="actions">
+      <%= submit_tag 'Apply filter' %>
+
+    </div>
+<% end %>
+<%= link_to "Download CSV", shipping_schedule_path(:format => 'csv'), :id => "download"%>
+
+<%= content_tag(:div,nil, :"data-schedule" => schedule_json(@orders), :"data-settings" => handson_settings_json(current_user), :id => "schedule") %>

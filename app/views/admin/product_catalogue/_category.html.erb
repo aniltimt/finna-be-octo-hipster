@@ -1,0 +1,17 @@
+<div id="category_<%= parent_id %>_<%= category.id.to_s %>">
+      	<table border="0" cellpadding="2" cellspacing="1" width="100%" id="category_table<%= category.id.to_s %>" style="margin-top:-1px;margin-bottom:-1px;margin-left:-1px;margin-right:0px">
+        <tr class="<%= category.parent_id==0 ? cycle("row_dark", "row_light", :name => category.parent_id.to_s) : "row_light" -%>">
+          <td width="22"><%= link_to_elapse(category,"categories") %></td>
+          <td><%= link_to category.title ,{:action => 'edit', :id => category.id}, :title=>"edit" %></td>
+          <td width="40" align="center"><%= category.styles.size %></td>
+          <td width="30"><%= link_to_add_child(category) %></td> 
+          <td width="30"><%= link_to_enable(category) %></td>          
+          <td width="30"><%= link_to_edit(category) %></td>
+          <td width="30"><%= link_to_delete(category) %></td>    
+        </tr>
+        </table>
+        <%= ruled_table("category_table#{category.id}",0) %>
+        <div id="categories_holder_<%= category.id.to_s %>">
+        <%= render :partial=>"categories_holder", :locals=>{:parent_id => category.id.to_s, :categories => category.children} %>
+        </div>
+</div>

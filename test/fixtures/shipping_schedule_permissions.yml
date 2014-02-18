@@ -1,0 +1,18 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  role: admin
+  reference: 0
+  status: 2
+  customer_name: 0
+  order_confirmation: 2
+  requested_ship_date: 2
+  requested_delivery: 2
+  mixed_full: 2
+  arrival_port: 2
+  customer_city: 2
+  confirmed_ship_date: 2
+  eta_to_port: 2
+  eta_to_customer: 2
+  shipping_notes: 2
+

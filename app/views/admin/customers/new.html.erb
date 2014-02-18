@@ -1,0 +1,5 @@
+<%= page_title('New customer') %>
+<% form_for @customer, :url => { :controller => "admin/customers",:action => "create" }  do |order_form| %>
+  <%= render :partial => 'form',:locals=>{:f => order_form} %>
+<% end %>
+<%= link_to 'Back', :controller => "admin/customers",:action=>'index' %>

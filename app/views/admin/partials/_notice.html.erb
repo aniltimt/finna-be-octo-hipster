@@ -1,0 +1,3 @@
+<div id="notice_holder" <% unless flash[:notice] %>style="display:none"<% end %> title="Close" onClick="$('#notice_holder').toggle();">
+  <div id="notice"><%= flash[:notice] %></div>
+</div>

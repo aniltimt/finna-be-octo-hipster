@@ -1,0 +1,22 @@
+<%= page_title('Templates') %>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="templates">
+  <tr>
+    <td class="label">Name</td>
+    <td class="label_actions" width="30">edit</td>
+    <td class="label_actions" width="30">delete</td>
+  </tr>
+  <% unless @template_items.blank? -%>
+    <% for template_item in @template_items -%>
+      <tr class="<%= cycle("row_dark", "row_light") -%>">
+        <td><%= template_item.name %></td>
+        <td><%= link_to_edit(template_item) %></td>
+        <td><%= link_to_delete(template_item) %></td>
+      </tr>
+    <% end -%>
+  <% else -%>
+    <tr>
+      <td colspan="3" class="note">No templates</td>
+    </tr>
+  <% end -%>
+</table>
+<%= list_footer("template",@template_items) %>

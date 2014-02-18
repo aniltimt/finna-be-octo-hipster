@@ -1,0 +1,26 @@
+  <table width="100%" border="0" cellpadding="2" cellspacing="1" id="media_items">
+    <% if @parent -%>
+    <tr class="<%= cycle("row_dark", "row_light") -%>" ondblclick="document.location='/admin/media_library/mini_browse/<%= @parent.parent_id!=0 ? @parent.parent_id : "" -%>?file_type=<%= params["file_type"] -%>';">
+      <td style="border:0px" width="24"><%= link_to(image_tag("/images/media_library/up.png",:alt=>"view",:alt=>"view",:width=>"22px",:height=>"22px"),{:action=>"mini_browse", :id=>@parent.parent_id!=0 ? @parent.parent_id : nil, :file_type=>params["file_type"]}, :title=>"up") %></td>
+      <td colspan="3" ><%= link_to("[..]",{:action=>"mini_browse", :id=>@parent.parent_id!=0 ? @parent.parent_id : nil, :file_type=>params["file_type"]}, :title=>"up") %></td>         
+    </tr>    
+    <% end -%> 
+    
+    <% for folder in @folders %>    
+        <tr class="<%= cycle("row_dark", "row_light") -%>" ondblclick="document.location='/admin/media_library/mini_browse/<%= folder.id -%>?file_type=<%= params["file_type"] -%>';">
+          <td style="border:0px" width="24"><%= link_to(image_tag("/images/media_library/folder.png",:alt=>"view",:width=>"24px",:height=>"24px"),{:action=>"mini_browse", :id=>folder, :file_type=>params["file_type"]}, :title=>"view") %></td>         
+		  <td style="border:0px" ><%= link_to(folder.name,{:action=>"mini_browse", :id=>folder, :file_type=>params["file_type"]}, :title=>"view") %>
+          </td>                   
+        </tr>
+	<% end -%> 
+    <% for object in @objects %>
+        <% if !params["file_type"] or (params["file_type"] and object.media_file and object.media_file.file_type=~ Regexp.new("#{params["file_type"]}")) %>
+        <tr class="<%= cycle("row_dark", "row_light") -%>" style="cursor:pointer" onclick="mySubmit('/admin/media_library/get_object/<%= object.id.to_s %>');">
+          <td style="border:0px" width="24"><%= get_icon(object) %></td>                
+          <td><%= object.name %></td>      
+        </tr>   
+        <% end -%>  
+    <% end -%>  
+
+</table>
+<%= ruled_table("media_items", (@parent ? 1 : 0)) %>

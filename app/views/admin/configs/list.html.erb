@@ -1,0 +1,27 @@
+<%= page_title('Configuration') %>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="configs">
+  <tr>
+    <td class="label">Key</td>
+    <td class="label">Value</td>
+    <td class="label">Description</td>
+    <td style="width:30px" class="label_actions">edit</td>
+    <td style="width:30px" class="label_actions">delete</td>
+  </tr>
+  <% unless @app_configs.blank? -%>
+    <% for config in @app_configs -%>
+      <tr class="<%= cycle("row_dark", "row_light") -%>">
+        <td><%= config.key %></td>
+        <td><%= config.value %></td>  
+        <td><%= config.description %></td>         
+        <td><%= link_to_edit(config) %></td>
+        <td><%= link_to_delete(config) %></td>
+      </tr>
+    <% end -%>
+  <% else -%>
+    <tr>
+      <td colspan="3" class="note">No configs</td>
+    </tr>
+  <% end -%>
+</table>
+<%= list_footer("config", @app_configs) %><br/>
+To refresh the settings click <%= link_to("here", :action => 'refresh_config')%>

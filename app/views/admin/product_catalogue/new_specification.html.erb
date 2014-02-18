@@ -1,0 +1,6 @@
+<%= page_title('New specification') %>
+<% form_tag({:action => 'create_specification',:id=>@style.id}) do %>
+  <%= render :partial => 'specification_form' %>
+<% end %>
+<br><br>
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,28 @@
+page.replace_html "num", :partial => "numerations"
+
+page.replace_html "body", :partial => "items"
+
+page.replace_html "body-po", :partial => "body_po"
+
+page.call "initializer", 'all', 'all'
+
+page.call "clear_params"
+
+page.call "initformsie"
+
+page.call "set_context_menu" if @sadmin
+
+unless @rows.blank?
+  page.replace_html "pages", will_paginate(
+        @rows,
+        {
+          :previous_label => '&laquo; ',
+          :next_label   => ' &raquo;',
+          :renderer => 'RemoteLinkRenderer',
+          :remote => {
+            :before => '$("#spinner-dialog").dialog("open");',
+            :complete => '$("#spinner-dialog").dialog("close");'
+          }
+        }
+      )
+end

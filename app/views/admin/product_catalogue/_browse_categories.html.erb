@@ -1,0 +1,4 @@
+<%= header_for_hidden_div("Book categories", "categories") %>
+
+<%= render :partial => "category_flat", :collection => @categories, :locals => {:parent_id => "0"} %>
+<%= ruled_table("categories") %>

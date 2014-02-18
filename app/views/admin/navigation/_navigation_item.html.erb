@@ -1,0 +1,17 @@
+<div id="navigation_item_<%= parent_id %>_<%= navigation_item.id.to_s %>">
+      	<table border="0" cellpadding="2" cellspacing="1" id="navigation_item_table<%= navigation_item.id.to_s %>" style="margin-top:-1px;margin-bottom:-1px;margin-left:-1px;margin-right:0px">
+        <tr class="<%= navigation_item.parent_id==0 ? cycle("row_dark", "row_light", :name => navigation_item.parent_id.to_s) : "row_light" -%>">
+          <td width="20"><%= link_to_elapse(navigation_item,"navigation_items") %></td>
+          <td width="283"><%= navigation_item.name %></td>
+          <td width="210"><%= navigation_item.url %></td>
+          <td width="30"><%= link_to_add_child(navigation_item) %></td>
+          <td width="30"><%= link_to_enable(navigation_item) %></td>          
+          <td width="30"><%= link_to_edit(navigation_item) %></td>
+          <td width="30"><%= link_to_delete(navigation_item) %></td>    
+        </tr>
+        </table>
+        <%= ruled_table("navigation_item_table#{navigation_item.id}",0) %>
+        <div id="navigation_items_holder_<%= navigation_item.id.to_s %>">
+        <%= render :partial=>"navigation_items_holder", :locals=>{:parent_id=>navigation_item.id.to_s,:navigation_items=>navigation_item.children} %>
+        </div>
+</div>

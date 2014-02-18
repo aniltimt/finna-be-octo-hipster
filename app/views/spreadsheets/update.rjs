@@ -1,0 +1,29 @@
+unless @sadmin
+  page.call "$('#body table #cell-#{params[:id]}-#{params[:cell][:field]}').addClass", "edited-cell"
+else
+  page.call "set_context_menu"
+end
+
+if ["etd", "mbcc"].include?(params[:cell][:field]) &&
+    !@row.etd.blank? && !@row.mbcc.blank? &&
+    (@row.etd - 7.days) >= @row.mbcc
+  page.call "$('#body table #cell-#{@row.id}-etd').addClass", "red-cell"
+else
+  page.call "$('#body table #cell-#{@row.id}-etd').removeClass", "red-cell"
+end
+
+if ["request_eta", "eta_port"].include?(params[:cell][:field]) &&
+    !@row.request_eta.blank? && !@row.eta_port.blank? &&
+    (@row.eta_port - 5.days) >= @row.request_eta
+  page.call "$('#body table #cell-#{@row.id}-eta_port').addClass", "red-cell"
+else
+  page.call "$('#body table #cell-#{@row.id}-eta_port').removeClass", "red-cell"
+end
+
+if @row.oc_highlight
+  page.call("$('#cell-#{@row.id}-oc').addClass", "red-cell")
+else
+  page.call("$('#cell-#{@row.id}-oc').removeClass", "red-cell")
+end
+
+page.call "initformsie"

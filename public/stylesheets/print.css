@@ -1,0 +1,16 @@
+#actions,
+#num .right-label,
+#num .visible-row,
+#left-helper,
+#top-helper {
+    display:none;
+}
+
+#head table,
+div#body table {
+    width:2160px;
+}
+
+#po-field {
+    width:88px;
+}

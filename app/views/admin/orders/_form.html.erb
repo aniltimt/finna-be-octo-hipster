@@ -1,0 +1,203 @@
+<%#= stylesheet_link_tag "jquery-ui/jquery.ui.all", "spreadsheet", :media => "all" %>
+  <%= f.error_messages %>
+  <table class="form">
+    <tr>
+      <td></td>
+      <% if @order.company == "C"%>
+      <td><img src="/images/logo.gif" alt="" width="70" height="50" border="0" /></br>
+        North America Office:</br>
+        P.O. Box 84657</br>
+        2336 Bloor St. W.</br>
+        Toronto, Ontario M6S 4Z7</br>
+        Tel: (416) 767 9574</br>
+        Fax: (416) 767 7505</br>
+        info@ctiplastic.com</br>
+      </td>
+      <% else %>
+      <td><img src="/images/centrade_logo.png" alt="" border="0" /></br>
+        83 Durie St.</br>
+        Toronto, Ontario M6S 3E7</br>
+        Tel: (416) 767 9574</br>
+        Fax: (416) 767 7505
+      <% end %>
+      <td></td>
+    </tr>
+    <tr>
+      <td><td>
+      <td class="field_label">Order Confirmation:</td>
+      <% if !controller.action_name.eql?("new")%>
+      	<td style="vertical-align:text-top"><%= @order.order_confirmation.partition(' ').first %><%= text_field 'order','order_confirmation',{:class=>"input", :style=>"width:145px", :value => @order.order_confirmation.partition(' ').last}%></td>
+      <% else %>
+      	<td style="vertical-align:text-top"><%= @customer.company %>O-<%= (@customer.oc_code).upcase if !@customer.oc_code.blank?%><%= text_field 'order','order_confirmation',{:class=>"input", :style=>"width:145px"}%></td>
+     <% end %>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td class="field_label">Sold By:</td>
+      <td><%= current_user.first_name %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td class="field_label">Date Created:</td>
+      <td><%= date = Date.today %></td>
+      <%= hidden_field 'order','date_created',{:value => date} %>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td class="field_label">Customer PO:</td>
+      <td><%= text_field 'order','customer_po',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td class="field_label">Status:</td>
+      <td><%=select_tag 'order[status]', options_for_select([
+        ['Pending','Pending'],
+        ['Placed','Placed'],
+        ['Invoiced','Invoiced'],
+        ['Discrepancy', 'Discrepancy'],
+        ['Approved', 'Approved '],
+        ['P.S.', 'P.S.']
+        ],@order.status),:class=>"input", :style=>"width:203px"%></td>
+    </tr>
+    <tr> 
+      <td class="field_label">Sold To: </td>
+      <% shipping_address_value = "#{@address.receiver_name}
+#{@address.street_1} #{@address.street_2} 
+#{@address.city} #{@address.province} #{@address.country} 
+#{@address.postal_code} 
+#{@address.phone}" %>
+      <td><%= @customer.customer_name %></br><%= @customer.street_1 %><%= @customer.street_2 %></br><%= @customer.city %>,<%= @customer.province %>,<%= @customer.country %></br><%= @customer.postal_code %></br><%= @customer.phone %></td> <%= hidden_field 'order','customer_id',{:value => @customer.id} %>
+      <td class="field_label">Ship To:</td>
+      <td><%= text_area 'order','ship_to',{:class=>"input", :size => "25x4",:value => shipping_address_value}%></td>
+      <%= hidden_field 'order','shipping_address_id',{:value => @address.id} %>
+      <%= hidden_field 'order','company',{:value => @order.company} %>
+    </tr>
+    <tr>
+      <td class="field_label">Requested Delivery:</td>
+      <td><%= text_field 'order','requested_delivery',{:class=>"input", :id=>"datepicker1", :style=>"width:150px"} %><img src="/images/media_library/mimetypes/vcalendar.png" alt="" width="20" height="20" border="0" /></td>
+      <td class="field_label">Arrival Port:</td>
+      <td style="vertical-align:text-top"><%= render :partial => 'arrival_port',:locals => {:arrival_port => @customer.arrival_port} %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Requested Ship Date:</td>
+      <td><%= text_field 'order','requested_ship_date',{:class=>"input", :id=>"datepicker2", :style=>"width:150px"} %><img src="/images/media_library/mimetypes/vcalendar.png" alt="" width="20" height="20" border="0" /></td>
+      <td class="field_label">Terms:</td>
+      <td style="vertical-align:text-top"><%= @customer.terms %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Finished Date:</td>
+      <td><%= text_field 'order','finished_date',{:class=>"input", :id=>"datepicker7", :style=>"width:150px"} %><img src="/images/media_library/mimetypes/vcalendar.png" alt="" width="20" height="20" border="0" /></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="field_label">Confirmed Ship Date:</td>
+      <td><%= text_field 'order','confirmed_ship_date',{:class=>"input", :id=>"datepicker3", :style=>"width:150px"} %><img src="/images/media_library/mimetypes/vcalendar.png" alt="" width="20" height="20" border="0" /></td>
+      <td class="field_label">Delivery Terms:</td>
+      <td style="vertical-align:text-top"><%= @customer.delivery_terms %></td>
+    </tr>
+    <tr>
+      <td class="field_label">ETA to Port:</td>
+      <td><%= text_field 'order','eta_to_port',{:class=>"input", :id=>"datepicker4", :style=>"width:150px"} %><img src="/images/media_library/mimetypes/vcalendar.png" alt="" width="20" height="20" border="0" /></td>
+      <td class="field_label">Currency:</td>
+      <td style="vertical-align:text-top"><%= @customer.currency  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">ETA to Customer:</td>
+      <td><%= text_field 'order','eta_to_customer',{:class=>"input", :id=>"datepicker5", :style=>"width:150px"} %><img src="/images/media_library/mimetypes/vcalendar.png" alt="" width="20" height="20" border="0" /></td>
+      <td class="field_label">Reference:</td>
+      <% if controller.action_name.eql?("new") %>
+	      
+	      <% if !@order.reference.blank? %>
+	      <% if @order.company == "C"%>
+	        <td style="vertical-align:text-top">CTI-<%= text_field 'order','reference',{:class=>"input", :style=>"width:110px",:onblur=>"enableButton(this);"} %> <%= link_to 'Production Order', "/edit_view_production_order?reference=#{@order.reference}",:method=>'post',:class=>"buttons",:id=>"Production" %></td>
+	      <% else %>
+	        <td style="vertical-align:text-top">CENT-<%= text_field 'order','reference',{:class=>"input", :style=>"width:110px",:onblur=>"enableButton(this);"} %> <%= link_to 'Production Order', "/edit_view_production_order?reference=#{@order.reference}",:method=>'post',:class=>"buttons",:id=>"Production" %></td>
+	      <% end %>
+	      <% else %>
+	      <% if @order.company == "C"%>
+	        <td style="vertical-align:text-top">CTI-<%= text_field 'order','reference',{:class=>"input", :style=>"width:110px",:onblur=>"enableButton(this);"}  %> <%= link_to 'Production Order', "#",:method=>'post',:class=>"buttons",:id=>"Production",:style=>"display: none;" %></td>
+	      <% else %>
+	        <td style="vertical-align:text-top">CENT-<%= text_field 'order','reference',{:class=>"input", :style=>"width:110px",:onblur=>"enableButton(this);"} %> <%= link_to 'Production Order', "#",:method=>'post',:class=>"buttons",:id=>"Production",:style=>"display: none;" %></td>
+	      <% end %>
+	      <% end %> 
+	<% else %>
+	<td style="vertical-align:text-top"><%= @order.reference.partition('-').first + '-' %><%= text_field 'order','reference',{:class=>"input", :style=>"width:110px",:onblur=>"enableButton(this);", :value => @order.reference.partition('-').last} %> <%= link_to 'Production Order', "/edit_view_production_order?reference=#{@order.reference}",:method=>'post',:class=>"buttons",:id=>"Production" %></td>
+    <% end %>
+    </tr>
+    <tr>
+      <td class="field_label">Mixed/Full:</td>
+      <td><%=select_tag 'order[mixed_full]', options_for_select([
+        ['Mixed','Mixed'],
+        ['Full','Full']
+        ],@order.mixed_full),:class=>"input", :style=>"width:150px" %></td>
+        <td class="field_label">Prod Arrival Port:</td>
+        <td style="vertical-align:text-top"><%= render :partial => 'arrival_port',:locals => {:arrival_port => @customer.arrival_port} %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Notes:</td>
+      <td colspan="1" ><%= text_area 'order','notes',{:class=>"input", :size => "21x1"}  %></td>
+      <td class="field_label">Deposit Required:</td>
+      <td style="vertical-align:text-top"><%= select_tag 'order[deposit_invoice]', options_for_select([
+        ['No','No'],
+        ['Yes','Yes']
+        ],@order.deposit_invoice),:class=>"input", :style=>"width:150px" %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Additional Shipping Charge:&nbsp;$</td>
+      <td><%= text_field 'order','add_ship_charge',{:class => "input", :style => "width:160px"} %></td>
+      <td class="field_label">Amount:</td>
+      <td><%= text_field 'order','deposit_amount',{:class=>"input", :style=>"width:160px"}  %></td>
+    </tr>
+    <tr>
+      <td colspan=4>
+    <table height="100%" border="0" cellspacing="0" width="100%" valign="bottom" cellpadding="0" >
+      <tr>
+        <td bgcolor="#EEEEEE">      
+          <table  border="0" cellpadding="3" cellspacing="1" class="texts" width="678">
+            <tr align="center" valign="top">
+              <td><strong>Code</strong><span></span></td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td><strong>Description</strong></td>
+              <td><strong>Colour</strong></td>
+              <td><strong>Notes</strong></td>
+              <td><strong>Drain</strong></td>
+              <td><strong>Skid</strong></td>
+              <td><strong>Pack</strong></td>
+              <td><strong>Total</strong></td>
+              <td><strong>Price</strong></td>
+              <td><strong>Total</strong></td>
+              <td><strong>Action</strong></td>
+              <td><strong>Barcode</strong></td>
+            </tr>
+            <% @count = 0 %>
+            <% f.fields_for :order_product_details do |product_form| %>
+              <%= render "order_product_detail_fields", :f => product_form %>
+              <% @count += 1 %>
+            <% end %>
+            <% @count = "" %>
+            <tr>
+              <td><%= link_to_add_fields "Add More", f, :order_product_details %></td>
+              <td colspan="9"><%= f.hidden_field :final_amount %></td>
+              <td class="final_amount"><%= number_to_currency(f.object.final_amount) %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="4" class="field_label">
+	    <%= f.submit 'Save',{:class=>"buttons"} %>
+      <%= link_to 'Cancel', "/admin/orders",:method=>'get',:class=>"buttons" %>
+      <%= f.submit 'Print',{:class=>"buttons", :name => 'print'} %>
+      <%= f.submit 'Export to .xls',{:class=>"buttons", :name => 'xls'} %>
+	    </td>
+    </tr>    
+  </table>

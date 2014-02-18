@@ -1,0 +1,35 @@
+<%= page_title('Edit customer') %>
+<% form_for @customer, :url => { :controller => "admin/customers",:action => "update", :id => @customer.id }  do |order_form| %>
+  <%= render :partial => 'form',:locals=>{:f => order_form} %>
+<% end %>
+<table class="form">
+  <tr>
+    <td colspan=3><h1>Shipping Address</h1></td>
+    <td><%= button_to 'Add', "/admin/shipping_addresses/new?id=#{@customer.id}" %></td>
+  </tr>
+  <tr>
+    <td>
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+      <tbody><tr>
+        <td><strong>Name</strong></td>
+        <td></td>
+        <td><strong>Phone</strong></td>
+        <td></td>
+        <td><strong>Address<strong></td>
+      </tr>
+      <% @customer.shipping_addresses.each_with_index do | single_add,index | %>
+      <tr class="<%= index%2 == 0 ? 'row_dark' : 'row_light'  %>">
+        <td style="vertical-align:text-top"><%=h single_add.receiver_name %></td>
+        <td></td>
+        <td style="vertical-align:text-top"><%= single_add.phone %></td>
+        <td></td>
+        <td><%= single_add.street_1 %><br/><%= single_add.city %>,<%= render :partial => 'listing_provience',:locals => {:address =>single_add} %></td>
+        <td><%= button_to 'Edit', "/admin/shipping_addresses/edit/#{single_add.id}",:method=>'get' %></td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </td>
+  </tr>
+</table>
+<%= link_to 'Back', :controller => "admin/customers",:action => "index" %>

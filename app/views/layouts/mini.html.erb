@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>KORE CMS: <%= @config['cms_owner'] %></title>
+      <% unless Rails.env.test? -%>
+        <meta name="authenticity-token" id="authenticity-token" content="<%= form_authenticity_token %>" />
+      <% end -%>
+      <%= javascript_include_tag :defaults, "jquery.highlitable", "thickbox", "jquery.string" %>
+      <%= stylesheet_link_tag "application" %>
+      <%= yield :auto_discovery_link_tag %>
+      <%= javascript_include_tag "tiny_mce/tiny_mce_popup" %>
+      <%= javascript_include_tag "filebrowser" %>
+    <!--[if lt IE 7]>
+    <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+    <![endif]-->
+
+  </head>
+  <body style="background-color:#FFFFFF; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 5px;">
+    <%= yield  %>
+  </body>
+</html>

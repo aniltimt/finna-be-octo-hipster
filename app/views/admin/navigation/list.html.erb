@@ -1,0 +1,26 @@
+<%= page_title('Navigation') %>
+      <table border="0" cellpadding="2" cellspacing="1" class="list">
+        <tr>
+          <td class="label" width="22">&nbsp;</td>
+          <td class="label" width="285">Name</td>
+          <td class="label" width="215">URL</td>
+          <td class="label_actions" width="30">add</td>
+          <td class="label_actions" width="30">on/off</td>
+          <td class="label_actions" width="30">edit</td>
+          <td class="label_actions" width="30">delete</td>
+        </tr>
+        
+		<% unless @navigation_items.empty? -%>  
+            <tr><td colspan="7" style="border:0px; padding:0px;">     
+            <div id="navigation_items_holder_0">
+            <%= render :partial=>"navigation_items_holder", :locals=>{:parent_id=>"0",:navigation_items=>@navigation_items} %>
+            </div>
+            </td></tr>
+        <% else -%>
+            <tr>
+             <td colspan="7" class="note">No navigation items</td>
+            </tr>
+        <% end -%>        
+		
+	  </table>
+<%= list_footer("navigation_item",nil) %>

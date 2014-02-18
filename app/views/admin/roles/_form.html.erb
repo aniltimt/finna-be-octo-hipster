@@ -1,0 +1,39 @@
+<%= error_messages_for 'role' %>
+
+<!--[form:role]-->
+<table class="form">
+  <tr>
+    <td>Name:</td>
+    <td><%= text_field 'role', 'name', {:class => "input", :style => "width:200px"} %></td>
+  </tr>
+  <tr>
+    <td>Codename:</td>
+    <td><%= text_field 'role', 'codename', {:class => "input", :style => "width:200px"} %></td>
+  </tr>
+  <tr>
+  	<td>Update colour:</td>
+  	<td><%= text_field 'role', 'update_colour', {:class => "input", :style => "width:200px"} %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align:right;"><%= submit_tag 'Save', {:class => "buttons"} %></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+// <![CDATA[
+  $name = $('#role_name');
+  $codename = $('#role_codename');
+  $old_name = $name.val() || '';
+
+  function name_updated() {
+    if (jQuery.toSlug($old_name) == $codename.val())
+      $codename.val(jQuery.toSlug($name.val()));
+    $old_name = $name.val();
+  }
+
+  $('#role_name').bind("keyup", function() {name_updated();});
+// ]]>
+</script>
+
+<%= focus('role_name') %>
+<!--[eoform:role]-->

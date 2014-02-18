@@ -1,0 +1,49 @@
+<% unless @gallery_items.blank? -%> 
+   <% for gallery_item in @gallery_items -%>
+    <div id="item_<%= gallery_item.id.to_s %>">
+      <table width="100%" border="0" cellpadding="2" cellspacing="1" 
+             id="gallery_item_table_<%= gallery_item.id.to_s %>"
+             style="margin-top:-1px;margin-bottom:-1px;margin-left:-1px;margin-right:0px">
+        <tr class="<%= cycle("row_dark", "row_light", :name => 'colors') -%>">
+          <td><%= gallery_item.name %></td>
+          <td style="width:30px">
+                <%= link_to(
+                  image_tag("/images/cms/view.gif", :alt => "view"),
+                  gallery_item.image.url(:medium),
+                  :class => 'thickbox'
+                ) %>
+              </td>
+          <td style="width:30px">
+            <%= link_to(
+              image_tag("/images/cms/edit.gif", :alt => "edit_gallery_item"),
+              {:action => "edit_item", :id => gallery_item},
+              :title => "Edit"
+            ) %>
+          </td>
+          <td style="width:30px">
+            <%= link_to_remote(
+              image_tag("/images/cms/delete.gif", :alt => "destroy_gallery_item"),
+              :url => {:action => "destroy_item", :id => gallery_item.id, :style_id => gallery_item.style_id},
+              :title => "delete",
+              :confirm => "Are you sure you want to delete this gallery item?",
+              :method => :post
+            ) %>
+          </td>          
+        </tr>
+      </table>
+      <%= ruled_table("gallery_item_table_#{gallery_item.id}",0) %>
+    </div>
+    <% unless @specifications.blank? -%>
+      <%#  reset_cycle('colors') -%>
+    <% end -%>
+    <%= sortable_element(
+      "gallery_items",
+      :tag => 'div',
+      :url => {:action => 'update_item_positions', :style_id => gallery_item.style_id}
+    ) %>
+  <% end -%>
+<% else -%>
+  <tr>
+    <td colspan="3" class="note">No items</td>
+  </tr>
+<% end -%>

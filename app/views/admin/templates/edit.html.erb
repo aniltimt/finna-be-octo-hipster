@@ -1,0 +1,6 @@
+<%= page_title('Editing template') %>
+<% form_tag :action => 'update', :id => @template_item do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<br><br>
+<%= link_to 'Back', :action => 'list' %>

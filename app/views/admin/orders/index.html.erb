@@ -1,0 +1,72 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td class="page_title" style="text-align:left">Create Order</td>
+    <td align="right"></td>
+  </tr>
+</tbody></table>
+<br /><br />
+<% form_tag('/new_order') do -%>
+<table width="40%" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td style="text-align:right">Company&nbsp;&nbsp;</td>
+      <td><%=select_tag 'company', options_for_select([
+      	['Centrade','T'],
+      	['CTI','C']
+      	],params[:company]),:style=>"width: 122px;"%></td>
+    </tr>
+    <tr>
+      <td style="text-align:right">Customer Name &nbsp;&nbsp;</td>
+      <td><%= render :partial =>  "customer_dropdown" %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right">Shipping Address&nbsp;&nbsp;</td>
+      <td><%= render :partial =>  "shipping_address_dropdown" %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= submit_tag "create" %></td> 
+    </tr>
+    <!--<tr>
+ 	  <td style="text-align:right"><%= link_to 'Update all to full', :controller => "admin/orders", :action => "update_all" %></td>
+    </tr> -->
+  </tbody>
+</table>
+<% end %>
+<br /><br />
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="users">
+  <tbody><tr>
+    <td class="label">Confirmation</td>
+    <td class="label">Reference</td>
+    <td class="label_actions" width="30">edit</td>
+  </tr>
+<% unless @orders.blank? -%>   
+   <% @orders.each_with_index do |order,index| %>    
+      <tr class="<%= index%2 == 0 ? 'row_dark' : 'row_light'  %>">
+        <td><%= order.order_confirmation %></td>
+       	<td><%= order.reference %></td>
+        <td><%= link_to "#{image_tag '/images/cms/edit.gif?1370421000'}", :controller => "admin/orders",:action=>'edit',:id => order.id %>
+      </tr>
+    <% end %>
+    <% else -%>
+    <tr>
+      <td colspan="3" class="note">No orders</td>
+    </tr>
+  <% end -%>
+  </tbody>
+</table>
+<%= order_footer("order", @orders) %>
+<script>
+  $("#company").change(function () {
+    var str = "";
+    $("#company option:selected").each(function () {
+      str += $(this).val() + " ";
+      $.ajax({
+        url: "/customer_dropdown?company=" + str ,
+        success: function(data) {
+          $("#second_drop").html(data);
+        }
+      });
+    });
+  }).change();
+</script>

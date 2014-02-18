@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= @config['cms_owner'] %></title>
+    <% unless Rails.env.test? -%>
+      <meta name="authenticity-token" id="authenticity-token" content="<%= form_authenticity_token %>" />
+    <% end -%>
+    <%= stylesheet_link_tag "home" %>
+    <%= include_tiny_mce_js_if_needed %>
+    <%= tiny_mce_init_if_needed %>
+    <%= javascript_include_tag :defaults %>
+
+    <%= javascript_tag "blockContextClick();" %>
+    <!--[if lt IE 7]>
+      <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+    <!--
+        function simplePreload()
+        { 
+          var args = simplePreload.arguments;
+          document.imageArray = new Array(args.length);
+          for(var i=0; i<args.length; i++)
+          {
+            document.imageArray[i] = new Image;
+
+            document.imageArray[i].src = args[i];
+          }
+        }
+        simplePreload(<%= preload_graphic_navigation  %>);
+
+    //-->
+     </script>
+
+  </head>
+  <body onload="simplePreload(<%= preload_graphic_navigation %>);" >
+    <table width="101%" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
+      <tr>
+        <td align="center"><br />
+          <table width="90%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="/images/1.gif" alt="" width="40" height="169" /></td>
+              <td width="100%" align="center" class="topbg">
+                <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="left"><a href="/"><img src="/images/logo.gif" alt="" width="137" height="94" border="0" /></a></td>
+                    <td align="right"><img src="/images/flower.jpg" alt="" width="439" height="169" /></td>
+                  </tr>
+                </table>
+              </td>
+              <td><img src="/images/2.gif" alt="" width="40" height="169" /></td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="center" bgcolor="#004A53">
+                      <table width="85%" border="0" cellpadding="0" cellspacing="0">
+                        <tr align="center">
+                          <%= website_navigation %>
+                          <%= get_catalogue_login %>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="botbg">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="left" valign="bottom" class="bg3"><img src="/images/3.gif" alt="" width="40" height="40" /></td>
+                          <td width="100%" height="472" align="center">
+                            <%= @object.page.content %>
+                            <p>&nbsp;</p>
+                          <p>&nbsp;</p></td>
+                          <td align="right" valign="bottom" class="bg4"><img src="/images/4.gif" alt="" width="40" height="40" class="bg4" /></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<tr class="<%= cycle("row_dark", "row_light") -%>">
+  <td style="border:0px;width:24px;">
+    <%= image_tag("/images/media_library/mimetypes/unknown.png", :alt => "view", :width => "22px", :height => "22px") %>
+  </td>
+  <td>
+    <% form_tag(
+      {:action => :create_object, :id => @parent_id != 0 ? @parent_id : nil},
+      :multipart => true, :id => "create_object", :name => "create_object"
+    ) do %>
+      <%= text_field 'media_object', 'name', {:class => "input_media", :style => "width:200px"}  %>
+      <%= collection_select(
+        "media_object",
+        'media_type_id',
+        MediaType.find(:all, :order => "name ASC"), 'id', 'name',
+        {},
+        {
+          :class => "input_media_select",
+          :onChange => "
+            if (this.value == '1') { $('#new_file').show(); $('#new_page').hide(); }
+            if (this.value == '2') { $('#new_file').hide(); $('#new_page').show(); }
+          "
+        }
+      ) %>
+      <%= hidden_field 'media_object', 'media_holder_id', {:value => @parent_id}  %>
+      <span id="new_file">
+        <%= file_field 'media_file', 'file_name', {:class => "input_media_file", :style => "width:200px;", :size => 15}  %>
+      </span>
+      <span id="new_page" style="display:none">
+        <%= collection_select(
+          'page',
+          'template_item_id',
+          TemplateItem.find(:all, :order => 'name'), 'id', 'name',
+          :class => "input_media_select",
+          :style => "width:204px"
+        ) %>
+      </span>
+      <%= focus("media_object_name") -%>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to(
+      image_tag("/images/cms/ok.png", :alt => "save", :width => "24px", :height => "24px"),
+      "javascript:void(0)",
+      :onclick => "$('#create_object').submit(); return false;",
+      :title => "save"
+    ) %>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/cancel.png", :alt => "cancel", :width => "24px", :height => "24px"),
+      {:url => {:action => 'browse', :id => @parent_id}},
+      :title => "cancel"
+    ) %>
+  </td>
+</tr>

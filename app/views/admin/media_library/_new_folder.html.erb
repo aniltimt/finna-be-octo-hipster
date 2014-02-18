@@ -1,0 +1,30 @@
+<tr class="<%= cycle("row_dark", "row_light") -%>">
+  <td style="border:0px">
+    <%= image_tag("/images/media_library/folder.png", :alt => "view") %>
+  </td>
+  <td>
+    <% form_remote_tag(
+      :url => {:action => :create_folder, :id => @parent_id},
+      :html => {:id => "create_folder", :name => "create_folder"}
+    ) do %>
+      <%= text_field('media_holder', 'name', {:class => "input_media", :style => "width:200px"}) %>
+      <%= hidden_field('media_holder', 'parent_id', {:value => @parent_id}) %>
+      <%= focus("media_holder_name") -%>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to(
+      image_tag("/images/cms/ok.png", :alt => "save", :width => "24px", :height => "24px"),
+      "javascript:void(0)",
+      :onclick => "document.getElementById('create_folder').onsubmit(); return false;",
+      :title => "save"
+    ) %>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/cancel.png", :alt => "cancel", :width => "24px", :height => "24px"),
+      {:url => {:action => 'browse', :id => @parent_id}},
+      :title => "cancel"
+    ) %>
+  </td>
+</tr>

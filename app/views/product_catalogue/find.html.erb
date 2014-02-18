@@ -1,0 +1,20 @@
+<%= front_page_title('Searching for: "'+params[:search_string]+'"')%>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="media_items">
+<tr>
+  <td class="label" colspan="3">Name</td>
+</tr>
+<% for style in @styles %>    
+  <tr class="<%= cycle("row_dark", "row_light") -%>">
+    <td style="border:0px;">
+  <%= link_to(highlight(style.title, params[:search_string], '<span style="font-weight:bold;">\1</span>'),{:controller=>"product_catalogue",:action=>'show', :style_id=>style.id, :id=>style.category_id}, :title=>"view") %>
+    </td>                   
+  </tr>
+<% end -%> 
+<% if @styles.blank? %>
+  <tr class="<%= cycle("row_dark", "row_light") -%>">               
+      <td colspan="2" class="note">No results found</td>      
+  </tr>    
+<% end -%> 
+</table>
+<br />
+<%= link_to("Back",{:action=>'list'}) %>

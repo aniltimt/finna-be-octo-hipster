@@ -1,0 +1,220 @@
+<%= error_messages_for 'specification' %>
+<!--[form:specification]-->
+<table class="form" border="0">
+  <tr>
+    <td>Item</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "item",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td style="padding-top:25px;">Description</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "description",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Visible on Website</td>
+  </tr>
+  <tr>
+    <td><%= select("specification", "visible", [['Yes', true], ['No', false]], {:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Drainage</td>
+  </tr>
+  <tr>
+    <td><%= select("specification", "drainage", [['Yes', true], ['No', false]], {:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Inches OD</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "od_ol_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+   <tr>
+    <td>Inches HT</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "ht_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Inches BD</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "bd_bl_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>CMS OD</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "od_ol_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>CMS HT</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "ht_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>CMS BD</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "bd_bl_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Capacity Liquid Litres</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "litres",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Capacity U.S. Liquid Gallons</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "us_gallons",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Skid Pack</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "bulk_skids",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Weight Grams</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "weight_grams",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Style</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "sp_style",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Colour</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "colour",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Type</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "sp_type",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Vendor Specific</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "vendor_specific",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Outside Width (OW) Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "ow_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Inside Diameter/Length (ID/IL)Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "id_il_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Inside Width (IW) Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "iw_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+   <tr>
+    <td>Base/Width (BW) Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "bw_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+ <tr>
+    <td>Outside Width (OW) CMS</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "ow_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Inside Diameter/ Length (ID/IL) CMS</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "id_il_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Inside Width (IW) CMS</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "iw_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Base/Width (BW) CMS</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "bw_cms",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Weight Pounds</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "weight_pounds",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Skids In 40'H Container</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skids_container",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>SKID Length Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_length_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>SKID Width Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_width_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>SKID Height Inches</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_height_inch",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>SKID Length CM</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_length_cm",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>SKID Width CM</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_width_cm",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>SKID Height CM</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_height_cm",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr>
+  <tr>
+    <td>Skid Weight Pounds</td>
+  </tr>
+  <tr>
+    <td><%= text_field("specification", "skid_weight_pounds",{:class => 'input', :style => "width:300px;"}) %></td>
+  </tr> 
+  <tr>   
+    <td style="text-align:right;padding-top:10px">
+      <%= submit_tag 'Save',{:class => "buttons"} %>
+    </td>
+  </tr>  
+</table>
+<!--[eoform:specification]-->

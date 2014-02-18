@@ -1,0 +1,7 @@
+<%= page_title('Editing specification') %>
+<% form_tag({:action => 'update_specification', :id => @specification}) do %>
+  <%= render :partial => 'specification_form' %>
+<% end %>
+<p>
+  <%= link_to 'Back', {:action => 'edit_style', :id => @specification.style} %>
+</p>

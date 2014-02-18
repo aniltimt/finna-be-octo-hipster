@@ -1,0 +1,64 @@
+<tr class="<%= cycle("row_dark", "row_light") -%>"
+    ondblclick="<%= remote_function(
+                      :url => {
+                        :action => 'browse',
+                        :id => @parent_id,
+                        :folder_id => folder,
+                        :action_status => "edit_folder"
+                      }
+                    ) -%>"
+    onclick="select_item(<%= folder.id %>, 'selected_folders', this)">
+  <td style="border:0px">
+    <%= link_to(
+      image_tag("/images/media_library/folder.png", :alt => "view", :width => "24px", :height => "24px"),
+      {:action => "browse", :id => folder}, :title => "view"
+    ) %>
+  </td>
+  <% if params[:action_status] && params[:action_status] == "edit_folder" && params[:folder_id] == folder.id.to_s -%>
+  <td>
+    <% form_remote_tag(
+      :url => {:action => :update_folder, :id => @parent_id, :folder_id => folder.id},
+      :html => {:id => "save_folder_#{folder.id}", :name => "save_folder_#{folder.id}"}
+    ) do %>
+      <%= text_field 'media_holder', 'name', {:class => "input_media", :style => "width:200px", :value => folder.name}  %>
+      <%= focus("media_holder_name") -%>
+    <% end -%>
+  </td>
+  <td>
+    <%= link_to(
+      image_tag("/images/cms/ok.png", :alt => "save", :width => "24px", :height => "24px"),
+      "javascript:void(0)",
+      :onclick => "document.getElementById('save_folder_#{folder.id}').onsubmit(); return false;",
+      :title => "save"
+    ) %>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/cancel.png", :alt => "cancel", :width => "24px", :height => "24px"),
+      {:url => {:action => 'browse', :id => @parent_id}},
+      :title => "cancel"
+    ) %>
+  </td>
+  <% else -%>
+  <td>
+    <%= link_to(folder.name, {:action => "browse", :id => folder}, :title => "view") %>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/edit.gif", :alt => "edit folder", :width => "24px", :height => "24px"),
+      {:url => {:action => 'browse', :id => @parent_id, :folder_id => folder, :action_status => "edit_folder"}},
+      :title => "edit folder"
+    ) %>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/delete.gif", :alt => "delete folder", :width => "24px", :height => "24px"),
+      {
+        :url => {:action => 'delete_folder', :id => @parent_id, :folder_id => folder},
+        :confirm => "Are you sure you want do delete this item?"
+      },
+      :title => "delete folder"
+    ) %>
+  </td>
+  <% end -%>
+</tr>

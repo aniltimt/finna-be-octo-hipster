@@ -1,0 +1,140 @@
+<table width="90%" border="0" cellspacing="0" cellpadding="20">
+  <tr align="left">
+    <td valign="top" class="vline" nowrap="nowrap"><span class="h">Products</span>
+      <%= browse_categories %>  
+    </td>
+    <td align="center" valign="top"><p>&nbsp;</p></td>
+    <% unless @style.blank? %>
+    <td align="left" style="padding-bottom:50px;">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="h" width="150">
+            <%= @style.title %>
+          </td>
+          <td colspan='2' align="right" style="padding-right:2px;">
+            <% form_tag(:action => 'find') do -%>
+                    <%= text_field_tag('search_string', '', {:style => "width:185px;", :class => "input"}) %>
+                  <%= submit_tag("Find", :class => 'buttons') %>
+            <% end -%>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table border="0" align="right" valign="top" width="100%" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="right" colspan="2">
+                  <% form_tag({:action => 'search_by_size'}, :method => "get") do -%>
+                    <table border="0"  style="padding-right:0px;" align="right">
+                      <tr>
+                        <td nowrap="nowrap">Size, from:</td>
+                        <td><%= select 'size', 'from', [8,10,12,14,16,18], {:include_blank => true}, {:class => 'input', :width => '10px'} %></td>
+                        <td nowrap="nowrap">to:</td>
+                        <td><%= select 'size', 'to', [8,10,12,14,16,18], {:include_blank => true}, {:class => 'input', :width => '10px'} %></td>
+                        <td style="padding-right:0px;"><%= submit_tag("Find", :class => 'buttons') %></td>
+                      </tr>
+                    </table>
+                  <% end -%>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>  
+          <% @style.images.each do |image| %>
+            <td width="33%" align="center" style="padding: 20px;">
+              <% link_to(image.url(:medium), {:border => '0', :class => 'thickbox'}) do %>
+                <%= image_tag image.url(:thumb), :style => 'border:0px;', :alt => @style.title %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+        <tr>  
+          <td colspan='3' align="center" class="h">
+            <% link_to @style.palette.url, :class => 'thickbox' do %>
+              <%= image_tag("/images/media_library/mimetypes/rgb.png") %>
+              <span>View Color Palette</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <br />
+            <% unless @specifications.blank? -%>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td bgcolor="#EEEEEE">
+                    <table width="100%" border="0" cellpadding="3" cellspacing="1" class="texts">
+                      <tr align="center" valign="baseline">
+                        <td rowspan="2"><strong>ITEM </strong></td>
+                        <td rowspan="2"><strong>DESCRIPTION</strong></td>
+
+                        <td nowrap="nowrap" colspan="3"><strong>INCHES</strong></td>
+                        <td nowrap="nowrap" colspan="3"><strong>CMS</strong></td>
+
+                        <td rowspan="2"><strong>CAPACITY LIQUID LITRES</strong></td>
+                        <td rowspan="2"><strong>CAPACITY U.S. LIQUID GALLONS</strong></td>
+                        <td rowspan="2"><strong>SKID PACK</strong></td>
+                        
+                      </tr>
+                      <tr>
+                        <td align="center"><strong>OD </strong></td>
+                        <td align="center"><strong>HT </strong></td>
+                        <td align="center"><strong>BD</strong></td>
+
+                        <td align="center"><strong>OD</strong></td>
+                        <td align="center"><strong>HT</strong></td>
+                        <td align="center"><strong>BD</strong></td>
+
+        
+                    
+                      </tr>
+                      <% for specification in @specifications -%>
+                        <tr align="center" bgcolor="#FFFFFF">
+                          <td><%= specification.item %></td>
+                          <td><%= specification.description %></td>
+                          <td><%= specification.od_ol_inch %></td>
+                          <td><%= specification.ht_inch %></td>
+                          <td><%= specification.bd_bl_inch %></td>
+                          <td><%= specification.od_ol_cms %></td>
+                          <td><%= specification.ht_cms %></td>
+                          <td><%= specification.bd_bl_cms %></td>
+                          <td><%= specification.litres %></td>
+                          <td><%= specification.us_gallons %></td>
+                          <td><%= specification.bulk_skids %></td>            
+                        </tr>
+                      <% end -%>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            <% end -%>
+            <br />
+            <br />
+            <% unless @gallery_items.blank? -%>
+              <table border="0" cellpadding="2" cellspacing="0" align="center">
+              <% gallery_item_index=0; gallery_items_max_count = @gallery_items.size; per_row=5; row_count=0 -%>
+               <% while gallery_item_index < gallery_items_max_count -%>
+                <%  gallery_items, count = get_row_items_data(gallery_item_index,@gallery_items, per_row); gallery_item_index+=count -%> 
+                 <% row_count+=1 -%>
+                <tr>
+                <% for i in 0...per_row -%>
+                 <% gallery_item = gallery_items[i] -%>
+                  <% if gallery_item.nil? -%>
+                    <td>&nbsp;</td>
+                  <% else -%>  
+                    <td><%= link_to("<img src='#{gallery_item.image.url(:thumb)}' style='border:0px;' alt='#{gallery_item.name}' />",gallery_item.image.url(:medium),{:border=>'0', :class => 'thickbox'}) %></td>
+                  <% end -%>
+                <% end -%>
+               <% end -%>
+                </tr>
+              </table>
+            <% end -%>
+          </td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+    </td>
+    <% end %>
+  </tr>
+</table>
+<br />

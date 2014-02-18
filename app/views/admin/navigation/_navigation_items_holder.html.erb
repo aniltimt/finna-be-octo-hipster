@@ -1,0 +1,6 @@
+<div id="navigation_items_<%= parent_id %>" <% if parent_id!='0' %>class="children_for_list_item" style="display:none"<% end %>>
+<%= render :partial=>"navigation_item", :collection=>navigation_items, :locals=>{:parent_id=>parent_id} %>
+</div>
+ <%= sortable_element "navigation_items_#{parent_id}",
+:url => {:action => 'update_positions',:parent_id=>parent_id},
+:tag => 'div' %> 

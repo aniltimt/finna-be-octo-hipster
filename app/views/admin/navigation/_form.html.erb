@@ -1,0 +1,139 @@
+<%= error_messages_for 'navigation_item' %>
+<%= hidden_field 'navigation_item', 'parent_id' %>
+<!--[form:navigation_item]-->
+<table class="form">
+  <tr>
+    <td class="field_label"  width="140px">Name:</td>
+    <td><%= text_field 'navigation_item', 'name',{:class=>"input", :style=>"width:222px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label" width="140px">URL:</td>
+    <td><%= text_field 'navigation_item', 'url',{:class=>"input", :style=>"width:222px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label" width="140px"><label for="navigation_graphical">Graphical:</label></td>
+    <td><%= check_box 'navigation_item', 'graphical', :onclick => "$('#graphical_navigation').toggle()", :style=>"margin:0px" %></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <table id="graphical_navigation" <% if @navigation_item.graphical == false -%> style="display:none" <% else -%> style="display:block" <% end -%>  > 
+  <% if !@navigation_item.default_image.empty? %>
+    <tr>
+      <td class="field_label" width="139px"><span id="default_image_label">Default image:</span></td>
+      <td>
+        <span id="default_image">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><%= text_field 'navigation_item', 'default_image', {:class=>"input", :style=>"width:173px"} %></td>
+              <td><%= link_to(image_tag("/images/cms/view.gif",:alt=>"view"), {:action => 'get_image',:id => @navigation_item.id, :type => 'default'}, :class => "thickbox") %></td>
+              <td><%= link_to_remote image_tag("/images/cms/delete.gif",:alt=>"delete"), {:url => {:action => 'delete_image', :id => @navigation_item.id, :type => 'default'}, :success => "$('#default_image_label').hide(); $('#default_image').hide();",:confirm=>"Are you sure?"}%></td>
+            </tr>
+          </table>  
+        </span>
+      </td>
+    </tr>
+  <% end %>
+   <tr>
+    <td class="field_label" width="139px">Upload default image:</td>
+    <td style="text-align:left"><%= file_field 'file', 'default_image', {:class=>"input", :style=>"width:205px;", :size => '19'}  %></td>
+  </tr>
+
+  <% if !@navigation_item.hover_image.empty? %>
+    <tr>
+      <td class="field_label" width="139px">
+        <span id="hover_image_label">Hover image:</span>
+        </td>
+      <td>
+        <span id="hover_image">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><%= text_field 'navigation_item', 'hover_image', {:class=>"input", :style=>"width:173px"} %></td>
+              <td><%= link_to(image_tag("/images/cms/view.gif",:alt=>"view"), {:action => 'get_image',:id => @navigation_item.id, :type => 'hover'}, :class => "thickbox") %></td>
+              <td><%= link_to_remote image_tag("/images/cms/delete.gif",:alt=>"delete"), {:url => {:action => 'delete_image', :id => @navigation_item.id, :type => 'hover'}, :success => "$('#hover_image_label').hide(); $('#hover_image'].hide();",:confirm=>"Are you sure?"}%></td>
+            </tr>
+          </table>  
+        </span>
+      </td>
+    </tr>
+  <% end %>
+   <tr>
+    <td class="field_label" width="139px">Upload hover image:</td>
+    <td style="text-align:left"><%= file_field 'file', 'hover_image', {:class=>"input", :style=>"width:205px;", :size => '19'}  %></td>
+  </tr>
+  <% if !@navigation_item.current_image.empty? %>
+    <tr>
+      <td class="field_label" width="139px">
+        <span id="current_image_label">Current image:</span>
+      </td>
+      <td>
+        <span id="current_image">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><%= text_field 'navigation_item', 'current_image', {:class=>"input", :style=>"width:173px"} %></td>
+              <td><%= link_to(image_tag("/images/cms/view.gif",:alt=>"view"), {:action => 'get_image',:id => @navigation_item.id, :type => 'current'}, :class => "thickbox") %></td>
+              <td><%= link_to_remote image_tag("/images/cms/delete.gif",:alt=>"delete"), {:url => {:action => 'delete_image', :id => @navigation_item.id, :type => 'current'}, :success => "$('#current_image_label').hide(); $('#current_image').hide();",:confirm=>"Are you sure?"}%></td>
+            </tr>
+          </table>  
+        </span>
+      </td>
+    </tr>
+  <% end %>
+   <tr>
+    <td class="field_label" width="139px">Upload current image:</td>
+    <td style="text-align:left"><%= file_field 'file', 'current_image', {:class=>"input", :style=>"width:205px;", :size => '19'}  %></td>
+  </tr>
+</table>
+    </td>
+  </tr>
+  <tr>
+    <td class="field_label" width="140px">Parent:</td>
+    <td><%= text_field 'navigation_item_parent', 'name',{:class=>"input", :style=>"width:109px",:readonly=>true,:value=>@navigation_item.parent ? @navigation_item.parent.name : "none"}  %>
+    <%= hidden_field 'navigation_item', 'parent_id'  %>
+<%= link_to_remote("Browse",{:url =>{:action=>'browse_navigation_items',:id=>@navigation_item.id ? @navigation_item.id : 0},:success=>visual_effect(:appear,'navigation_items')},{:class=>"link_button", :title=>"browse"})%> 
+<%= link_to("None","javascript:void(0);",{:class=>"link_button", :title=>"set 'none'", :onclick=>"document.getElementById('navigation_item_parent_id').value=0;document.getElementById('navigation_item_parent_name').value='none';"})%>   
+    </td>
+  </tr>  
+  <tr>
+    <td colspan="2">
+	<% hidden_div_if(true, {:id=>"navigation_items"}) do %>
+	<% end %></td>
+  </tr>   
+  <tr>
+    <td class="field_label"  width="140px">Media Object:</td>
+    <td><%= text_field 'media_object', 'name',{:class=>"input", :style=>"width:109px",:readonly=>true,:value=>@navigation_item.media_object ? @navigation_item.media_object.name : "none"}  %>
+    <%= hidden_field 'navigation_item', 'media_object_id'  %>
+<%= link_to_remote("Browse",{:url =>{:action=>'browse_media_library'},:before=>visual_effect(:appear,'media_library')},{:class=>"link_button", :title=>"browse"})%>   
+<%= link_to("None","javascript:void(0);",{:class=>"link_button", :title=>"set 'none'", :onclick=>"document.getElementById('navigation_item_media_object_id').value=0;document.getElementById('media_object_name').value='none';"})%>   
+ 
+    </td>
+  </tr>  
+  <tr>
+    <td colspan="2">
+	<% hidden_div_if(true, {:id=>"media_library"}) do %>
+	<% end %></td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" class="field_label"><label for="navigation_item_enabled">Enabled?</label>
+    <%= check_box 'navigation_item', 'enabled', :style=>"margin:0px" %>
+	<%= submit_tag 'Save',{:class=>"buttons"} %> </td>
+  </tr>  
+</table> 
+      <script type="text/javascript">
+      // <![CDATA[
+        $name = $('#navigation_item_name');
+        $url = $('#navigation_item_url');
+        $old_name = $name.val() || '';
+        $navigation_item_url = '<%= @navigation_item_url %>';
+
+        function name_updated() {
+          if ($navigation_item_url + jQuery.toSlug($old_name) == $url.val())
+            $url.val($navigation_item_url + jQuery.toSlug($name.val()));
+          $old_name = $name.val();
+        }
+
+        $('#navigation_item_name').bind("keyup", name_updated);
+      // ]]>
+      </script>
+<!--[eoform:navigation_item]-->
+

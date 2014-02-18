@@ -1,0 +1,28 @@
+<%=page_title('Searching for: "'+params[:search_string]+'"')%>
+ <table width="100%" border="0" cellpadding="2" cellspacing="1" class="list" id="media_items">
+	<tr>
+      <td class="label" width="24">&nbsp;</td>
+      <td class="label" colspan="3">Name</td>
+    </tr>
+    <% for folder in @folders %>    
+        <tr class="<%= cycle("row_dark", "row_light") -%>">
+          <td style="border:0px" width="24">
+<%= link_to(image_tag("/images/media_library/folder.png",:alt=>"view"),{:controller=>"media_library", :action=>'browse', :id=>folder}, :title=>"view") %></td>         
+		  <td style="border:0px;" ><%= link_to(highlight(folder.name, params[:search_string], '<span style="font-weight:bold;">\1</span>'),{:controller=>"media_library",:action=>'browse', :id=>folder}, :title=>"view") %>
+          </td>                   
+        </tr>
+	<% end -%> 
+    <% for object in @objects %>
+        <tr class="<%= cycle("row_dark", "row_light") -%>">
+          <td style="border:0px" width="24">
+<%= link_to(get_icon(object),{:controller=>"media_library",:action=>"get_object", :id=>object}, :title=>"view",:target=>"_blank") %></td>                
+          <td><%= link_to(highlight(object.name, params[:search_string], '<span style="font-weight:bold;">\1</span>'),{:controller=>"media_library",:action=>"get_object", :id=>object}, :title=>"view",:target=>"_blank") %></td>      
+        </tr>    
+    <% end -%>  
+    <% if @objects.empty? and @folders.empty? %>
+        <tr class="<%= cycle("row_dark", "row_light") -%>">               
+          <td colspan="2">No results found</td>      
+        </tr>    
+    <% end -%> 
+</table>
+<%= ruled_table("media_items",1) %>

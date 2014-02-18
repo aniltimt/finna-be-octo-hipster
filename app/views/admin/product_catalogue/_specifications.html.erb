@@ -1,0 +1,23 @@
+<% unless @specifications.empty? -%> 
+   <% for specification in @specifications -%>
+    <div id="item_<%= specification.id.to_s %>">
+      <table width="100%" border="0" cellpadding="2" cellspacing="1" id="specification_table_<%= specification.id.to_s %>" style="margin-top:-1px;margin-bottom:-1px;margin-left:-1px;margin-right:0px">
+        <tr class="<%= cycle("row_dark", "row_light") -%>">
+          <td><%= specification.item %></td>
+          <td style="width:30px">
+            <%= link_to(image_tag("/images/cms/edit.gif", :alt=>"edit_specification"),   {:action=>"edit_specification", :id => specification.id }, :title => "Edit") %>
+          </td>
+          <td style="width:30px">
+            <%= link_to_remote(image_tag("/images/cms/delete.gif",:alt=>"destroy_gallery_item"),:url => {:action=>"destroy_specification", :id => specification.id, :style_id => specification.style_id}, :title=>"delete", :confirm=>"Are you sure you want to delete this gallery item?", :method => :post) %>
+          </td>          
+        </tr>
+      </table>
+      <%= ruled_table("specification_table_#{specification.id}",0) %>
+    </div>
+    <%= sortable_element("specifications", :tag => 'div', :url => {:action => 'update_specification_positions', :style_id => specification.style_id}) %>
+  <% end -%>
+<% else -%>
+  <tr>
+    <td colspan="3" class="note">No specifications</td>
+  </tr>
+<% end -%>

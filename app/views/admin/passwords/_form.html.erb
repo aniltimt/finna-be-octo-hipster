@@ -1,0 +1,16 @@
+<%= error_messages_for 'password' %>
+<!--[form:password]-->
+<table class="form" border="0">
+  <tr>
+    <td style="text-align:right;">Title:</td>
+    <td><%= text_field 'password', 'title', {:class => "input", :style => "width:250px"}  %></td>
+  </tr>
+  <tr>
+    <td style="text-align:right;">Value:</td>
+    <td><%= text_field 'password', 'value', {:class => "input", :style => "width:250px"}  %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align:right;"><%= submit_tag 'Save', {:class => "buttons"} %></td>
+  </tr>
+</table>
+<!--[eoform:password]-->

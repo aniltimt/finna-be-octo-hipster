@@ -1,0 +1,13 @@
+<div id="categories_<%= parent_id %>" <% if parent_id!='0' %> class="children_for_list_item" style="display:none"<% end %> >
+     <table width="100%" border="0" cellpadding="2" cellspacing="1" id="category_flat_table<%= category_flat.id.to_s %>">
+     <tr class="<%= category_flat.parent_id==0 ? cycle("row_dark", "row_light", :name => category_flat.parent_id.to_s) : "row_light" -%>">
+     <% if category_flat.styles.size > 0 %>
+     <% else %>
+     <td style="border:0px" width="20"><%= link_to_elapse(category_flat,"categories") %></td>
+     <td onclick="document.getElementById('category_parent_id').value=<%= category_flat.id.to_s %>;document.getElementById('category_parent_name').value='<%= adjust_quotes(category_flat.title) %>';$('#categories').hide()" style="cursor:pointer" title="select"><%= category_flat.title %></td>
+     <% end %>
+  </tr>
+  </table>
+  <%= ruled_table("category_table#{category_flat.id}",0) %>
+  <%= render :partial=>"category_flat", :collection => category_flat.children.find(:all,:conditions=>["id!=?",@category ? @category.id : 0]), :locals => {:parent_id => category_flat.id.to_s} %>
+</div>

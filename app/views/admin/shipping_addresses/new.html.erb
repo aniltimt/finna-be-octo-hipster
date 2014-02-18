@@ -1,0 +1,4 @@
+<%= page_title('New Shipping Address') %>
+<% form_for @shipping_address, :url => { :controller => "admin/shipping_addresses",:action => "create" }  do |order_form| %>
+  <%= render :partial => 'form',:locals=>{:f => order_form} %>
+<% end %>

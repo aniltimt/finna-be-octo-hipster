@@ -1,0 +1,22 @@
+<%= page_title('Passwords') %>
+<table border="0" width="100%" cellpadding="2" cellspacing="1" class="list" id="passwords">
+  <tr>
+    <td class="label">Title</td>
+    <td class="label_actions" style="width:30px;">edit</td>
+    <td class="label_actions" style="width:30px;">delete</td>
+  </tr>
+   <% unless @passwords.blank? -%>
+     <% for password in @passwords %>
+      <tr>
+        <td><%= password.title %></td>
+        <td><%= link_to_edit(password) %></td>
+        <td><%= link_to_delete(password) %></td>
+      </tr>
+    <% end %>
+  <% else -%>
+    <tr>
+      <td class="note" colspan="3">No passwords</td>
+    </tr>
+  <% end -%>
+</table>
+<%= list_footer("password", @passwords) %>

@@ -1,0 +1,6 @@
+<% if logged_in? %>
+  <strong><%= current_user.login %></strong>:
+  <a href="/admin/account/profile" title="Your Profile">Profile</a> | <a href="/admin/account/logout" title="Goodbye">Logout</a>
+<% else %>
+  <a href="/admin/account/login" title="Log in">Log in</a>
+<% end %>

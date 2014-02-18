@@ -1,0 +1,54 @@
+
+<tr class="fields">
+
+    <% show_id_var = !@count.blank? ?  @count.to_s : 'new_order_product_details'  %>
+
+  <td><%= f.text_field 'code',{:class=>"input",:onblur=>"myFunction(this);",:style=>"width:60px"} %>
+
+  </td>
+
+  <td><span style="text-align:left" id='<%= show_id_var %>' >-<%= colr = !f.object.colour.blank? ? f.object.colour : 'AC' %></span></td>
+
+  <% show_id_var ='#' + show_id_var%>
+
+  <td><%= f.object.description %><%= f.hidden_field :description %></td>
+
+  <td><%= f.select 'colour', options_for_select(Color.all, f.object.colour),{:class=>"input"},{:style=>"width:90px",:class=>"colour",:onChange=>"code_disp(this,'#{show_id_var}');"} %></td>
+
+  <td><%= f.text_field 'notes',{:class=>"input", :style=>"width:80px"} %></td>
+
+  <td><%= f.select 'drainage',options_for_select([['Yes',true],['No',false]],f.object.drainage) %></td>
+
+  <td><%= f.text_field 'skid',{:class=>"input",:onblur=>"total(this);", :style=>"width:50px"} %><%= f.hidden_field :total %></td>
+
+  <td><%= f.object.pack %><%= f.hidden_field :pack %></td>
+
+  <td><%= f.object.total %></td>
+
+  <td><%= f.text_field 'price',{:class=>"input",:onblur=>"total_amount(this);", :style=>"width:40px"} %><%= f.hidden_field :total_amount %></td>
+
+  <td class="total_amount"> <%= number_to_currency(f.object.total.to_f * f.object.price.to_f)  %></td>
+
+  <td><% f.hidden_field :_destroy %><%= link_to_remove_fields "remove", f %></td>
+
+  <td><%= link_to "Add","#",:id =>"#{!@count.blank? ? 'barcode_change' + @count.to_s : 'barcode_change'}",:onclick=>"show_barcode(this);" %></td>
+
+</tr>
+
+
+
+<tr class="<%= !@count.blank? ? 'barcode_change' + @count.to_s : 'row_change_show'  %>" style="display: none;">
+
+  <td><%= f.text_field 'barcode_number',{:class=>"input",:placeholder=>"Barcode Number", :style=>"width:80px"} %></td>
+
+  <td><%= f.text_field 'bar_line_one',{:class=>"input",:placeholder=>"Line 1", :style=>"width:80px"} %></td>
+
+  <td><%= f.text_field 'bar_line_two',{:class=>"input",:placeholder=>"Line 2", :style=>"width:80px"} %></td>
+
+  <td><%= f.text_field 'bar_line_three',{:class=>"input",:placeholder=>"Line 3", :style=>"width:80px"} %></td>
+
+  <td><%= f.text_field 'bar_line_four',{:class=>"input",:placeholder=>"Line 4", :style=>"width:80px"} %></td>
+
+  <td><%= f.text_field 'barcode_position',{:class=>"input",:placeholder=>"Position", :style=>"width:80px"} %></td>
+
+</tr>

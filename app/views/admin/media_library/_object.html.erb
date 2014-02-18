@@ -1,0 +1,69 @@
+<tr class="<%= cycle("row_dark", "row_light") -%>"
+    ondblclick="<%= remote_function(
+                      :url => {
+                        :action => 'browse',
+                        :id => @parent_id,
+                        :object_id => object,
+                        :action_status => "edit_object"
+                      }
+                    ) -%>"
+    onclick="select_item(<%= object.id %>, 'selected_media_objects', this)">
+  <td style="border:0px">
+    <%= link_to(get_icon(object), {:action => "get_object", :id => object}, :title => "view", :target => "_blank") %>
+  </td>
+  <% if params[:action_status] && params[:action_status] == "edit_object" && params[:object_id] == object.id.to_s -%>
+  <td>
+    <% form_remote_tag(
+      :url => {:action => :update_object, :id => @parent_id, :object_id => object.id},
+      :html => {:id => "save_object_#{object.id}", :name => "save_object_#{object.id}"}
+    ) do %>
+    <%= text_field 'media_object', 'name', {:class => "input_media", :style => "width:200px", :value => object.name}  %>
+    <%= focus("media_object_name") -%>
+    <% end -%>
+  </td>
+  <td>
+    <%= link_to(
+      image_tag("/images/cms/ok.png", :alt => "save"),
+      "javascript:void(0)",
+      :onclick => "document.getElementById('save_object_#{object.id}').onsubmit(); return false;",
+      :title => "save"
+    ) %>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/cancel.png", :alt => "cancel"),
+      {:url => {:action => 'browse', :id => @parent_id}},
+      :title => "cancel"
+    ) %>
+  </td>
+  <% else -%>
+  <td>
+    <%= link_to(object.name, {:action => "get_object", :id => object}, :title => "view", :target => "_blank") %>
+  </td>
+  <td>
+    <% if object.media_type.codename == "page" -%>
+      <%= link_to(
+        image_tag("/images/cms/edit.gif", :alt => "edit", :width => "24px", :height => "24px"),
+        {:action => :edit_object, :id => object},
+        :title => "edit page"
+      ) %>
+    <% else -%>
+      <%= link_to_remote(
+        image_tag("/images/cms/edit.gif", :alt => "edit file"),
+        {:url => {:action => 'browse', :id => @parent_id, :object_id => object, :action_status => "edit_object"}},
+        :title => "edit file"
+      ) %>
+  <% end -%>
+  </td>
+  <td>
+    <%= link_to_remote(
+      image_tag("/images/cms/delete.gif", :alt => "delete file", :width => "24px", :height => "24px"),
+      {
+        :url => {:action => 'delete_object', :id => @parent_id, :object_id => object},
+        :confirm => "Are you sure you want do delete this item?"
+      },
+      :title => "delete file"
+    ) %>
+  </td>
+  <% end -%>
+</tr>

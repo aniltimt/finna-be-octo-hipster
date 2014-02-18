@@ -1,0 +1,8 @@
+<%= page_title('Editing gallery item') %>
+<% form_tag({:action => 'update_item', :id => @gallery_item}, :multipart=>true) do %>
+  <%= render :partial => 'item_form' %>
+<% end %>
+
+<p>
+  <%= link_to 'Back', {:action => 'edit_style', :id => @gallery_item.style} %>
+</p>

@@ -1,0 +1,48 @@
+<%= error_messages_for 'user' %>
+
+<!--[form:user]-->
+<table class="form">
+  <tr>
+    <td class="field_label">First Name:</td>
+    <td><%= text_field 'user', 'first_name',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Last Name:</td>
+    <td><%= text_field 'user', 'last_name',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Username:</td>
+    <td class="field_label"><%= text_field 'user', 'login',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Password:</td>
+    <td><%= password_field 'user', 'password',{:class=>"input", :style=>"width:200px", :value => (params[:user] and not params[:user][:password].empty?) ? @user.password : ''}  %></td>
+  </tr>  
+  <tr>
+    <td class="field_label">Confirm:</td>
+    <td><%= password_field 'user', 'password_confirmation',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>  
+  <tr>
+    <td class="field_label">Email:</td>
+    <td><%= text_field 'user', 'email',{:class=>"input", :style=>"width:200px"}  %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Role:</td>
+    <td><%= collection_select 'user', 'role_id', Role.find(:all, :order=>"name ASC"), 'id', 'name', {:include_blank=>true}, :class => "input", :style => "width:204px" %></td>
+  </tr>
+  <tr>
+    <td class="field_label">Spreadsheet Fields:</td>
+    <td><%= collection_select 'user', 'spreadsheet_field_ids', SpreadsheetField.all, 'id', 'name', {:include_blank => false}, :class => "input", :style => "width:204px", :multiple => true %></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="field_label"><label for="user_enabled">Enabled?</label>
+    <%= check_box 'user', 'enabled', :style=>"margin:0px" %>
+	<%= submit_tag 'Save',{:class=>"buttons"} %> </td>
+  </tr>      
+</table>
+
+
+
+
+<!--[eoform:user]-->
+

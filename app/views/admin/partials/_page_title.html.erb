@@ -1,0 +1,13 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="page_title" style="text-align:left"><%= text %></td>
+    <td align="right">
+      <%= link_to(
+        "Edit",
+        {:action => 'edit_object', :controller => '/admin/media_library', :id => @object},
+        {:alt => "Edit page", :title => "Edit page"}
+      ) if @object && current_user && current_user.role && current_user.role.permissions.find_by_name('media_library/edit') %>
+    </td>
+  </tr>
+</table>
+<br />

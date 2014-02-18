@@ -1,0 +1,13 @@
+<%= error_messages_for 'permission' %>
+
+<!--[form:permission]-->
+<table class="form">
+  <tr>
+    <td>Name:</td>
+    <td><%= text_field 'permission', 'name',{:class=>"input", :style=>"width:200px"}  %></td>
+    <td><%= submit_tag 'Save',{:class=>"buttons"} %> </td>
+  </tr>  
+</table> 
+<%= focus('permission_name') %>
+<!--[eoform:permission]-->
+

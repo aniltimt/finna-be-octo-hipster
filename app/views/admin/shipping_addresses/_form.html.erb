@@ -1,0 +1,160 @@
+
+    <%= f.error_messages %>
+<table class="form">
+    <tr>
+      <td class="field_label">Title:</td>
+      <td colspan="3" >
+        <%=f.hidden_field :customer_id %>
+        <%= text_field 'shipping_address', 'title',{:class=>"input", :style=>"width:500px"}  %>*
+      </td>
+    </tr>
+    <tr>
+      <td class="field_label">Arrival Port:</td>
+      <% case @shipping_address.customer.arrival_port when "VAN_BC" %>
+        <td>Vancouver</td>
+        <% when "CAL_AB" %>
+        <td>Calgary</td>
+        <% when "WIN_MB" %>
+        <td>Winnipeg</td>
+        <% when "CHA_IL" %>
+        <td>Chicago</td>
+        <% when "TOR_ON" %>
+        <td>Toronto</td>
+        <% when "MON_QC" %>
+        <td>Montreal</td>
+        <% when "SEA_WA" %>
+        <td>Seattle</td>
+        <% when "POR_OR" %>
+        <td>Portland</td>
+        <% when "CLE_OH" %>
+        <td>Cleveland</td>
+        <% when "COL_OH" %>
+        <td>Columbus</td>
+        <% when "DET_MI" %>
+        <td>Detroit</td>
+        <% when "IND_IN" %>
+        <td>Indianapolis</td>
+        <% when "MIN_MN" %>
+        <td>Minneapolis</td>
+        <% when "NWY_NY" %>
+        <td>New York</td>
+        <% when "BAL_NC" %>
+        <td>Baltimore</td>
+        <% when "WIL_NC" %>
+        <td>Wilmington</td>
+        <% when "CHA_CS" %>
+        <td>Charleston</td>
+        <% when "SAN_CA" %>
+        <td>San Francsico</td>
+        <% when "LOS_CA" %>
+        <td>Los Angeles</td>
+        <% when "OAK_CA" %>
+        <td>Oakland</td>
+        <% when "DEN_CO" %>
+        <td>Denver</td>
+        <% when "ATL_GA" %>
+        <td>Atlanta</td>
+        <% when "CHA_NC" %>
+        <td>Charlotte</td>
+        <% when "SAL_UT" %>
+        <td>Salt Lake City</td>
+        <% when "DAL_TX" %>
+        <td>Dallas</td>
+        <% when "HOU_TX" %>
+        <td>Houston</td>
+        <% when "NOR_VA" %>
+        <td>Norfolk</td>
+        <% when "SAV_GA" %>
+        <td>Savannah</td>
+        <% when "MIA_FL" %>
+        <td>Miami</td>
+        <% end %>
+      </td>
+      <td class="field_label">Shipping Region:</td>
+      <% case @shipping_address.customer.region when "CEA" %>
+        <td>Canada East</td>
+        <% when "CAC" %>
+        <td>Canada Central</td>
+        <% when "CAW" %>
+        <td>Canada West</td>
+        <% when "USE" %>
+        <td>US South East</td>
+        <% when "UNE" %>
+        <td>US North East</td>
+        <% when "USC" %>
+        <td>US South Central</td>
+        <% when "UNC" %>
+        <td>US North Central</td>
+        <% when "UNW" %>
+        <td>US North West</td>
+        <% when "USW" %>
+        <td>US South West</td>
+        <% when "UK" %>
+        <td>United Kindom</td>
+        <% when "AUS" %>
+        <td>Austrailia</td>
+        <% end %>
+    </tr>
+    <tr>
+      <td class="field_label">Receiver Name:</td>
+      <td><%= text_field 'shipping_address', 'receiver_name',{:class=>"input", :style=>"width:200px"}  %>*</td>
+      <td class="field_label">Email:</td>
+      <td><%= text_field 'shipping_address', 'email',{:class=>"input", :style=>"width:200px"}  %>*</td>
+    </tr>
+    <tr>
+      <td class="field_label">Phone:</td>
+      <td><%= text_field 'shipping_address', 'phone',{:class=>"input", :style=>"width:200px"}  %>*</td>
+      <td class="field_label"></td>
+      <td><%#= text_field 'shipping_address', 'fax',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Notes:</td>
+      <td colspan="3" ><%= text_field 'shipping_address', 'notes',{:class=>"input", :style=>"width:500px",:maxlength=>"127"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Street 1:</td>
+      <td><%= text_field 'shipping_address', 'street_1',{:class=>"input", :style=>"width:200px"}  %>*</td>
+      <td class="field_label">Country:</td>
+      <td>
+        <%=select_tag 'shipping_address[country]', options_for_select([
+          ['Canada','Canada'],
+          ['Usa','Usa'],
+          ['UK','UK'],
+          ['Argentine','Argentine'],
+          ['Ireland','Ireland']
+        ],@shipping_address.country),:class=>"input", :id=>"country", :style=>"width:200px"%>
+        <%#= text_field 'shipping_address', 'country',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+    <tr>
+      <td class="field_label">Street 2:</td>
+      <td><%= text_field 'shipping_address', 'street_2',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Province:</td>
+      <td><%= render :partial =>  "shipping_province_dropdown" %></td>
+    </tr>
+    <tr>
+      <td class="field_label">City:</td>
+      <td><%= text_field 'shipping_address', 'city',{:class=>"input", :style=>"width:200px"}  %></td>
+      <td class="field_label">Postal Code:</td>
+      <td><%= text_field 'shipping_address', 'postal_code',{:class=>"input", :style=>"width:200px"}  %></td>
+    </tr>
+ 
+    <tr>
+      <td colspan="4" class="field_label">
+      <%= submit_tag 'Save',{:class=>"buttons"} %> <%= link_to 'Cancel', "/admin/customers/edit/#{@shipping_address.customer_id}",:method=>'get',:class=>"buttons" %>
+    </td>
+    </tr>    
+  </table>
+
+<script>
+  $("#country").change(function () {
+    $("#country option:selected").each(function () {
+      var str = $(this).val();
+      $.ajax({
+        url: "/shipping_province_dropdown?country="+str+"&shipping_address_id=<%= @shipping_address.id %>&province_val=<%= params[:shipping_address][:province] if !params[:shipping_address].blank?%>" ,
+        success: function(data) {
+          $("#province_drop").html(data);
+        }
+      });
+    });
+  }).change();
+</script>

@@ -1,0 +1,17 @@
+unless @sadmin
+  page.call "$('#order-confirmation-table #cell-#{params[:id]}-#{params[:cell][:field]}').addClass", "edited-cell"
+end
+
+if ["request_date"].include?(params[:cell][:field]) &&
+    !@row.request_date.blank? && !@spreadsheet_row.eta_port.blank? &&
+    (@spreadsheet_row.eta_port - 7.days) >= @row.request_date
+  page.call "$('#order-confirmation-table #cell-#{@row.id}-request_date').addClass", "red-cell"
+else
+  page.call "$('#order-confirmation-table #cell-#{@row.id}-request_date').removeClass", "red-cell"
+end
+
+if @spreadsheet_row.oc_highlight
+  page.call("$('#cell-#{@spreadsheet_row.id}-oc').addClass", "red-cell")
+else
+  page.call("$('#cell-#{@spreadsheet_row.id}-oc').removeClass", "red-cell")
+end

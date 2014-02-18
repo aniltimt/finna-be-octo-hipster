@@ -1,0 +1,5 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+admin_permission:
+  id: 1
+  name: 'some_admin_permission'
+

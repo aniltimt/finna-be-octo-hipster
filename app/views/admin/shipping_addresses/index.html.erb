@@ -1,0 +1,42 @@
+<h1>Listing shipping_addresses</h1>
+
+<table>
+  <tr>
+    <th>Customer</th>
+    <th>Title</th>
+    <th>Receiver name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Notes</th>
+    <th>Street 1</th>
+    <th>Street 2</th>
+    <th>City</th>
+    <th>Country</th>
+    <th>Province</th>
+    <th>Postal code</th>
+  </tr>
+
+<% @shipping_addresses.each do |shipping_address| %>
+  <tr>
+    <td><%=h shipping_address.customer_id %></td>
+    <td><%=h shipping_address.title %></td>
+    <td><%=h shipping_address.receiver_name %></td>
+    <td><%=h shipping_address.email %></td>
+    <td><%=h shipping_address.phone %></td>
+    <td><%=h shipping_address.notes %></td>
+    <td><%=h shipping_address.street_1 %></td>
+    <td><%=h shipping_address.street_2 %></td>
+    <td><%=h shipping_address.city %></td>
+    <td><%=h shipping_address.country %></td>
+    <td><%=h shipping_address.province %></td>
+    <td><%=h shipping_address.postal_code %></td>
+    <td><%= link_to 'Show', shipping_address %></td>
+    <td><%= link_to 'Edit', edit_shipping_address_path(shipping_address) %></td>
+    <td><%= link_to 'Destroy', shipping_address, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New shipping_address', new_shipping_address_path %>

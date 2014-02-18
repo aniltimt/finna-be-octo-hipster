@@ -1,0 +1,178 @@
+<script type="text/javascript">
+  
+  var arr1 = new Array();
+  var arr2 = new Array();
+  
+
+  function addElement()
+  {
+    ni = document.getElementById('myDiv');
+    numi = document.getElementById('theValue');
+    num = (document.getElementById("theValue").value -1)+ 2;
+    numi.value = num;
+    divIdName = "my"+num+"Div";
+    newdiv = document.createElement('div');
+    newdiv.setAttribute("id",divIdName);
+    newdiv.innerHTML='<table border="0" cellpadding="3" cellspacing="0"><tr><td align="right" width="113">Product:</td><td><select id="letter_product_'+num+'" name="products['+num+']" class="input" style="width:138px;"><option value=""></option><%= my_options_from_collection_for_select(Style.find(:all, :order=>"title ASC"), "id", "title") %></select></td><td align="right">Quantity:</td><td><input type="text" name="quantities['+num+']" id="quote_quantity_'+num+'" class="input" style="width:138px;" /></td><td><input type="button" value="Delete" onclick="javascript:removeElement('+num+');" class="buttons" /></td></tr></table>';
+    ni.appendChild(newdiv);
+    arr1.push('letter_product_'+num);
+    arr2.push('quote_quantity_'+num);
+  }
+  
+  function removeElement(id)
+  {
+    var d = document.getElementById('myDiv');
+    var olddiv = document.getElementById('my'+id+'Div');
+    d.removeChild(olddiv); 
+    var length=d.childNodes.length;
+    var ind = arr1.indexOf('letter_product_'+id);
+    arr1.splice(ind,1);
+    var ind = arr2.indexOf('quote_quantity'+id);
+    arr2.splice(ind,1);			
+  }
+  
+  function check_quote_form() {
+    for (i = 0; i < document.quote_form.elements.length; i++) { 
+      oElem = document.quote_form.elements[i]; 
+      if (oElem.type != "submit") { 
+        oElem.style.border=''; 
+      } 
+    }
+    var quote_error_field=document.getElementById('quote_error'); 
+    
+    if (document.quote_form.quote_product.value == '')
+      {
+        document.quote_form.quote_product.style.border='1px solid red';
+        document.quote_form.quote_product.focus();
+        quote_error_field.innerHTML = 'Product is required.';
+        return false;                                               
+      }
+      if (document.quote_form.quantity.value=='')
+        {
+          document.quote_form.quantity.style.border='1px solid red';
+          document.quote_form.quantity.focus();
+          quote_error_field.innerHTML = 'Quantity is required.';
+          return false;                                               
+        }
+        var quantity_pattern = /^[1-9]{1,}$/;
+        if (!document.quote_form.quantity.value.match(new RegExp(quantity_pattern)))
+          {
+            document.quote_form.quantity.style.border='1px solid red';
+            document.quote_form.quantity.focus();                     
+            quote_error_field.innerHTML = "Invalid Quantity format.";
+            return false;               
+          }
+          for(j = 0; j < arr1.length; j++)
+            {
+              if (document.getElementById(arr1[j]).value=='')
+                {
+                  document.getElementById(arr1[j]).style.border='1px solid red';
+                  document.getElementById(arr1[j]).focus();
+                  quote_error_field.innerHTML = 'Product is required.';
+                  return false;
+                }
+                if (document.getElementById(arr2[j]).value=='')
+                  {
+                    document.getElementById(arr2[j]).style.border='1px solid red';
+                    document.getElementById(arr2[j]).focus();
+                    quote_error_field.innerHTML = 'Quantity is required.';
+                    return false;
+                  }
+                  var quantity_pattern_1 = /^[1-9]{1,}$/;
+                  if (!document.getElementById(arr2[j]).value.match(new RegExp(quantity_pattern_1)))
+                    {
+                      document.getElementById(arr2[j]).style.border='1px solid red';
+                      document.getElementById(arr2[j]).focus();                     
+                      quote_error_field.innerHTML = "Invalid Quantity format.";
+                      return false;               
+                    }               
+                  }
+                  if (document.quote_form.company.value=='')
+                    {
+                      document.quote_form.company.style.border='1px solid red';
+                      document.quote_form.company.focus();
+                      quote_error_field.innerHTML = 'Company is required.';
+                      return false;                                               
+                    }              
+                    if (document.quote_form.name.value=='')
+                      {
+                        document.quote_form.name.style.border='1px solid red';
+                        document.quote_form.name.focus();
+                        quote_error_field.innerHTML = 'Name is required.';
+                        return false;                                               
+                      }
+                      if (document.quote_form.email.value=='')
+                        {
+                          document.quote_form.email.style.border='1px solid red';
+                          document.quote_form.email.focus();
+                          quote_error_field.innerHTML = 'E-mail is required.'; 
+                          return false;                                           
+                        }
+                        var quote_mail_pattern = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+                        if (!document.quote_form.email.value.match(new RegExp(quote_mail_pattern)))
+                          {
+                            document.quote_form.email.style.border='1px solid red';
+                            document.quote_form.email.focus();                     
+                            quote_error_field.innerHTML = "Invalid E-mail address format.";
+                            return false;               
+                          }
+                          if (document.quote_form.phone.value=='')
+                            {
+                              document.quote_form.phone.style.border='1px solid red';
+                              document.quote_form.phone.focus();
+                              quote_error_field.innerHTML = 'Phone is required.';
+                              return false;                                               
+                            }     
+                            if (document.quote_form.fax.value=='')
+                              {
+                                document.quote_form.fax.style.border='1px solid red';
+                                document.quote_form.fax.focus();
+                                quote_error_field.innerHTML = 'Fax is required.';
+                                return false;                                               
+                              }
+                              
+                              return true;
+                            }          
+                            
+                            </script>
+<%= front_page_title("Quote") %>
+<!--div style="margin-bottom:40px;"><%# link_to "Contact", "/contact",:class=>"contact_link" %>&nbsp;|&nbsp;<!--span class="cur_contact_link">Quote</span-->&nbsp;|&nbsp;<%# link_to "Sample", "/contact/sample",:class=>"contact_link" %><!--/div-->
+  <% form_tag({:action =>'quote_mail'}, :id=>"quote_form", :name=>'quote_form', :onsubmit=>"return check_quote_form();") do %>
+  <table border="0" cellpadding="3" cellspacing="0">
+    <tr>
+      <td align="right" width="113">Product:</td>
+      <td><%= collection_select 'products', '0', Style.find(:all, :order=>"title ASC"), 'id', 'title', {:include_blank=>true}, :class => "input", :style => "width:138px", :id => 'quote_product' %></td>
+      <td align="right" >Quantity:</td>
+      <td><%= text_field('quantities', '0', :id=>"quantity", :size => '21', :class => 'input', :style => 'width:138px;') %>&nbsp;<%= button_to_function("Add item", :class=>'buttons', :name => 'submit', :onclick => 'addElement();') %></td>
+    </tr>
+  </table>
+  <div id='myDiv'></div>
+  <table border="0" cellpadding="3" cellspacing="0" width="389">
+    <tr>
+      <td align="right" width="113" >Company:</td>
+      <td><%= text_field('letter', 'company', :id=>"company", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td align="right" >Name:</td>
+      <td><%= text_field('letter', 'name', :id=>"name", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;nowrap:true;">E-mail:</td>
+      <td><%= text_field('letter', 'email', :id=>"email", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;nowrap:true;">Phone:</td>
+      <td><%= text_field('letter', 'phone', :id=>"phone", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;nowrap:true;vertical-align:top;">Fax:</td>
+      <td><%= text_field('letter', 'fax', :id=>"fax", :size => '21', :class => 'input') %></td>
+    </tr>
+    <tr>
+      <td style="text-align:right;" colspan="2"><span id="quote_error" style="margin-right:10px;"></span><%= submit_tag("Submit", :class=>'buttons', :name => 'submit')%></td>
+    </tr>
+    <tr>
+      <td><%= hidden_field('letter', 'hidden', :id => 'theValue', :value => '0') %></td>
+    </tr>
+  </table>
+<% end -%>

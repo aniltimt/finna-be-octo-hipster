@@ -1,0 +1,57 @@
+<table border="0" cellpadding="0" cellspacing="0" id="body-table">
+  <tbody id="body-table-tbody">
+    <% for row in @rows %>
+    <tr id="body_row_<%= row.id %>" class="<%= row.visible ? '' : 'invisible-row' %>">
+      <%= #fix for opera 10.x
+        text = ""
+        #text << "<td id=\"cell-#{ row.id }-po\"
+                     #class=\"#{ row.po_highlight ? "edited-cell" : "" }\">#{ row.po }</td>"
+        text << "<td id=\"cell-#{ row.id }-cnee\"
+                     class=\"tipsed #{ row.cnee_highlight ? "edited-cell" : "" }\">#{ row.cnee }</td>"
+        text << "<td id=\"cell-#{ row.id }-oc\"
+                     class=\"order-confirmation #{ row.oc_highlight ? "red-cell" : "" }\">#{  }</td>"
+        text << "<td id=\"cell-#{ row.id }-cntr\"
+                     class=\"cntr #{ row.cntr_highlight ? "edited-cell" : "" }\">#{ row.cntr }</td>"
+        text << "<td id=\"cell-#{ row.id }-mixed_port\"
+                     class=\"mixed-port #{ row.mixed_port_highlight ? "edited-cell" : "" }\">#{ row.mixed_port }</td>"
+        text << "<td id=\"cell-#{ row.id }-carrier\"
+                     class=\"carrier #{ row.carrier_highlight ? "edited-cell" : "" }\">#{ row.carrier }</td>"
+        text << "<td id=\"cell-#{ row.id }-mbcc\"
+                     class=\"date date-mbcc #{ row.mbcc_highlight ? "edited-cell" : "" }\">#{ !row.mbcc.blank? ? row.mbcc.strftime("%m/%d/%Y") : "" }</td>"
+        text << "<td id=\"cell-#{ row.id }-port_of_loading\"
+                     class=\"port-of-loading #{ row.port_of_loading_highlight ? "edited-cell" : "" }\">#{ row.port_of_loading }</td>"
+        text << "<td id=\"cell-#{ row.id }-request_shipdate\"
+                     class=\"date #{ row.request_shipdate_highlight ? "edited-cell" : "" }\">#{ !row.request_shipdate.blank? ? row.request_shipdate.strftime("%m/%d/%Y") : "" }</td>"
+        if !row.etd.blank? && !row.mbcc.blank? &&
+            (row.etd - 7.days) >= row.mbcc
+          etd_highlight = "red-cell"
+        else
+          etd_highlight = ""
+        end
+        text << "<td id=\"cell-#{ row.id }-etd\"
+                     class=\"date #{ row.etd_highlight ? "edited-cell" : "" } #{etd_highlight}\">#{ !row.etd.blank? ? row.etd.strftime("%m/%d/%Y") : "" }</td>"
+        text << "<td id=\"cell-#{ row.id }-request_eta\"
+                     class=\"date #{ row.request_eta_highlight ? "edited-cell" : "" }\">#{ !row.request_eta.blank? ? row.request_eta.strftime("%m/%d/%Y") : "" }</td>"
+        if !row.request_eta.blank? && !row.eta_port.blank? &&
+            (row.eta_port - 5.days) >= row.request_eta
+          eta_highlight = "red-cell"
+        else
+          eta_highlight = ""
+        end
+        text << "<td id=\"cell-#{ row.id }-eta_port\"
+                     class=\"date #{ row.eta_port_highlight ? "edited-cell" : "" } #{eta_highlight}\">#{ !row.eta_port.blank? ? row.eta_port.strftime("%m/%d/%Y") : "" }</td>"
+        text << "<td id=\"cell-#{ row.id }-destination\"
+                     class=\"#{ row.destination_highlight ? "edited-cell" : "" }\">#{ row.destination }</td>"
+        text << "<td id=\"cell-#{ row.id }-door_address\"
+                     class=\"tipsed #{ row.door_address_highlight ? "edited-cell" : "" }\">#{ row.door_address }</td>"
+        text << "<td id=\"cell-#{ row.id }-notes\" style=\"height:13px;\"
+                     class=\"tipsed notes #{ row.notes_highlight ? "edited-cell" : "" }\">#{ row.notes }</td>"
+        text << "<td id=\"cell-#{ row.id }-delivery_date\"
+                     class=\"date #{ row.delivery_date_highlight ? "edited-cell" : "" }\">#{ !row.delivery_date.blank? ? row.delivery_date.strftime("%m/%d/%Y") : "" }</td>"
+        text << "<td id=\"cell-#{ row.id }-delivered\"
+                     class=\"#{ row.delivered_highlight ? "edited-cell" : "" }\">#{ row.delivered }</td>"
+      %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

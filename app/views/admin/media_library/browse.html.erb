@@ -1,0 +1,94 @@
+<%= params[:id] ? yah(@parent) + page_title(@parent.name) : page_title('Media Library') %>
+
+<script type="text/javascript">
+  function select_item(item_id, container_id, row){
+    var container = $('#' + container_id);
+
+    if (container.val().match(new RegExp(" " + item_id + ","))){
+      $(row).removeClass("highlighted");
+      container.val(container.val().replace(new RegExp(" " + item_id + ","), ""));
+    } else {
+      $(row).addClass("highlighted");
+      container.val(container.val() + " " + item_id + ",");
+    }
+
+    if(container.val != "") {
+      $("#move_objects").show();
+    }else{
+      $("#move_objects").hide();
+    }
+  }
+  function reset_container(container_id){
+    var container = $(container_id);
+    container.val("");
+    $("#move_objects").hide();
+  }
+</script>
+
+<% form_remote_tag(
+  :url => {:action => :move_items, :id => @parent_id},
+  :success => "$('#media_library').hide(); $('#move_objects').hide();",
+  :html => {:id => "move_items", :name => "move_items"}
+) do %>
+  <%= hidden_field_tag 'folder_id' %>
+  <%= hidden_field_tag 'selected_folders' %>
+  <%= hidden_field_tag 'selected_media_objects' %>
+<% end %>
+
+<div id="media_objects">
+  <%= render :partial => "media_objects" %>
+</div>
+
+<table border="0" cellpadding="2" cellspacing="1" style="margin-top:5px">
+  <tr>
+    <td>
+      <%= link_to_remote(
+        image_tag("/images/media_library/folder_new.png", :alt => "new folder", :width => "24px", :height => "24px"),
+        {:url => {:action => 'browse', :id => @parent_id, :action_status => "new_folder"}},
+        :title => "new folder"
+      ) %>
+    </td>
+    <td>
+      <%= link_to_remote(
+        image_tag("/images/media_library/file_new.png", :alt => "new object", :width => "24px", :height => "24px"),
+        {:url => {:action => 'browse', :id => @parent_id, :action_status => "new_object"}},
+        :title => "new object"
+      ) %>
+    </td>
+    <td>
+      <%= link_to(
+        image_tag("/images/media_library/item_find.png", :alt => "find object", :width => "24px", :height => "24px"),
+        "javascript:void(0)",
+        :onclick => "$('#search_form').show();$('#search_string').focus();",
+        :title => "find object"
+      ) %>
+    </td>
+    <td>
+      <%= link_to_remote(
+        image_tag("/images/media_library/item_move.png", :alt => "move objects", :width => "24px", :height => "24px"),
+        {
+          :url => {:action => 'browse_media_library', :id => @parent_id},
+          :before => visual_effect(:appear, 'media_library')
+        },
+        :title => "move objects", :id => "move_objects", :style => "display:none"
+      ) %>
+    </td>
+  </tr>
+</table>
+
+<% hidden_div_if(true, {:id => "search_form", :style => "width:300px; padding:2px"}) do %>
+  <% form_tag(:action => :find) do %>
+    <%= text_field_tag('search_string', '', {:style => "width:183px;", :class => "input"}) %>
+    <%= submit_tag("Find", :class => 'buttons') %>
+    <input type="button" value="Cancel" class='buttons' onclick="$('#search_form').hide();" />
+  <% end %>
+<% end %>
+    
+<% hidden_div_if(true, {:id => "media_library", :style => "width:300px"}) do %>
+
+<% end %>
+
+<!-- pngfix problem - does not work for display:none images -->
+<!--[if lt IE 7]>
+<%= javascript_tag('$("#move_objects").show()') %>
+<![endif]-->

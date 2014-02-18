@@ -1,0 +1,26 @@
+<%= page_title('Product catalogue') %>
+<table border="0" width="100%" cellpadding="2" cellspacing="1" class="list">
+  <tr>
+    <td class="label" width="20">&nbsp;</td>
+    <td class="label">Name</td>
+    <td class="label_actions" width="40">styles</td>
+    <td class="label_actions" style="width:30px;">add</td>
+    <td class="label_actions" style="width:30px;">on/off</td>
+    <td class="label_actions" style="width:30px;">edit</td>
+    <td class="label_actions" style="width:30px;">delete</td>
+  </tr>
+   <% unless @categories.empty? -%>  
+    <tr>
+      <td colspan="7" style="border:0px; padding:0px;">     
+        <div id="categories_holder_0">
+          <%= render :partial=>"categories_holder", :locals=>{:parent_id=>"0", :categories => @categories} %>
+        </div>
+      </td>
+    </tr>
+  <% else -%>
+    <tr>
+      <td colspan="6" class="note" style="border:0px; padding:0px;padding-left:3px;" >No categories</td>
+    </tr>
+  <% end -%>        
+</table>
+<%= list_footer("category",nil) %>

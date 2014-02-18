@@ -1,0 +1,15 @@
+<table border="0" cellpadding="0" cellspacing="0" id="num-table">
+  <tbody id="num-table-tbody">
+    <% for row in @rows %>
+      <tr id="rownum_<%= row.id %>">
+        <td class="rownum <%= row.visible ? '' : 'invisible-row' %>">
+          <span class="numerations"><%= row.id %></span>
+          <% if @sadmin %>
+            <input type="checkbox" class="visible-row" id="row_<%= row.id %>" <%= row.visible ? 'checked="checked"' : "" %> />
+            <label class="right-label" for="row_<%= row.id %>">Visible?</label>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

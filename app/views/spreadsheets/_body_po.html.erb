@@ -1,0 +1,9 @@
+<table border="0" cellpadding="0" cellspacing="0" id="body-po-table">
+  <tbody id="body-po-table-tbody">
+    <% for row in @rows %>
+      <tr id="body-po_row_<%= row.id %>" class="<%= row.visible ? '' : 'invisible-row' %>">
+        <td id="cell-<%= row.id %>-po" class="<%= row.po_highlight ? "edited-cell" : "" %> body-po"><%= row.po %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

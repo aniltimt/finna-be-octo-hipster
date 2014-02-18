@@ -1,0 +1,8 @@
+<p>
+  <b>Customer name:</b>
+  <%=h @customer.customer_name %>
+</p>
+
+
+<%= link_to 'Edit', :controller => "admin/customers",:action => "edit",:id => @customer.id  %> |
+<%= link_to 'Back', :controller => "admin/customers",:action => "index" %>
